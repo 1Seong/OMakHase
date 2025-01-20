@@ -6,6 +6,7 @@ public class customerData : ScriptableObject
     [SerializeField]
     private new string name;
     public string Name { get { return name; } }
+    public void SetName(string name) {  this.name = name; }
 
     [SerializeField]
     private bool isSpecial;
