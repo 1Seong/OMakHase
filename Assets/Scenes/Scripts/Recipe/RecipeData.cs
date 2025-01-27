@@ -15,5 +15,5 @@ public class RecipeData : RecipeBase
     private int _taste;
     public int taste { get => taste; }
 
-    public bool _isNew;
+    public bool isNew;
 }
