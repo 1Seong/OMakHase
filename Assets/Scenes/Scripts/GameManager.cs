@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public List<foodData> Recipes;
 
     // °í°´ ¸ñ·Ï
-    public List<customerData> Customers;
+    public List<CustomerData> Customers;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
