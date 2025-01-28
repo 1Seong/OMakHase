@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CategoryData", menuName = "Scriptable Objects/CategoryData")]
@@ -20,4 +21,5 @@ public class CategoryData : ScriptableObject
         if (baseIngred == other.baseIngred && cook == other.cook) return true;
         else return false;
     }
+
 }

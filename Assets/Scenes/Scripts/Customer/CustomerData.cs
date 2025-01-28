@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using static Ingredient;
 
 public enum Personality { Picky, Normal, Generous }
 
@@ -55,5 +57,56 @@ public class CustomerData : RecipeBase
                 return false;
 
         return true;
+    }
+
+    public void InitializeOrder()
+    {
+        InitializeCategory();
+        InitializeIngredient();
+        _baseIngred = Ingredient.Base.noCondition;
+        _cook = Ingredient.Cook.noCondition;
+        _mainIngredCategory = Ingredient.Main.noCondition;
+    }
+
+    public void RandomOrder()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, 2);
+
+        if(randomIndex == 0){
+            GetRandomIngredient(); // Determine the ingredients(meat, fish, vege) in detail
+        }
+        else if (randomIndex == 1)
+        {
+            _mainIngredCategory = GetRandomEnum<Ingredient.Main>(); // Determine only the ingred category
+        }
+
+        randomIndex = UnityEngine.Random.Range(0, 2);
+        if (randomIndex == 0)
+        {
+            // Determine from basic category pool
+            GetRandomCategory();
+            _baseIngred = categoryData.baseIngred;
+            _cook = categoryData.cook;
+        }
+        else if (randomIndex == 1)
+        {
+            // Determine the category in detail
+            _baseIngred = GetRandomEnum<Ingredient.Base>();
+            _cook = GetRandomEnum<Ingredient.Cook>();
+        }
+
+    }
+
+    // get values from enum
+    T GetRandomEnum<T>()
+    {
+
+        Array enumValues = Enum.GetValues(typeof(T));
+
+
+        int randomIndex = UnityEngine.Random.Range(0, enumValues.Length);
+
+
+        return (T)enumValues.GetValue(randomIndex);
     }
 }

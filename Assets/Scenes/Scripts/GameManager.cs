@@ -1,8 +1,12 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     // 플레이어 이름
     public string player_name;
     // 평판 수치
@@ -18,8 +22,6 @@ public class GameManager : MonoBehaviour
     // 시간
     public enum Time {Morning, Afternoon, Night};
 
-    // 레시피 목록
-    public List<foodData> Recipes;
 
     // 고객 목록
     public List<CustomerData> Customers;
@@ -28,7 +30,8 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        instance = this;
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame

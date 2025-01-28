@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: CustomerData
   m_EditorClassIdentifier: 
   _categoryData: {fileID: 0}
+  _meatfish: 0
   _vege: 0
-  customerSprite: {fileID: 0}
+  _baseIngred: 0
+  _cook: 0
+  _mainIngredCategory: 0
+  _personality: 2
+  _customerLineData: {fileID: 0}
+  _isSpecial: 0
+  sprite: {fileID: 0}
