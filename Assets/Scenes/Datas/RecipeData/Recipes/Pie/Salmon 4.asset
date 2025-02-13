@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eca47919f5606e46847bd3762ed0ce5, type: 3}
+  m_Name: Salmon 4
+  m_EditorClassIdentifier: 
+  _categoryData: {fileID: 11400000, guid: 4fc2b557fe7cf964fac56e8babe5e43d, type: 2}
+  _meatfish: 100
+  _vege: 5
+  _recipeName: "\uC5F0\uC5B4 \uB2F9\uADFC \uD06C\uB9BC\uD30C\uC774"
+  _desc: 
+  _taste: 6
+  isNew: 0

@@ -201,9 +201,9 @@ public class CustomerManager : MonoBehaviour
         {
             orderText.text += "연어 ";
         }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.egg)
+        else if (currentCustomer.meatfish == Ingredient.MeatFish.tuna)
         {
-            orderText.text += "달걀 ";
+            orderText.text += "참치 ";
         }
         else if (currentCustomer.meatfish == Ingredient.MeatFish.pork)
         {

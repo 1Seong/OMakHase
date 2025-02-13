@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eca47919f5606e46847bd3762ed0ce5, type: 3}
+  m_Name: None 4
+  m_EditorClassIdentifier: 
+  _categoryData: {fileID: 11400000, guid: 47ebf3e0c4d8ff245bad0fb42671528f, type: 2}
+  _meatfish: 1
+  _vege: 5
+  _recipeName: "\uB2F9\uADFC \uC720\uBD80\uCD08\uBC25"
+  _desc: 
+  _taste: 4
+  isNew: 0
