@@ -258,7 +258,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACC4\uB780"
+  m_text: "\uCC38\uCE58"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1a99bf32e0af03a45beffe390fa8715d, type: 2}
   m_sharedMaterial: {fileID: 8708435716669226108, guid: 1a99bf32e0af03a45beffe390fa8715d, type: 2}
@@ -518,11 +518,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_name: 
+  day: 1
+  customerNum: 1
   reputation: 0
   money: 0
   sawEnding: 0
   achievements: 
-  Customers: []
+  customerPerDay: 03000000030000000500000005000000070000000700000009000000090000000c0000000c000000
 --- !u!1 &52828105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,15 +1440,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0623aaad9bc776a4bb13203ec457dafd, type: 2}
     - {fileID: 11400000, guid: 130ffde630e4b8842b0264b9be03d38b, type: 2}
     - {fileID: 11400000, guid: a86e70e46007dc243ae5ab1481bdc84b, type: 2}
-  - categoryData: {fileID: 11400000, guid: caf04a95af0712d4f872f2f018328039, type: 2}
-    recipeDatas:
-    - {fileID: 0}
-  - categoryData: {fileID: 11400000, guid: 19b0d64e825faff4bacdf5c25d37f8ff, type: 2}
-    recipeDatas:
-    - {fileID: 0}
-  - categoryData: {fileID: 11400000, guid: f55134714f6c721489f3920fbb53f069, type: 2}
-    recipeDatas:
-    - {fileID: 0}
 --- !u!1 &286913602
 GameObject:
   m_ObjectHideFlags: 0
@@ -3822,6 +3815,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 52828108}
+        m_TargetAssemblyTypeName: CookManager, Assembly-CSharp
+        m_MethodName: cookFood
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 359110988}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -9756,6 +9761,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1225800}
         m_TargetAssemblyTypeName: CustomerManager, Assembly-CSharp
         m_MethodName: GetOrder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 34912544}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: nextCustomer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -50,6 +50,14 @@ public class CookManager : MonoBehaviour
         return (T)enumValues.GetValue(index);
     }
 
+    public void cookFood()
+    {
+
+        RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
+        Debug.Log(food.recipeName);
+
+    }
+
     private void Awake()
     {
         instance = this;

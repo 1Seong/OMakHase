@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
 
     // 플레이어 이름
     public string player_name;
+    // 날짜
+    public int day;
+    // 고객 수
+    public int customerNum;
     // 평판 수치
     public int reputation;
     // 돈 수치
@@ -22,15 +26,16 @@ public class GameManager : MonoBehaviour
     // 시간
     public enum Time {Morning, Afternoon, Night};
 
-
-    // 고객 목록
-    public List<CustomerData> Customers;
+    // 날짜 별 고객 수 목록
+    [SerializeField]
+    private List<int> customerPerDay;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         instance = this;
+        initGame();
         DontDestroyOnLoad(this);
     }
 
@@ -38,5 +43,27 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void initGame() {
+        day = 1;
+        customerNum = 1;
+        reputation = 1;
+        money = 1;
+    }
+
+    public void nextCustomer() {
+        if (day > customerPerDay.Count)
+        {
+            return;
+        }
+        if (customerNum < customerPerDay[day - 1])
+        {
+            customerNum++;
+        }
+        else {
+            day++;
+            customerNum = 1;
+        }
     }
 }
