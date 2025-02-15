@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 
 public class CustomerManager : MonoBehaviour
@@ -11,6 +12,9 @@ public class CustomerManager : MonoBehaviour
 
 
     [SerializeField] private Image activeSpriteImage;
+
+
+    public CustomerData currentCustomer;
 
     [SerializeField]
     private List<Sprite> spritePool;
@@ -154,7 +158,6 @@ public class CustomerManager : MonoBehaviour
         activeSpriteImage.sprite = randomSprite;
 
         //test
-        CustomerData currentCustomer;
 
         int randomIndex = UnityEngine.Random.Range(0, 3);
 
@@ -193,43 +196,55 @@ public class CustomerManager : MonoBehaviour
             orderText.text += "과채류 ";
         }
 
-        if (currentCustomer.meatfish == Ingredient.MeatFish.beef)
+        else if (currentCustomer.mainIngredCategory == Ingredient.Main.noCondition)
         {
-            orderText.text += "소고기 ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.salmon)
-        {
-            orderText.text += "연어 ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.tuna)
-        {
-            orderText.text += "참치 ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.pork)
-        {
-            orderText.text += "돼지고기 ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.chicken)
-        {
-            orderText.text += "닭고기 ";
-        }
+            if (currentCustomer.meatfish == Ingredient.MeatFish.beef)
+            {
+                orderText.text += "소고기 ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.salmon)
+            {
+                orderText.text += "연어 ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.tuna)
+            {
+                orderText.text += "참치 ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.pork)
+            {
+                orderText.text += "돼지고기 ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.chicken)
+            {
+                orderText.text += "닭고기 ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.none)
+            {
+                orderText.text += "육류, 생선류 넣지말고 ";
+            }
 
-        if (currentCustomer.vege == Ingredient.Vege.potato)
-        {
-            orderText.text += "감자 ";
+            if (currentCustomer.vege == Ingredient.Vege.potato)
+            {
+                orderText.text += "감자 ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.tomato)
+            {
+                orderText.text += "토마토 ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.carrot)
+            {
+                orderText.text += "당근 ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.mushroom)
+            {
+                orderText.text += "버섯 ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.none)
+            {
+                orderText.text += "과채류 넣지말고 ";
+            }
         }
-        else if (currentCustomer.vege == Ingredient.Vege.tomato)
-        {
-            orderText.text += "토마토 ";
-        }
-        else if (currentCustomer.vege == Ingredient.Vege.carrot)
-        {
-            orderText.text += "당근 ";
-        }
-        else if (currentCustomer.vege == Ingredient.Vege.mushroom)
-        {
-            orderText.text += "버섯 ";
-        }
+        
 
         if (currentCustomer.baseIngred == Ingredient.Base.rice) {
             orderText.text += "쌀 ";
@@ -242,8 +257,12 @@ public class CustomerManager : MonoBehaviour
         {
             orderText.text += "면 ";
         }
+        else if (currentCustomer.baseIngred == Ingredient.Base.noCondition)
+        {
+            orderText.text += "쌀, 빵, 면 아무거나 ";
+        }
 
-        if (currentCustomer.cook == Ingredient.Cook.none || currentCustomer.cook == Ingredient.Cook.noCondition)
+        if (currentCustomer.cook == Ingredient.Cook.none)
         {
             orderText.text += "\n이 들어간 요리야";
         }

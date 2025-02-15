@@ -72,12 +72,21 @@ public class CustomerData : RecipeBase
     {
         int randomIndex = UnityEngine.Random.Range(0, 2);
 
-        if(randomIndex == 0){
-            GetRandomIngredient(); // Determine the ingredients(meat, fish, vege) in detail
+        if (randomIndex == 0) {
+            do 
+            {
+                GetRandomIngredient(); // Determine the ingredients(meat, fish, vege) in detail
+            } while (meatfish == Ingredient.MeatFish.noCondition || vege == Ingredient.Vege.noCondition);
+                
         }
         else if (randomIndex == 1)
         {
             _mainIngredCategory = GetRandomEnum<Ingredient.Main>(); // Determine only the ingred category
+            if(_mainIngredCategory == Ingredient.Main.noCondition)
+                do
+                {
+                    GetRandomIngredient(); // Determine the ingredients(meat, fish, vege) in detail
+                } while (meatfish == Ingredient.MeatFish.noCondition || vege == Ingredient.Vege.noCondition);
         }
 
         randomIndex = UnityEngine.Random.Range(0, 2);
@@ -90,9 +99,12 @@ public class CustomerData : RecipeBase
         }
         else if (randomIndex == 1)
         {
-            // Determine the category in detail
-            _baseIngred = GetRandomEnum<Ingredient.Base>();
-            _cook = GetRandomEnum<Ingredient.Cook>();
+            do
+            {
+                // Determine the category in detail
+                _baseIngred = GetRandomEnum<Ingredient.Base>();
+                _cook = GetRandomEnum<Ingredient.Cook>();
+            } while (_baseIngred == Ingredient.Base.noCondition || _cook == Ingredient.Cook.noCondition);
         }
 
     }

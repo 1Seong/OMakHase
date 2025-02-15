@@ -54,7 +54,48 @@ public class CookManager : MonoBehaviour
     {
 
         RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
+        CustomerData customer = CustomerManager.instance.currentCustomer;
+
+        bool requestSatisfied = false;
+
+        // 요구조건 검사
+
+
+        // 주재료와 요리방법 검사
+        if (customer.baseIngred == food.categoryData.baseIngred && customer.cook == food.categoryData.cook) 
+        {
+
+            // 메인 카테고리 검사
+            if (customer.mainIngredCategory != Ingredient.Main.noCondition)
+            {
+                if (customer.mainIngredCategory == Ingredient.Main.meat && (food.meatfish == Ingredient.MeatFish.beef || food.meatfish == Ingredient.MeatFish.chicken || food.meatfish == Ingredient.MeatFish.pork))
+                {
+                    requestSatisfied = true;
+                }
+                else if (customer.mainIngredCategory == Ingredient.Main.fish && (food.meatfish == Ingredient.MeatFish.tuna || food.meatfish == Ingredient.MeatFish.salmon))
+                {
+                    requestSatisfied = true;
+                }
+                else if (customer.mainIngredCategory == Ingredient.Main.vege && (food.vege == Ingredient.Vege.potato || food.vege == Ingredient.Vege.tomato || food.vege == Ingredient.Vege.carrot || food.vege == Ingredient.Vege.mushroom))
+                {
+                    requestSatisfied = true;
+                }
+            }
+            // 메인 카테고리로 지정을 한 것이 아닐 때
+            else
+            {
+                if (customer.meatfish == food.meatfish && customer.vege == food.vege)
+                {
+                    requestSatisfied = true;
+                }
+            }
+
+        }
+
+
+
         Debug.Log(food.recipeName);
+        Debug.Log(requestSatisfied);
 
     }
 
