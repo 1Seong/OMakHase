@@ -13,7 +13,7 @@ public class CustomerManager : MonoBehaviour
 
     [SerializeField] private Image activeSpriteImage;
 
-
+    public Personality currentPersonality;
     public CustomerData currentCustomer;
 
     [SerializeField]
@@ -182,6 +182,7 @@ public class CustomerManager : MonoBehaviour
         orderText.text = "내가 먹고 싶은 요리는\n";
 
         currentCustomer.RandomOrder();
+        currentPersonality = currentCustomer.personality;
 
         if (currentCustomer.mainIngredCategory == Ingredient.Main.meat)
         {

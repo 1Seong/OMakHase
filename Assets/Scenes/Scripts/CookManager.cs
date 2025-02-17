@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System;
+using TreeEditor;
 using UnityEngine;
 
 public class CookManager : MonoBehaviour
@@ -52,13 +54,14 @@ public class CookManager : MonoBehaviour
 
     public void cookFood()
     {
+        // 음식 요리
 
         RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
         CustomerData customer = CustomerManager.instance.currentCustomer;
 
         bool requestSatisfied = false;
 
-        // 요구조건 검사
+        // 고객 요구조건 검사
 
 
         // 주재료와 요리방법 검사
@@ -92,10 +95,61 @@ public class CookManager : MonoBehaviour
 
         }
 
-
-
         Debug.Log(food.recipeName);
         Debug.Log(requestSatisfied);
+        
+        // 평판 증감
+        if (requestSatisfied)
+        {
+            GameManager.instance.reputation += judge(food);
+        }
+        else {
+
+            if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 8)
+            {
+                GameManager.instance.reputation += judge(food);
+            }
+
+            else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
+            {
+                GameManager.instance.reputation += judge(food);
+            }
+
+            else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 2)
+            {
+                GameManager.instance.reputation += judge(food);
+            }
+        }
+        
+
+    }
+
+    public int judge(RecipeData food ) 
+    {
+        int person = 0;
+        if (CustomerManager.instance.currentPersonality == Personality.Picky)
+        {
+            person = 3;
+        }
+
+        else if (CustomerManager.instance.currentPersonality == Personality.Normal)
+        {
+            person = 2;
+        }
+
+        else
+        {
+            person = 1;
+        }
+
+        if (food.isNew) {
+            return 6 + Math.Max((food.taste - person), 0);
+        }
+
+        else
+        {
+            return 3 + Math.Max((food.taste - person), 0);
+        }
 
     }
 

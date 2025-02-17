@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
     public void initGame() {
         day = 1;
         customerNum = 1;
-        reputation = 1;
-        money = 1;
+        reputation = 0;
+        money = 0;
     }
 
     public void nextCustomer() {
