@@ -159,7 +159,7 @@ public class CustomerManager : MonoBehaviour
 
         //test
 
-        int randomIndex = UnityEngine.Random.Range(0, 3);
+        int randomIndex = UnityEngine.Random.Range(0, 4);
 
         if (randomIndex == 0)
         {
@@ -171,17 +171,23 @@ public class CustomerManager : MonoBehaviour
             Debug.Log("보통 손님");
             currentCustomer = GetCustomer(Personality.Normal, false);
         }
-        else
+        else if (randomIndex == 2)
         {
             Debug.Log("관대한 손님");
             currentCustomer = GetCustomer(Personality.Generous, false);
+        }
+        else
+        {
+            Debug.Log("엄격한 손님");
+            currentCustomer = GetCustomer(Personality.Strict, false);
         }
 
         currentCustomer.InitializeOrder();
 
         orderText.text = "내가 먹고 싶은 요리는\n";
 
-        currentCustomer.RandomOrder();
+        //currentCustomer.RandomOrder();
+        currentCustomer.GetOrder();
         currentPersonality = currentCustomer.personality;
 
         if (currentCustomer.mainIngredCategory == Ingredient.Main.meat)

@@ -59,45 +59,15 @@ public class CookManager : MonoBehaviour
         RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
         CustomerData customer = CustomerManager.instance.currentCustomer;
 
-        bool requestSatisfied = false;
+        bool requestSatisfied;
 
         // 고객 요구조건 검사
-
-
-        // 주재료와 요리방법 검사
-        if (customer.baseIngred == food.categoryData.baseIngred && customer.cook == food.categoryData.cook) 
-        {
-
-            // 메인 카테고리 검사
-            if (customer.mainIngredCategory != Ingredient.Main.noCondition)
-            {
-                if (customer.mainIngredCategory == Ingredient.Main.meat && (food.meatfish == Ingredient.MeatFish.beef || food.meatfish == Ingredient.MeatFish.chicken || food.meatfish == Ingredient.MeatFish.pork))
-                {
-                    requestSatisfied = true;
-                }
-                else if (customer.mainIngredCategory == Ingredient.Main.fish && (food.meatfish == Ingredient.MeatFish.tuna || food.meatfish == Ingredient.MeatFish.salmon))
-                {
-                    requestSatisfied = true;
-                }
-                else if (customer.mainIngredCategory == Ingredient.Main.vege && (food.vege == Ingredient.Vege.potato || food.vege == Ingredient.Vege.tomato || food.vege == Ingredient.Vege.carrot || food.vege == Ingredient.Vege.mushroom))
-                {
-                    requestSatisfied = true;
-                }
-            }
-            // 메인 카테고리로 지정을 한 것이 아닐 때
-            else
-            {
-                if (customer.meatfish == food.meatfish && customer.vege == food.vege)
-                {
-                    requestSatisfied = true;
-                }
-            }
-
-        }
+        requestSatisfied = customer.CheckCondition(food);
 
         Debug.Log(food.recipeName);
         Debug.Log(requestSatisfied);
-        
+
+
         // 평판 증감
         if (requestSatisfied)
         {
@@ -105,7 +75,7 @@ public class CookManager : MonoBehaviour
         }
         else {
 
-            if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 8)
+            if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
             {
                 GameManager.instance.reputation += judge(food);
             }
@@ -115,7 +85,7 @@ public class CookManager : MonoBehaviour
                 GameManager.instance.reputation += judge(food);
             }
 
-            else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 2)
+            else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
             {
                 GameManager.instance.reputation += judge(food);
             }
@@ -129,17 +99,22 @@ public class CookManager : MonoBehaviour
         int person = 0;
         if (CustomerManager.instance.currentPersonality == Personality.Picky)
         {
-            person = 3;
+            person = 5;
         }
 
         else if (CustomerManager.instance.currentPersonality == Personality.Normal)
         {
-            person = 2;
+            person = 5;
+        }
+
+        else if (CustomerManager.instance.currentPersonality == Personality.Generous)
+        {
+            person = 3;
         }
 
         else
         {
-            person = 1;
+            person = 7;
         }
 
         if (food.isNew) {

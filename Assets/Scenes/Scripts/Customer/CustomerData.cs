@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using static Ingredient;
 
-public enum Personality { Picky, Normal, Generous }
+public enum Personality { Picky, Normal, Generous, Strict }
 
 [CreateAssetMenu(fileName = "CustomerData", menuName = "Scriptable Objects/CustomerData")]
 public class CustomerData : RecipeBase
@@ -66,6 +66,144 @@ public class CustomerData : RecipeBase
         _baseIngred = Ingredient.Base.noCondition;
         _cook = Ingredient.Cook.noCondition;
         _mainIngredCategory = Ingredient.Main.noCondition;
+    }
+
+    public void GetOrder() 
+    {
+
+        if (CustomerManager.instance.currentPersonality == Personality.Picky)
+        {
+            PickyOrder();
+        }
+        else if (CustomerManager.instance.currentPersonality == Personality.Normal)
+        {
+            NormalOrder();
+        }
+        else if (CustomerManager.instance.currentPersonality == Personality.Generous)
+        {
+            GenerousOrder();
+        }
+        else 
+        {
+            StrictOrder();
+        }
+
+    }
+
+    public void PickyOrder() 
+    {
+        int randomIndex = UnityEngine.Random.Range(0, 2);
+
+        // 카테고리 하나 특정: 예:“볶음밥을 만들어 주세요.”
+        if (randomIndex == 0)
+        {
+            do
+            {
+                // Determine from basic category pool
+                GetRandomCategory();
+                _baseIngred = categoryData.baseIngred;
+                _cook = categoryData.cook;
+            } while (categoryData == null );
+
+        }
+
+        // 카테고리 범위 지정: “밥을 사용한 요리가 먹고 싶어요.”
+        else if (randomIndex == 1)
+        {
+            do
+            {
+                _baseIngred = GetRandomEnum<Ingredient.Base>();
+                _cook = GetRandomEnum<Ingredient.Cook>();
+            } while (_baseIngred == Ingredient.Base.noCondition && _cook == Ingredient.Cook.noCondition);
+        }
+
+        randomIndex = UnityEngine.Random.Range(0, 2);
+
+        // 주재료 하나 특정: “오늘은 연어가 땡기네요.”
+        if (randomIndex == 0)
+        {
+            do
+            {
+                GetRandomIngredient(); // Determine the ingredients(meat, fish, vege) in detail
+            } while (meatfish == Ingredient.MeatFish.noCondition && vege == Ingredient.Vege.noCondition);
+
+        }
+        // 주재료 범위 지정: “저는 생선이 좋아요.”
+        else if (randomIndex == 1)
+        {
+            do
+            {
+                _mainIngredCategory = GetRandomEnum<Ingredient.Main>(); // Determine only the ingred category
+            } while (_mainIngredCategory == Ingredient.Main.noCondition);
+        }
+    }
+
+
+    public void NormalOrder()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, 2);
+
+        // 카테고리 하나 특정: 예:“볶음밥을 만들어 주세요.”
+        if (randomIndex == 0)
+        {
+            do
+            {
+                // Determine from basic category pool
+                GetRandomCategory();
+                _baseIngred = categoryData.baseIngred;
+                _cook = categoryData.cook;
+            } while (categoryData == null);
+        }
+
+        // 주재료 하나 특정: “오늘은 연어가 땡기네요.”
+        else if (randomIndex == 1)
+        {
+            do
+            {
+                GetRandomIngredient(); // Determine the ingredients(meat, fish, vege) in detail
+            } while (meatfish == Ingredient.MeatFish.noCondition && vege == Ingredient.Vege.noCondition);
+
+        }
+
+    }
+
+    public void GenerousOrder()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, 2);
+
+        // 카테고리 범위 지정: “밥을 사용한 요리가 먹고 싶어요.”
+        if (randomIndex == 0)
+        {
+            _baseIngred = GetRandomEnum<Ingredient.Base>();
+            _cook = GetRandomEnum<Ingredient.Cook>();
+        }
+
+        // 주재료 범위 지정: “저는 생선이 좋아요.”
+        else if (randomIndex == 1)
+        {
+            _mainIngredCategory = GetRandomEnum<Ingredient.Main>(); // Determine only the ingred category
+        }
+
+    }
+
+    public void StrictOrder()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, 3);
+
+        if (randomIndex == 0)
+        {
+            PickyOrder();
+        }
+
+        else if (randomIndex == 1)
+        {
+            NormalOrder();
+        }
+
+        else { 
+            GenerousOrder();
+        }
+
     }
 
     public void RandomOrder()

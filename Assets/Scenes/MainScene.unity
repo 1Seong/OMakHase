@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeSpriteImage: {fileID: 1525812947}
+  currentPersonality: 0
+  currentCustomer: {fileID: 0}
   spritePool:
   - {fileID: 3940517801717844717, guid: 08af930f36042754db4fafbf818346e7, type: 3}
   - {fileID: 6587903341090316865, guid: 08af930f36042754db4fafbf818346e7, type: 3}
@@ -200,6 +202,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 1465818fca3688746bb11fcf17c2325e, type: 2}
     specialCustomerDatas:
     - {fileID: 11400000, guid: f930df75f98d4384d87cf34b8be3a0f3, type: 2}
+  - personality: 3
+    normalCustomerDatas:
+    - {fileID: 11400000, guid: 631813d1c4fb3d24a923910362097f80, type: 2}
+    specialCustomerDatas:
+    - {fileID: 11400000, guid: 9c25b2b3ae2609042a346ad350c9c8f7, type: 2}
   orderText: {fileID: 1524860119}
 --- !u!1 &4072589
 GameObject:
