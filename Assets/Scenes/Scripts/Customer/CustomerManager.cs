@@ -193,14 +193,23 @@ public class CustomerManager : MonoBehaviour
         if (currentCustomer.mainIngredCategory == Ingredient.Main.meat)
         {
             orderText.text += "À°·ù ";
+
+            if(currentCustomer.hateMeatFish == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.fish)
         {
             orderText.text += "»ý¼±·ù ";
+
+            if (currentCustomer.hateMeatFish == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.vege)
         {
             orderText.text += "°úÃ¤·ù ";
+
+            if (currentCustomer.hateVege == true)
+                orderText.text += "½È¾î ";
         }
 
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.noCondition)
@@ -208,22 +217,37 @@ public class CustomerManager : MonoBehaviour
             if (currentCustomer.meatfish == Ingredient.MeatFish.beef)
             {
                 orderText.text += "¼Ò°í±â ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.salmon)
             {
                 orderText.text += "¿¬¾î ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.tuna)
             {
                 orderText.text += "ÂüÄ¡ ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.pork)
             {
                 orderText.text += "µÅÁö°í±â ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.chicken)
             {
                 orderText.text += "´ß°í±â ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.none)
             {
@@ -233,18 +257,30 @@ public class CustomerManager : MonoBehaviour
             if (currentCustomer.vege == Ingredient.Vege.potato)
             {
                 orderText.text += "°¨ÀÚ ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.tomato)
             {
                 orderText.text += "Åä¸¶Åä ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.carrot)
             {
                 orderText.text += "´ç±Ù ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.mushroom)
             {
                 orderText.text += "¹ö¼¸ ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.none)
             {
@@ -255,14 +291,23 @@ public class CustomerManager : MonoBehaviour
 
         if (currentCustomer.baseIngred == Ingredient.Base.rice) {
             orderText.text += "½Ò ";
+
+            if (currentCustomer.hateBase == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.bread)
         {
             orderText.text += "»§ ";
+
+            if (currentCustomer.hateBase == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.noodle)
         {
             orderText.text += "¸é ";
+
+            if (currentCustomer.hateBase == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.noCondition)
         {
@@ -271,7 +316,7 @@ public class CustomerManager : MonoBehaviour
 
         if (currentCustomer.cook == Ingredient.Cook.none)
         {
-            orderText.text += "\nÀÌ µé¾î°£ ¿ä¸®¾ß";
+            orderText.text += "\nÀ» Á¶¸®ÇÏÁö ¾ÊÀº ¿ä¸®¾ß";
         }
         else if (currentCustomer.cook == Ingredient.Cook.stirFry)
         {

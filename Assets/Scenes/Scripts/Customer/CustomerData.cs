@@ -19,6 +19,24 @@ public class CustomerData : RecipeBase
     private Ingredient.Main _mainIngredCategory;
     public Ingredient.Main mainIngredCategory { get => _mainIngredCategory; }
 
+    [Header("hate data")]
+
+    [SerializeField]
+    private bool _hateMeatFish;
+    public bool hateMeatFish { get => _hateMeatFish; }
+
+    [SerializeField]
+    private bool _hateVege;
+    public bool hateVege { get => _hateVege; }
+
+    [SerializeField]
+    private bool _hateBase;
+    public bool hateBase { get => _hateBase; }
+
+    [SerializeField]
+    private bool _hateCategory;
+    public bool hateCategory { get => _hateCategory; }
+
     [Header("person data")]
 
     [SerializeField]
@@ -37,24 +55,47 @@ public class CustomerData : RecipeBase
 
     public bool CheckCondition(RecipeData recipe)
     {
-        if (categoryData != null)
+
+        if (categoryData != null && _hateMeatFish == false && _hateVege == false && _hateBase == false && _hateCategory == false)
             if (!categoryData.Equals(recipe.categoryData)) return false;
 
-        if(meatfish != Ingredient.MeatFish.noCondition)
-            if (meatfish != recipe.meatfish) return false;
+        if (meatfish != Ingredient.MeatFish.noCondition)
+        {
+            if (meatfish == recipe.meatfish && _hateMeatFish == true) return false;
+            if (meatfish != recipe.meatfish && _hateMeatFish == false) return false;
+        }
 
         if(vege != Ingredient.Vege.noCondition)
-            if(vege != recipe.vege) return false;
+        {
+            if (vege == recipe.vege && _hateVege == true) return false;
+            if (vege != recipe.vege && _hateVege == false) return false;
+        }
 
-        if(baseIngred != Ingredient.Base.noCondition)
-            if(baseIngred != recipe.categoryData.baseIngred) return false;
+        if (baseIngred != Ingredient.Base.noCondition)
+        {
+            if (baseIngred == recipe.categoryData.baseIngred && _hateBase == true) return false;
+            if (baseIngred != recipe.categoryData.baseIngred && _hateBase == false) return false;
+        }
 
         if (cook != Ingredient.Cook.noCondition)
             if (cook != recipe.categoryData.cook) return false;
 
         if (mainIngredCategory != Ingredient.Main.noCondition)
-            if (!Ingredient.IsSubCategory(recipe.meatfish, mainIngredCategory) && !Ingredient.IsSubCategory(recipe.vege, mainIngredCategory))
+        {
+            if (!Ingredient.IsSubCategory(recipe.meatfish, mainIngredCategory) && !Ingredient.IsSubCategory(recipe.vege, mainIngredCategory) && hateCategory == false)
                 return false;
+            
+            if (Ingredient.IsSubCategory(recipe.meatfish, mainIngredCategory) && hateCategory == true)
+                return false;
+
+            if (Ingredient.IsSubCategory(recipe.vege, mainIngredCategory) && hateCategory == true)
+                return false;
+            
+        }
+
+        //if (meatfish == recipe.meatfish && _hateMeatFish == true) return false;
+        //if (vege != recipe.vege && _hateVege == true) return false;
+        //if (baseIngred == recipe.categoryData.baseIngred && _hateBase == true) return false;
 
         return true;
     }
@@ -66,6 +107,11 @@ public class CustomerData : RecipeBase
         _baseIngred = Ingredient.Base.noCondition;
         _cook = Ingredient.Cook.noCondition;
         _mainIngredCategory = Ingredient.Main.noCondition;
+
+        _hateMeatFish = false;
+        _hateVege = false;
+        _hateBase = false;
+        _hateCategory = false;
     }
 
     public void GetOrder() 
@@ -87,7 +133,7 @@ public class CustomerData : RecipeBase
         {
             StrictOrder();
         }
-
+        RandomHate();
     }
 
     public void PickyOrder() 
@@ -206,6 +252,40 @@ public class CustomerData : RecipeBase
 
     }
 
+    public void RandomHate() {
+        if (meatfish != Ingredient.MeatFish.noCondition && meatfish != Ingredient.MeatFish.none) {
+            _hateMeatFish = UnityEngine.Random.Range(0, 2) == 0;
+        }
+
+        if (vege != Ingredient.Vege.noCondition && vege != Ingredient.Vege.none)
+        {
+            _hateVege = UnityEngine.Random.Range(0, 2) == 0;
+        }
+
+        if (baseIngred != Ingredient.Base.noCondition)
+        {
+            _hateBase = UnityEngine.Random.Range(0, 2) == 0;
+        }
+
+        if (mainIngredCategory != Ingredient.Main.noCondition)
+        {
+            _hateCategory = UnityEngine.Random.Range(0, 2) == 0;
+            if ( _hateCategory == true && mainIngredCategory == Ingredient.Main.meat) 
+            {
+                _hateMeatFish = true;
+            }
+            else if (_hateCategory == true && mainIngredCategory == Ingredient.Main.fish)
+            {
+                _hateMeatFish = true;
+            }
+            else if (_hateCategory == true && mainIngredCategory == Ingredient.Main.vege)
+            {
+                _hateVege = true;
+            }
+        }
+    }
+
+    /*
     public void RandomOrder()
     {
         int randomIndex = UnityEngine.Random.Range(0, 2);
@@ -246,7 +326,7 @@ public class CustomerData : RecipeBase
         }
 
     }
-
+    */
     // get values from enum
     T GetRandomEnum<T>()
     {
