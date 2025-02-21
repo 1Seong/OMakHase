@@ -19,7 +19,6 @@ public static class Ingredient
     private static readonly Dictionary<MeatFish, Main> _meatMapping = new Dictionary<MeatFish, Main>
     {
         {MeatFish.pork, Main.meat },
-        {MeatFish.tuna, Main.meat },
         {MeatFish.chicken, Main.meat },
         {MeatFish.beef, Main.meat }
     };
