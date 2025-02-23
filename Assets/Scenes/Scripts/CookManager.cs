@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using System;
 using TreeEditor;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CookManager : MonoBehaviour
 {
@@ -14,6 +16,19 @@ public class CookManager : MonoBehaviour
     public Ingredient.Base baseIngred;
 
     public Ingredient.Cook cook;
+
+    [SerializeField, HideInInspector]
+    private int _reputationRise;  // 인스펙터에서 수정 불가
+
+    public int ReputationRise => _reputationRise;
+
+
+
+    private RectTransform _OrderCanvas;
+
+    private RectTransform _OrderButton;
+
+    private RectTransform _CookCanvas;
 
     public void getMeatFish(int index) 
     {
@@ -61,45 +76,58 @@ public class CookManager : MonoBehaviour
 
         bool requestSatisfied;
 
-        // 고객 요구조건 검사
-        requestSatisfied = customer.CheckCondition(food);
-
-        Debug.Log(food.recipeName);
-        Debug.Log(requestSatisfied);
-
-
-        // 평판 증감
-        if (requestSatisfied)
+        if (food != null)
         {
-            GameManager.instance.reputation += judge(food);
-            CustomerManager.instance.orderText.text = "맛있다";
+            // 고객 요구조건 검사
+            requestSatisfied = customer.CheckCondition(food);
+
+            Debug.Log(food.recipeName);
+            Debug.Log(requestSatisfied);
+
+            _reputationRise = judge(food);
+
+            // 평판 증감
+            if (requestSatisfied)
+            {
+                GameManager.instance.reputation += ReputationRise;
+                CustomerManager.instance.orderText.text = "맛있다";
+            }
+            else
+            {
+
+                if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
+                {
+                    GameManager.instance.reputation += ReputationRise;
+                    CustomerManager.instance.orderText.text = "먹을만 하다";
+                }
+
+                else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
+                {
+                    GameManager.instance.reputation += ReputationRise;
+                    CustomerManager.instance.orderText.text = "먹을만 하다";
+                }
+
+                else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
+                {
+                    GameManager.instance.reputation += ReputationRise;
+                    CustomerManager.instance.orderText.text = "먹을만 하다";
+                }
+
+                else
+                {
+                    CustomerManager.instance.orderText.text = "맛없다";
+                }
+            }
+
+            _OrderCanvas.gameObject.SetActive(true);
+            _CookCanvas.gameObject.SetActive(false);
+            _OrderButton.gameObject.SetActive(true);
+
         }
-        else {
-
-            if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
-            {
-                GameManager.instance.reputation += judge(food);
-                CustomerManager.instance.orderText.text = "먹을만 하다";
-            }
-
-            else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
-            {
-                GameManager.instance.reputation += judge(food);
-                CustomerManager.instance.orderText.text = "먹을만 하다";
-            }
-
-            else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
-            {
-                GameManager.instance.reputation += judge(food);
-                CustomerManager.instance.orderText.text = "먹을만 하다";
-            }
-
-            else 
-            {
-                CustomerManager.instance.orderText.text = "맛없다";
-            }
+        else 
+        {
+            Debug.Log("없는 레시피입니다");
         }
-        
 
     }
 
@@ -140,12 +168,19 @@ public class CookManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
+        _OrderCanvas = GameManager.instance.Order_Canvas.GetComponent<RectTransform>();
+        Debug.Log(_OrderCanvas);
+        _OrderButton = GameManager.instance.Order_Canvas.transform.GetChild(2).GetComponent<RectTransform>();
+        Debug.Log(_OrderButton);
+        _CookCanvas = GameManager.instance.Cook_Canvas.GetComponent<RectTransform>();
+        Debug.Log(_OrderCanvas);
     }
 
     // Update is called once per frame

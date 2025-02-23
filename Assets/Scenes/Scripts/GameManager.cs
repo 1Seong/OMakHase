@@ -30,6 +30,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<int> customerPerDay;
 
+    // Äµ¹ö½º ui
+    [SerializeField]
+    private RectTransform _Order_Canvas;
+    public RectTransform Order_Canvas { get => _Order_Canvas; }
+
+    [SerializeField]
+    private RectTransform _Base_Canvas;
+    public RectTransform Base_Canvas { get => _Base_Canvas; }
+    [SerializeField]
+    private RectTransform _Cook_Canvas;
+    public RectTransform Cook_Canvas { get => _Cook_Canvas; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

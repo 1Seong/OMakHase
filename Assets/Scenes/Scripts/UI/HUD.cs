@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
 
-    public enum InfoType { Day, Reputation, Money }
+    public enum InfoType { Day, Reputation, Money, ReputationRising }
     public InfoType type;
 
     TextMeshProUGUI myText;
@@ -29,6 +29,9 @@ public class HUD : MonoBehaviour
                 break;
             case InfoType.Money:
 
+                break;
+            case InfoType.ReputationRising:
+                myText.text = string.Format("평판이 {0:F0} 증가했습니다. ->", CookManager.instance.ReputationRise);
                 break;
 
         }
