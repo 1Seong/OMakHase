@@ -40,7 +40,7 @@ public class CustomerManager : MonoBehaviour
         //spritePool = new List<Sprite>();
     }
 
-    [SerializeField] private TextMeshProUGUI orderText;
+    [SerializeField] public TextMeshProUGUI orderText;
 
     private void Start()
     {

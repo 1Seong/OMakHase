@@ -72,22 +72,31 @@ public class CookManager : MonoBehaviour
         if (requestSatisfied)
         {
             GameManager.instance.reputation += judge(food);
+            CustomerManager.instance.orderText.text = "¸ÀÀÖ´Ù";
         }
         else {
 
             if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
             {
                 GameManager.instance.reputation += judge(food);
+                CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
             }
 
             else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
             {
                 GameManager.instance.reputation += judge(food);
+                CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
             }
 
             else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
             {
                 GameManager.instance.reputation += judge(food);
+                CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+            }
+
+            else 
+            {
+                CustomerManager.instance.orderText.text = "¸À¾ø´Ù";
             }
         }
         
