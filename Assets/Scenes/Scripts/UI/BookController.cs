@@ -9,6 +9,7 @@ public class BookController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private GameObject combinationPanel;
     [SerializeField] private Slider taste;
+    [SerializeField] private RectTransform RightPageUI;
 
     private Sprite baseSprite;
     private Sprite ingred1Sprite;
@@ -61,7 +62,7 @@ public class BookController : MonoBehaviour
 
     private void UpdateRightPage()
     {
-        var data = RecipeManager.instance.FindNormal(baseIngred, cook, meatFish, vege);
+        var data = RecipeManager.instance.GetRecipe(baseIngred, cook, meatFish, vege);
         var combinationImages = combinationPanel.GetComponentsInChildren<Image>();
         var baseIcon = combinationImages[1];
         var ingredIcon1 = combinationImages[2];
@@ -70,8 +71,10 @@ public class BookController : MonoBehaviour
 
         if (data != null)
         {
+            if (RightPageUI.localScale.x == 0) RightPageUI.localScale = new Vector3(1, 1, 1);
+
             image.sprite = data.categoryData.sprite;
-            title.text = data.name;
+            title.text = data.recipeName;
             taste.value = data.taste;
 
             baseIcon.sprite = baseSprite;
@@ -79,6 +82,7 @@ public class BookController : MonoBehaviour
             ingredIcon2.sprite = ingred2Sprite;
             cookIcon.sprite = cookSprite;
         }
+        
     }
 
     public void OnClick(Ingredient.Base baseIng, Sprite sprite)
