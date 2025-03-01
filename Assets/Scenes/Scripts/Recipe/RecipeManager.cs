@@ -21,5 +21,24 @@ public class RecipeManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-  
+    public RecipeData FindNormal(Ingredient.Base baseIng, Ingredient.Cook cook, Ingredient.MeatFish meat, Ingredient.Vege vege)
+    {
+        CategoryData categoryData = new CategoryData(baseIng, cook);
+
+        foreach(var i in categoryListDatas)
+        {
+            if (i.categoryData.Equals(categoryData))
+            {
+                foreach(var j in i.recipeDatas)
+                {
+                    if (j.meatfish == meat && j.vege == vege) return j;
+                }
+            }
+        }
+
+        Debug.Log("Cannot Find Recipe");
+        return null;
+    }
+
+    //public RecipeData FindHard() { }
 }

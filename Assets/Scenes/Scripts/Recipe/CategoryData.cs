@@ -16,6 +16,12 @@ public class CategoryData : ScriptableObject
     private Sprite _sprite;
     public Sprite sprite { get => _sprite; }
 
+    public CategoryData(Ingredient.Base baseIng, Ingredient.Cook cook)
+    {
+        _baseIngred = baseIng;
+        _cook = cook;
+    }
+
     public bool Equals(CategoryData other)
     {
         if (baseIngred == other.baseIngred && cook == other.cook) return true;
