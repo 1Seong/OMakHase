@@ -16,7 +16,7 @@ public class Dialogue
     public string name;
 
     [Tooltip("텍스트")]
-    public string contexts;
+    public string line;
 
     [Tooltip("캐릭터 스프라이트 ID")]
     public string spriteID;
