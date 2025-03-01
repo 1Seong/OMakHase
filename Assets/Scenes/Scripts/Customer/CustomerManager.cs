@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 
 public class CustomerManager : MonoBehaviour
@@ -11,6 +12,9 @@ public class CustomerManager : MonoBehaviour
 
 
     [SerializeField] private Image activeSpriteImage;
+
+    public Personality currentPersonality;
+    public CustomerData currentCustomer;
 
     [SerializeField]
     private List<Sprite> spritePool;
@@ -36,7 +40,7 @@ public class CustomerManager : MonoBehaviour
         //spritePool = new List<Sprite>();
     }
 
-    [SerializeField] private TextMeshProUGUI orderText;
+    [SerializeField] public TextMeshProUGUI orderText;
 
     private void Start()
     {
@@ -154,9 +158,8 @@ public class CustomerManager : MonoBehaviour
         activeSpriteImage.sprite = randomSprite;
 
         //test
-        CustomerData currentCustomer;
 
-        int randomIndex = UnityEngine.Random.Range(0, 3);
+        int randomIndex = UnityEngine.Random.Range(0, 4);
 
         if (randomIndex == 0)
         {
@@ -168,84 +171,152 @@ public class CustomerManager : MonoBehaviour
             Debug.Log("º¸Åë ¼Õ´Ô");
             currentCustomer = GetCustomer(Personality.Normal, false);
         }
-        else
+        else if (randomIndex == 2)
         {
             Debug.Log("°ü´ëÇÑ ¼Õ´Ô");
             currentCustomer = GetCustomer(Personality.Generous, false);
+        }
+        else
+        {
+            Debug.Log("¾ö°ÝÇÑ ¼Õ´Ô");
+            currentCustomer = GetCustomer(Personality.Strict, false);
         }
 
         currentCustomer.InitializeOrder();
 
         orderText.text = "³»°¡ ¸Ô°í ½ÍÀº ¿ä¸®´Â\n";
 
-        currentCustomer.RandomOrder();
+        //currentCustomer.RandomOrder();
+        currentCustomer.GetOrder();
+        currentPersonality = currentCustomer.personality;
 
         if (currentCustomer.mainIngredCategory == Ingredient.Main.meat)
         {
             orderText.text += "À°·ù ";
+
+            if(currentCustomer.hateMeatFish == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.fish)
         {
             orderText.text += "»ý¼±·ù ";
+
+            if (currentCustomer.hateMeatFish == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.vege)
         {
             orderText.text += "°úÃ¤·ù ";
+
+            if (currentCustomer.hateVege == true)
+                orderText.text += "½È¾î ";
         }
 
-        if (currentCustomer.meatfish == Ingredient.MeatFish.beef)
+        else if (currentCustomer.mainIngredCategory == Ingredient.Main.noCondition)
         {
-            orderText.text += "¼Ò°í±â ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.salmon)
-        {
-            orderText.text += "¿¬¾î ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.egg)
-        {
-            orderText.text += "´Þ°¿ ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.pork)
-        {
-            orderText.text += "µÅÁö°í±â ";
-        }
-        else if (currentCustomer.meatfish == Ingredient.MeatFish.chicken)
-        {
-            orderText.text += "´ß°í±â ";
-        }
+            if (currentCustomer.meatfish == Ingredient.MeatFish.beef)
+            {
+                orderText.text += "¼Ò°í±â ";
 
-        if (currentCustomer.vege == Ingredient.Vege.potato)
-        {
-            orderText.text += "°¨ÀÚ ";
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.salmon)
+            {
+                orderText.text += "¿¬¾î ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.tuna)
+            {
+                orderText.text += "ÂüÄ¡ ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.pork)
+            {
+                orderText.text += "µÅÁö°í±â ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.chicken)
+            {
+                orderText.text += "´ß°í±â ";
+
+                if (currentCustomer.hateMeatFish == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.meatfish == Ingredient.MeatFish.none)
+            {
+                orderText.text += "À°·ù, »ý¼±·ù ³ÖÁö¸»°í ";
+            }
+
+            if (currentCustomer.vege == Ingredient.Vege.potato)
+            {
+                orderText.text += "°¨ÀÚ ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.tomato)
+            {
+                orderText.text += "Åä¸¶Åä ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.carrot)
+            {
+                orderText.text += "´ç±Ù ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.mushroom)
+            {
+                orderText.text += "¹ö¼¸ ";
+
+                if (currentCustomer.hateVege == true)
+                    orderText.text += "½È¾î ";
+            }
+            else if (currentCustomer.vege == Ingredient.Vege.none)
+            {
+                orderText.text += "°úÃ¤·ù ³ÖÁö¸»°í ";
+            }
         }
-        else if (currentCustomer.vege == Ingredient.Vege.tomato)
-        {
-            orderText.text += "Åä¸¶Åä ";
-        }
-        else if (currentCustomer.vege == Ingredient.Vege.carrot)
-        {
-            orderText.text += "´ç±Ù ";
-        }
-        else if (currentCustomer.vege == Ingredient.Vege.mushroom)
-        {
-            orderText.text += "¹ö¼¸ ";
-        }
+        
 
         if (currentCustomer.baseIngred == Ingredient.Base.rice) {
             orderText.text += "½Ò ";
+
+            if (currentCustomer.hateBase == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.bread)
         {
             orderText.text += "»§ ";
+
+            if (currentCustomer.hateBase == true)
+                orderText.text += "½È¾î ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.noodle)
         {
             orderText.text += "¸é ";
+
+            if (currentCustomer.hateBase == true)
+                orderText.text += "½È¾î ";
+        }
+        else if (currentCustomer.baseIngred == Ingredient.Base.noCondition)
+        {
+            orderText.text += "½Ò, »§, ¸é ¾Æ¹«°Å³ª ";
         }
 
-        if (currentCustomer.cook == Ingredient.Cook.none || currentCustomer.cook == Ingredient.Cook.noCondition)
+        if (currentCustomer.cook == Ingredient.Cook.none)
         {
-            orderText.text += "\nÀÌ µé¾î°£ ¿ä¸®¾ß";
+            orderText.text += "\nÀ» Á¶¸®ÇÏÁö ¾ÊÀº ¿ä¸®¾ß";
         }
         else if (currentCustomer.cook == Ingredient.Cook.stirFry)
         {

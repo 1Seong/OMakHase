@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f822ed5aded2f04a9cdd9a36763b2ce, type: 3}
   m_Name: CustomerData
   m_EditorClassIdentifier: 
-  _categoryData: {fileID: 11400000, guid: caf04a95af0712d4f872f2f018328039, type: 2}
-  _meatfish: 2
-  _vege: 4
-  _baseIngred: 3
-  _cook: 1
-  _mainIngredCategory: 0
+  _categoryData: {fileID: 11400000, guid: 9632eecc0c5c42146aec889b22a94e67, type: 2}
+  _meatfish: 0
+  _vege: 0
+  _baseIngred: 1
+  _cook: 2
+  _mainIngredCategory: 1
+  _hateMeatFish: 0
+  _hateVege: 0
+  _hateBase: 0
+  _hateCategory: 0
   _personality: 1
   _customerLineData: {fileID: 0}
   _isSpecial: 0
-  sprite: {fileID: -5618986482094654414, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  sprite: {fileID: 3940517801717844717, guid: 08af930f36042754db4fafbf818346e7, type: 3}

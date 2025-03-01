@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eca47919f5606e46847bd3762ed0ce5, type: 3}
+  m_Name: Chickin 4
+  m_EditorClassIdentifier: 
+  _categoryData: {fileID: 11400000, guid: caf04a95af0712d4f872f2f018328039, type: 2}
+  _meatfish: 4
+  _vege: 5
+  _recipeName: "\uB2F9\uADFC \uCD08\uACC4\uAD6D\uC218"
+  _desc: 
+  _taste: 5
+  isNew: 0

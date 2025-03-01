@@ -11,7 +11,7 @@ public static class Ingredient
 
     public enum Main { noCondition, meat, fish, vege }
 
-    public enum MeatFish { noCondition, none, pork, egg, chicken, beef, salmon = 100 }
+    public enum MeatFish { noCondition, none, pork, tuna, chicken, beef, salmon = 100 }
 
     public enum Vege { noCondition, none, potato, tomato, mushroom, carrot }
 
@@ -19,12 +19,12 @@ public static class Ingredient
     private static readonly Dictionary<MeatFish, Main> _meatMapping = new Dictionary<MeatFish, Main>
     {
         {MeatFish.pork, Main.meat },
-        {MeatFish.egg, Main.meat },
         {MeatFish.chicken, Main.meat },
         {MeatFish.beef, Main.meat }
     };
     private static readonly Dictionary<MeatFish, Main> _fishMapping = new Dictionary<MeatFish, Main>
     {
+        {MeatFish.tuna, Main.fish },
         {MeatFish.salmon, Main.fish }
     };
     private static readonly Dictionary<Vege, Main> _vegeMapping = new Dictionary<Vege, Main>

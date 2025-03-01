@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eca47919f5606e46847bd3762ed0ce5, type: 3}
+  m_Name: Pork 4
+  m_EditorClassIdentifier: 
+  _categoryData: {fileID: 11400000, guid: 6ad4744e7ae9da642bd190e918f212c5, type: 2}
+  _meatfish: 2
+  _vege: 5
+  _recipeName: "\uD074\uB798\uC2DD \uD584\uBC84\uAC70 \uB2F9\uADFC\uD280\uAE40 \uC138\uD2B8"
+  _desc: 
+  _taste: 4
+  isNew: 0

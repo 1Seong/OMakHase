@@ -13,7 +13,7 @@ public class RecipeData : RecipeBase
 
     [SerializeField]
     private int _taste;
-    public int taste { get => taste; }
+    public int taste { get => _taste; }
 
     public bool isNew;
 }
