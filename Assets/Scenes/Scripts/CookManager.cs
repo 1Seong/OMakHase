@@ -176,11 +176,11 @@ public class CookManager : MonoBehaviour
     {
 
         _OrderCanvas = GameManager.instance.Order_Canvas.GetComponent<RectTransform>();
-        Debug.Log(_OrderCanvas);
+        //Debug.Log(_OrderCanvas);
         _OrderButton = GameManager.instance.Order_Canvas.transform.GetChild(2).GetComponent<RectTransform>();
-        Debug.Log(_OrderButton);
+        //Debug.Log(_OrderButton);
         _CookCanvas = GameManager.instance.Cook_Canvas.GetComponent<RectTransform>();
-        Debug.Log(_OrderCanvas);
+        //Debug.Log(_OrderCanvas);
     }
 
     // Update is called once per frame
