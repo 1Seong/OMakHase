@@ -136,6 +136,50 @@ public class CustomerData : RecipeBase
         RandomHate();
     }
 
+    // 수동으로 모두 지정하는 주문 함수들
+    public void GetOrder(Ingredient.MeatFish meatfish, Ingredient.Vege vege, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateMeatFish, bool hateVege, bool hateBase) {
+        GetIngredient(meatfish, vege);
+        _baseIngred = baseIngred;
+        _cook = cook;
+
+        _hateMeatFish = hateMeatFish;
+        _hateVege = hateVege;
+        _hateBase = hateBase;
+    }
+
+    public void GetOrder(Ingredient.Main main, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateCategory, bool hateBase)
+    {
+        _mainIngredCategory = main;
+        _baseIngred = baseIngred;
+        _cook = cook;
+
+        _hateCategory = hateCategory;
+        _hateBase = hateBase;
+    }
+
+    public void GetOrder(Ingredient.MeatFish meatfish, Ingredient.Vege vege, CategoryData category, bool hateMeatFish, bool hateVege, bool hateBase)
+    {
+        GetIngredient(meatfish, vege);
+        _baseIngred = category.baseIngred;
+        _cook = category.cook;
+
+        _hateMeatFish = hateMeatFish;
+        _hateVege = hateVege;
+        _hateBase = hateBase;
+    }
+    public void GetOrder(Ingredient.Main main, CategoryData category, bool hateCategory, bool hateBase)
+    {
+        _mainIngredCategory = main;
+        _baseIngred = category.baseIngred;
+        _cook = category.cook;
+
+        _hateCategory = hateCategory;
+        _hateBase = hateBase;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+
+
     public void PickyOrder() 
     {
         int randomIndex = UnityEngine.Random.Range(0, 2);

@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void initGame() {
-        day = 1;
+        day = 0;
         customerNum = 1;
         reputation = 0;
         money = 0;
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        if (customerNum < customerPerDay[day - 1])
+        if (customerNum < customerPerDay[day])
         {
             customerNum++;
         }

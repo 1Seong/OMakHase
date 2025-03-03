@@ -22,9 +22,13 @@ public class CookManager : MonoBehaviour
 
     public int ReputationRise => _reputationRise;
 
-
+    [SerializeField]
+    bool _requestSatisfied;
+    public bool requestSatisfied { get => _requestSatisfied; }
 
     private RectTransform _OrderCanvas;
+
+    private RectTransform _NextButton;
 
     private RectTransform _OrderButton;
 
@@ -74,15 +78,15 @@ public class CookManager : MonoBehaviour
         RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
         CustomerData customer = CustomerManager.instance.currentCustomer;
 
-        bool requestSatisfied;
-
         if (food != null)
         {
             // 고객 요구조건 검사
-            requestSatisfied = customer.CheckCondition(food);
+            _requestSatisfied = customer.CheckCondition(food);
 
             Debug.Log(food.recipeName);
             Debug.Log(requestSatisfied);
+
+            DialogueManager.Instance.GetNextDialogue();
 
             _reputationRise = judge(food);
 
@@ -120,8 +124,9 @@ public class CookManager : MonoBehaviour
             }
 
             _OrderCanvas.gameObject.SetActive(true);
+            _NextButton.gameObject.SetActive(false);
             _CookCanvas.gameObject.SetActive(false);
-            _OrderButton.gameObject.SetActive(true);
+            //_OrderButton.gameObject.SetActive(true);
 
         }
         else 
@@ -177,6 +182,8 @@ public class CookManager : MonoBehaviour
 
         _OrderCanvas = GameManager.instance.Order_Canvas.GetComponent<RectTransform>();
         //Debug.Log(_OrderCanvas);
+        _NextButton = GameManager.instance.Order_Canvas.transform.GetChild(1).GetComponent<RectTransform>();
+        //Debug.Log(_NextButton);
         _OrderButton = GameManager.instance.Order_Canvas.transform.GetChild(2).GetComponent<RectTransform>();
         //Debug.Log(_OrderButton);
         _CookCanvas = GameManager.instance.Cook_Canvas.GetComponent<RectTransform>();

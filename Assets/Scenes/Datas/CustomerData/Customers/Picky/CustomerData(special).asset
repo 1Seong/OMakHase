@@ -18,6 +18,10 @@ MonoBehaviour:
   _baseIngred: 0
   _cook: 0
   _mainIngredCategory: 0
+  _hateMeatFish: 0
+  _hateVege: 0
+  _hateBase: 0
+  _hateCategory: 0
   _personality: 0
   _customerLineData: {fileID: 0}
   _isSpecial: 1
