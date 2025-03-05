@@ -49,4 +49,44 @@ public class DialogueParser : MonoBehaviour
 
     }
 
+    public RandomDialogue[] RandomParse(TextAsset CSV)
+    {
+        List<RandomDialogue> dialogueList = new List<RandomDialogue>(); // 대화 리스트 생성.
+        TextAsset csvData = CSV; // csv 파일 가져옴
+        //Resources.Load<TextAsset>(_CSVFileName);
+
+        string[] data = csvData.text.Split(new char[] { '\n' }); // 엔터 기준으로 쪼갬(스프레드시트의 행별로 쪼갬)
+
+        for (int i = 1; i < data.Length; i++)
+        {
+            //Debug.Log(data[i]);
+            string[] row = data[i].Split(new char[] { ',' });
+
+
+            RandomDialogue dialogue = new RandomDialogue(); // 대사 데이터 생성
+
+
+            dialogue.line = row[0]; // 텍스트
+            //Debug.Log(row[0]);
+            dialogue.type = row[1]; // 대화 유형
+            //Debug.Log(row[1]);
+            dialogue.desireMain = row[2]; // 요구하는 주재료
+            //Debug.Log(row[2]);
+            dialogue.desireCategory = row[3]; // 요구하는 카테고리
+            //Debug.Log(row[3]);
+            dialogue.afterDayN = row[4]; // N day 후
+            //Debug.Log(row[4]);
+            dialogue.isFormat = row[5]; // 포맷화 여부
+            //Debug.Log(row[5]);
+            dialogue.spriteID = row[6]; // 캐릭터 스프라이트 ID
+            //Debug.Log(row[6]);
+
+
+            dialogueList.Add(dialogue);
+
+        }
+
+        return dialogueList.ToArray();
+
+    }
 }

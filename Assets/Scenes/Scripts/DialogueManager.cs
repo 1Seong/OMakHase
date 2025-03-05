@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     [SerializeField] TextAsset StoryCSV;
+    [SerializeField] TextAsset RandomCSV;
     //string csv_FileName;
 
     [SerializeField] TextMeshProUGUI nameUI;
@@ -22,6 +23,7 @@ public class DialogueManager : MonoBehaviour
 
 
     Dictionary<string, Dialogue> dialogueDic = new Dictionary<string, Dialogue>();
+    Dictionary<int, RandomDialogue> randomDialogueDic = new Dictionary<int, RandomDialogue>();
 
     public static bool isFinish = false;
 
@@ -123,7 +125,16 @@ public class DialogueManager : MonoBehaviour
         nameUI.text = dialogueDic[currentID].name;
         dialogueUI.text = dialogueDic[currentID].line.Replace('`', ','); ;
         Debug.Log(dialogueDic[currentID].line);
-        
+
+
+
+        RandomDialogue[] randomDialogues = theParser.RandomParse(RandomCSV);
+
+        for (int i = 0; i < randomDialogues.Length; i++)
+        {
+            randomDialogueDic.Add(i, randomDialogues[i]);
+        }
+
     }
 
     public void GetNextDialogue()
@@ -137,6 +148,8 @@ public class DialogueManager : MonoBehaviour
 
             _currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", 1) + "_" + "01" + "_";
 
+            GameManager.instance.nextCustomer();
+
         }
 
         else if (dialogueDic[currentID].nextDialogueID == "EOO")
@@ -145,6 +158,8 @@ public class DialogueManager : MonoBehaviour
             _Customer = int.Parse(tmp[1].Substring(1)) + 1;
 
             _currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", _Customer) + "_" + "01" + "_";
+
+            GameManager.instance.nextCustomer();
         }
 
         else
@@ -213,26 +228,37 @@ public class DialogueManager : MonoBehaviour
 
             if (currentID.Contains("R"))
             {
+                string temp = currentID;
                 // 다중 반응 처리
                 if (currentID.Contains("&&")) {
                     Debug.Log("멀티");
                     string[] chooseTmp = _currentID.Split("&&");
 
-                    // 주문 만족시
-                    if (CookManager.instance.requestSatisfied)
-                    {
-                        _currentID = chooseTmp[0];
-                        nameUI.text = dialogueDic[currentID].name;
-                        dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
-                        return; 
+
+                    for (int i = 0; i < chooseTmp.Length; i++) {
+                        if (CookManager.instance.satisfiedType == CookManager.Result.positive && dialogueDic[chooseTmp[i]].type == "positive")
+                        {
+                            _currentID = chooseTmp[i];
+                            break;
+                        }
+                        else if (CookManager.instance.satisfiedType == CookManager.Result.neutral && dialogueDic[chooseTmp[i]].type == "neutral")
+                        {
+                            _currentID = chooseTmp[i];
+                            break;
+                        }
+                        else if (CookManager.instance.satisfiedType == CookManager.Result.negative && (dialogueDic[chooseTmp[i]].type == "negative" || dialogueDic[chooseTmp[i]].type == "s-negative"))
+                        {
+                            _currentID = chooseTmp[i];
+                            break;
+                        }
                     }
-                    // 주문 불만족시
-                    else {
-                        _currentID = chooseTmp[1];
-                        nameUI.text = dialogueDic[currentID].name;
-                        dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
-                        return;
-                    }
+
+                    if (temp == _currentID)
+                        Debug.LogWarning("해당되는 반응 대사가 없습니다.");
+
+                    nameUI.text = dialogueDic[currentID].name;
+                    dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
+                    return;
                 }
                 // 단일 반응 처리
                 else {

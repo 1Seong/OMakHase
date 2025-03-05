@@ -22,9 +22,16 @@ public class CookManager : MonoBehaviour
 
     public int ReputationRise => _reputationRise;
 
+
     [SerializeField]
     bool _requestSatisfied;
     public bool requestSatisfied { get => _requestSatisfied; }
+
+    public enum Result { positive, neutral, negative}
+    [SerializeField]
+    private Result _satisfiedType;
+    public Result satisfiedType { get => _satisfiedType; }
+    public void setSatisfiedType(Result type) { _satisfiedType = type; }
 
     private RectTransform _OrderCanvas;
 
@@ -90,8 +97,6 @@ public class CookManager : MonoBehaviour
             Debug.Log(food.recipeName);
             Debug.Log(requestSatisfied);
 
-            DialogueManager.Instance.GetNextDialogue();
-
             _reputationRise = judge(food);
 
             // ÆòÆÇ Áõ°¨
@@ -99,6 +104,7 @@ public class CookManager : MonoBehaviour
             {
                 GameManager.instance.reputation += ReputationRise;
                 CustomerManager.instance.orderText.text = "¸ÀÀÖ´Ù";
+                setSatisfiedType(Result.positive);
             }
             else
             {
@@ -107,25 +113,31 @@ public class CookManager : MonoBehaviour
                 {
                     GameManager.instance.reputation += ReputationRise;
                     CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    setSatisfiedType(Result.neutral);
                 }
 
                 else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
                 {
                     GameManager.instance.reputation += ReputationRise;
                     CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    setSatisfiedType(Result.neutral);
                 }
 
                 else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
                 {
                     GameManager.instance.reputation += ReputationRise;
                     CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    setSatisfiedType(Result.neutral);
                 }
 
                 else
                 {
                     CustomerManager.instance.orderText.text = "¸À¾ø´Ù";
+                    setSatisfiedType(Result.negative);
                 }
             }
+
+            DialogueManager.Instance.GetNextDialogue();
 
             _OrderCanvas.gameObject.SetActive(true);
             _NextButton.gameObject.SetActive(false);
