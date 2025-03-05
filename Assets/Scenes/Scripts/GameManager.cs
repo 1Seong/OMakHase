@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private RectTransform _Cook_Canvas;
     public RectTransform Cook_Canvas { get => _Cook_Canvas; }
+    [SerializeField]
+    private RectTransform _Dialogue_Canvas;
+    public RectTransform Dialogue_Canvas { get => _Dialogue_Canvas; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

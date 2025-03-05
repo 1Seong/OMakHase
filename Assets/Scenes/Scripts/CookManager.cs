@@ -34,6 +34,10 @@ public class CookManager : MonoBehaviour
 
     private RectTransform _CookCanvas;
 
+    private RectTransform _DialogueCanvas;
+
+    private RectTransform _SkipButton;
+
     public void getMeatFish(int index) 
     {
         meatfish = GetDataFromEnum<Ingredient.MeatFish>(index);
@@ -127,6 +131,8 @@ public class CookManager : MonoBehaviour
             _NextButton.gameObject.SetActive(false);
             _CookCanvas.gameObject.SetActive(false);
             //_OrderButton.gameObject.SetActive(true);
+            _DialogueCanvas.gameObject.SetActive(true);
+            _SkipButton.gameObject.SetActive(true);
 
         }
         else 
@@ -188,6 +194,10 @@ public class CookManager : MonoBehaviour
         //Debug.Log(_OrderButton);
         _CookCanvas = GameManager.instance.Cook_Canvas.GetComponent<RectTransform>();
         //Debug.Log(_OrderCanvas);
+
+        _DialogueCanvas = GameManager.instance.Dialogue_Canvas.GetChild(0).GetComponent<RectTransform>();
+        _SkipButton = GameManager.instance.Dialogue_Canvas.GetChild(0).GetChild(3).GetComponent<RectTransform>();
+
     }
 
     // Update is called once per frame
