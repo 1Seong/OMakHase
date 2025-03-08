@@ -17,11 +17,18 @@ public class RecipeBase : ScriptableObject
     private Ingredient.Vege _vege;
     public Ingredient.Vege vege { get => _vege; }
 
+    public void GetIngredient(Ingredient.MeatFish meatFish, Ingredient.Vege vege)
+    {
+        _meatfish = meatFish;
+        _vege = vege;
+    }
+
     public void GetRandomIngredient()
     {
         _meatfish = GetRandomEnum<Ingredient.MeatFish>();
         _vege = GetRandomEnum<Ingredient.Vege>();
     }
+
 
     public void GetRandomCategory()
     {

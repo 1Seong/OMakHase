@@ -23,12 +23,27 @@ public class CookManager : MonoBehaviour
     public int ReputationRise => _reputationRise;
 
 
+    [SerializeField]
+    bool _requestSatisfied;
+    public bool requestSatisfied { get => _requestSatisfied; }
+
+    public enum Result { positive, neutral, negative}
+    [SerializeField]
+    private Result _satisfiedType;
+    public Result satisfiedType { get => _satisfiedType; }
+    public void setSatisfiedType(Result type) { _satisfiedType = type; }
 
     private RectTransform _OrderCanvas;
+
+    private RectTransform _NextButton;
 
     private RectTransform _OrderButton;
 
     private RectTransform _CookCanvas;
+
+    private RectTransform _DialogueCanvas;
+
+    private RectTransform _SkipButton;
 
     public void getMeatFish(int index) 
     {
@@ -74,12 +89,10 @@ public class CookManager : MonoBehaviour
         RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
         CustomerData customer = CustomerManager.instance.currentCustomer;
 
-        bool requestSatisfied;
-
         if (food != null)
         {
             // °í°´ ¿ä±¸Á¶°Ç °Ë»ç
-            requestSatisfied = customer.CheckCondition(food);
+            _requestSatisfied = customer.CheckCondition(food);
 
             Debug.Log(food.recipeName);
             Debug.Log(requestSatisfied);
@@ -91,6 +104,7 @@ public class CookManager : MonoBehaviour
             {
                 GameManager.instance.reputation += ReputationRise;
                 CustomerManager.instance.orderText.text = "¸ÀÀÖ´Ù";
+                setSatisfiedType(Result.positive);
             }
             else
             {
@@ -99,29 +113,38 @@ public class CookManager : MonoBehaviour
                 {
                     GameManager.instance.reputation += ReputationRise;
                     CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    setSatisfiedType(Result.neutral);
                 }
 
                 else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
                 {
                     GameManager.instance.reputation += ReputationRise;
                     CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    setSatisfiedType(Result.neutral);
                 }
 
                 else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
                 {
                     GameManager.instance.reputation += ReputationRise;
                     CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    setSatisfiedType(Result.neutral);
                 }
 
                 else
                 {
                     CustomerManager.instance.orderText.text = "¸À¾ø´Ù";
+                    setSatisfiedType(Result.negative);
                 }
             }
 
+            DialogueManager.Instance.GetNextDialogue();
+
             _OrderCanvas.gameObject.SetActive(true);
+            _NextButton.gameObject.SetActive(false);
             _CookCanvas.gameObject.SetActive(false);
-            _OrderButton.gameObject.SetActive(true);
+            //_OrderButton.gameObject.SetActive(true);
+            _DialogueCanvas.gameObject.SetActive(true);
+            _SkipButton.gameObject.SetActive(true);
 
         }
         else 
@@ -177,10 +200,16 @@ public class CookManager : MonoBehaviour
 
         _OrderCanvas = GameManager.instance.Order_Canvas.GetComponent<RectTransform>();
         //Debug.Log(_OrderCanvas);
+        _NextButton = GameManager.instance.Order_Canvas.transform.GetChild(1).GetComponent<RectTransform>();
+        //Debug.Log(_NextButton);
         _OrderButton = GameManager.instance.Order_Canvas.transform.GetChild(2).GetComponent<RectTransform>();
         //Debug.Log(_OrderButton);
         _CookCanvas = GameManager.instance.Cook_Canvas.GetComponent<RectTransform>();
         //Debug.Log(_OrderCanvas);
+
+        _DialogueCanvas = GameManager.instance.Dialogue_Canvas.GetChild(0).GetComponent<RectTransform>();
+        _SkipButton = GameManager.instance.Dialogue_Canvas.GetChild(0).GetChild(3).GetComponent<RectTransform>();
+
     }
 
     // Update is called once per frame

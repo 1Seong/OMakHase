@@ -15,7 +15,7 @@ public class RecipeManager : MonoBehaviour
     }
 
     [SerializeField] private List<CategoryAndRecipes> categoryListDatas;
-
+    public List<CategoryAndRecipes> getCategoryListDatas () { return categoryListDatas; }
 
     [SerializeField]
     private Dictionary<(Ingredient.Base, Ingredient.Cook, Ingredient.MeatFish, Ingredient.Vege), RecipeData> recipeDictionary = new Dictionary<(Ingredient.Base, Ingredient.Cook, Ingredient.MeatFish, Ingredient.Vege), RecipeData>();

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using static Ingredient;
 
 
 public class CustomerManager : MonoBehaviour
@@ -49,7 +50,9 @@ public class CustomerManager : MonoBehaviour
 
         //test
 
-        GetOrder();
+        //GetRandomOrder();
+        
+        
         //Debug.Log(currentCustomer);
     }
 
@@ -136,6 +139,63 @@ public class CustomerManager : MonoBehaviour
         return result;
     }
 
+    // 수동으로 모두 지정하는 주문 함수들
+    public void GetOrder(Personality personality, Ingredient.MeatFish meatfish, Ingredient.Vege vege, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateMeatFish, bool hateVege, bool hateBase) {
+
+        currentCustomer = GetCustomer(personality, true);
+
+        currentCustomer.InitializeOrder();
+
+        currentCustomer.GetOrder(meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
+        currentPersonality = currentCustomer.personality;
+    }
+
+    public void GetOrder(Personality personality, Ingredient.Main main, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateCategory, bool hateBase)
+    {
+
+        currentCustomer = GetCustomer(personality, true);
+
+        currentCustomer.InitializeOrder();
+
+        currentCustomer.GetOrder(main, baseIngred, cook, hateCategory, hateBase);
+        currentPersonality = currentCustomer.personality;
+    }
+
+    public void GetOrder(Personality personality, Ingredient.MeatFish meatfish, Ingredient.Vege vege, CategoryData category, bool hateMeatFish, bool hateVege, bool hateBase)
+    {
+
+        currentCustomer = GetCustomer(personality, true);
+
+        currentCustomer.InitializeOrder();
+
+        currentCustomer.GetOrder(meatfish, vege, category, hateMeatFish, hateVege, hateBase);
+        currentPersonality = currentCustomer.personality;
+    }
+
+    public void GetOrder(Personality personality, Ingredient.Main main, CategoryData category, bool hateCategory, bool hateBase)
+    {
+
+        currentCustomer = GetCustomer(personality, true);
+
+        currentCustomer.InitializeOrder();
+
+        currentCustomer.GetOrder(main, category, hateCategory, hateBase);
+        currentPersonality = currentCustomer.personality;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// ////////////////////////////////////////////////////////////////////////////////
 
     // Method to get a random guest sprite
     Sprite GetRandomSprite()
@@ -152,7 +212,7 @@ public class CustomerManager : MonoBehaviour
 
 
     // Method to get a random guest order
-    public void GetOrder() {
+    public void GetRandomOrder() {
 
         Sprite randomSprite = GetRandomSprite();
         activeSpriteImage.sprite = randomSprite;
