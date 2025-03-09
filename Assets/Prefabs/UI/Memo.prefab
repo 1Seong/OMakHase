@@ -422,6 +422,7 @@ GameObject:
   - component: {fileID: 3424107060084550021}
   - component: {fileID: 4092022261171194089}
   - component: {fileID: 7200666049989744998}
+  - component: {fileID: 1021170503326898643}
   m_Layer: 5
   m_Name: Memo
   m_TagString: Untagged
@@ -502,3 +503,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   background: {fileID: 0}
   slideDuration: 0.4
+--- !u!114 &1021170503326898643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8906899986641936901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c77774f586868d4faf62a7c70fa2ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
