@@ -5,21 +5,21 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class UISlide : MonoBehaviour
 {
-    private RectTransform mainImage; // main image
+    protected RectTransform mainImage; // main image
     [SerializeField] private Image background; // background image
-    [SerializeField] private float speed = 5f;
+    [SerializeField] protected float speed = 5f;
 
-    private Vector2 hiddenPosition;
-    private Vector2 visiblePosition;
+    protected Vector2 hiddenPosition;
+    protected Vector2 visiblePosition;
 
     public bool isActing;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         mainImage = GetComponent<RectTransform>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         hiddenPosition = new Vector2(0f, -Screen.height);
         visiblePosition = Vector2.zero;
@@ -42,7 +42,7 @@ public class UISlide : MonoBehaviour
         StartCoroutine(SlideOut());
     }
 
-    private IEnumerator SlideIn()
+    protected virtual IEnumerator SlideIn()
     {
         var t = 0f;
         isActing = true;
@@ -62,7 +62,7 @@ public class UISlide : MonoBehaviour
         isActing = false;
     }
 
-    private IEnumerator SlideOut()
+    protected virtual IEnumerator SlideOut()
     {
         var t = 0f;
         isActing = true;

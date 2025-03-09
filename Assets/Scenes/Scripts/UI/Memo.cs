@@ -12,7 +12,7 @@ public class Memo : MonoBehaviour
 
     private void OnEnable()
     {
-        _textMesh.text = DialogueManager.Instance.currentDialogue;
+        //_textMesh.text = DialogueManager.Instance.currentDialogue;
     }
 
     private void OnDisable()
