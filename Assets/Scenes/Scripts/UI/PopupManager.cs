@@ -14,7 +14,7 @@ public class PopupManager : MonoBehaviour
 
     public void OnClickMain()
     {
-        if (CookManager.instance.meatfish != Ingredient.MeatFish.noCondition && CookManager.instance.vege != Ingredient.Vege.noCondition)
+        if (CookManager.instance.meatfish != Ingredient.MeatFish.none && CookManager.instance.vege != Ingredient.Vege.none)
             return;
 
         var popup = Instantiate(_popUpUI, transform).GetComponent<Popup>();

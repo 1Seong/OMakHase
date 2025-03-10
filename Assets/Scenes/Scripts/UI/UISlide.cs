@@ -48,7 +48,7 @@ public class UISlide : MonoBehaviour
         isActing = true;
         background.gameObject.SetActive(true);
 
-        while(mainImage.anchoredPosition.y < visiblePosition.y - 0.2f)
+        while(mainImage.anchoredPosition.y < visiblePosition.y - 1f)
         {
             mainImage.anchoredPosition += (visiblePosition - mainImage.anchoredPosition) * speed * Time.deltaTime;
             background.color = new Color(0, 0, 0, Mathf.Lerp(0, 0.5f, t)); 
@@ -67,7 +67,7 @@ public class UISlide : MonoBehaviour
         var t = 0f;
         isActing = true;
 
-        while(mainImage.anchoredPosition.y > hiddenPosition.y + 0.2f)
+        while(mainImage.anchoredPosition.y > hiddenPosition.y + 1f)
         {
             mainImage.anchoredPosition += (hiddenPosition - mainImage.anchoredPosition) * speed * Time.deltaTime;
             background.color = new Color(0, 0, 0, Mathf.Lerp(0.5f, 0, t));

@@ -45,6 +45,11 @@ public class CookManager : MonoBehaviour
 
     private RectTransform _SkipButton;
 
+    [SerializeField]
+    private GameObject _BaseNextButton;
+    [SerializeField]
+    private GameObject _CookNextButton;
+
     public void getMeatFish(int index) 
     {
         meatfish = GetDataFromEnum<Ingredient.MeatFish>(index);
@@ -58,11 +63,15 @@ public class CookManager : MonoBehaviour
     public void getBase(int index)
     {
         baseIngred = GetDataFromEnum<Ingredient.Base>(index);
+        if (!_BaseNextButton.activeSelf)
+            _BaseNextButton.SetActive(true);
     }
 
     public void getCook(int index)
     {
         cook = GetDataFromEnum<Ingredient.Cook>(index);
+        if (!_CookNextButton.activeSelf)
+            _CookNextButton.SetActive(true);
     }
 
     public void initCook() { 
