@@ -4,71 +4,62 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Popup : UISlide
 {
-    public enum Mode { SlideLerp, SlideExpon, Fade }
+    //public enum Mode { SlideLerp, SlideExpon, Fade }
 
     private Action PopIn;
     private Action PopOut;
 
     [SerializeField] private float _fadeTime = 0.3f;
     [SerializeField] private float _popDuration = 4.0f;
-    [SerializeField] private Mode _mode;
-    private Mode _Mode
+
+    private Image _image;
+    private TextMeshProUGUI _textMesh;
+
+    //[SerializeField] private Mode _mode;
+    //private Mode _Mode
+    //{
+    //    get => _mode;
+    //    set
+    //    {
+    //        _mode = value;
+    //        Debug.Log(_mode);
+    //        switch(_mode)
+    //        {
+    //            case Mode.SlideLerp:
+    //                Debug.Log("case slidelerp");
+    //                PopIn = () => StartCoroutine(SlideInLerp());
+    //                PopOut = () => StartCoroutine(SlideOutLerp());
+    //                break;
+    //            case Mode.SlideExpon:
+    //                PopIn = () => StartCoroutine(SlideIn());
+    //                PopOut = () => StartCoroutine(SlideOut());
+    //                break;
+    //            case Mode.Fade:
+    //                PopIn = () => StartCoroutine(FadeIn());
+    //                PopOut = () => StartCoroutine(FadeOut());
+    //                break;
+    //        }
+    //    }
+    //}
+
+    public void Init(int i)
     {
-        get => _mode;
-        set
+        switch (i)
         {
-            _mode = value;
-            Debug.Log(_mode);
-            switch(_mode)
-            {
-                case Mode.SlideLerp:
-                    Debug.Log("case slidelerp");
-                    PopIn = () => StartCoroutine(SlideInLerp());
-                    PopOut = () => StartCoroutine(SlideOutLerp());
-                    break;
-                case Mode.SlideExpon:
-                    PopIn = () => StartCoroutine(SlideIn());
-                    PopOut = () => StartCoroutine(SlideOut());
-                    break;
-                case Mode.Fade:
-                    PopIn = () => StartCoroutine(FadeIn());
-                    PopOut = () => StartCoroutine(FadeOut());
-                    break;
-            }
+            case 0:
+                _textMesh.text = "베이스 재료를 선택하지 않았습니다!";
+                break;
+            case 1:
+                _textMesh.text = "메인 재료를 선택하지 않았습니다!";
+                break;
+            case 2:
+                _textMesh.text = "요리 방식을 선택하지 않았습니다!";
+                break;
         }
-    }
-
-    public void OnClickBase()
-    {
-        if (CookManager.instance.baseIngred != Ingredient.Base.noCondition)
-            return;
-
-        var textMesh = GetComponentInChildren<TextMeshProUGUI>();
-        textMesh.text = "베이스 재료를 선택하지 않았습니다!";
-        PopInAndOut();
-    }
-
-    public void OnClickMain()
-    {
-        if (CookManager.instance.meatfish != Ingredient.MeatFish.noCondition || CookManager.instance.vege != Ingredient.Vege.noCondition)
-            return;
-
-        var textMesh = GetComponentInChildren<TextMeshProUGUI>();
-        textMesh.text = "주재료를 선택하지 않았습니다!";
-        PopInAndOut();
-    }
-
-    public void OnClickCook()
-    {
-        if (CookManager.instance.cook != Ingredient.Cook.noCondition)
-            return;
-
-        var textMesh = GetComponentInChildren<TextMeshProUGUI>();
-        textMesh.text = "주재료를 선택하지 않았습니다!";
         PopInAndOut();
     }
 
@@ -92,22 +83,36 @@ public class Popup : UISlide
     protected override void Awake()
     {
         mainImage = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
+        _textMesh = GetComponentInChildren<TextMeshProUGUI>();
 
-        _Mode = _mode;
-       
-        hiddenPosition = new Vector2(0f, 100f);
-        visiblePosition = mainImage.anchoredPosition;
+        PopIn = () => StartCoroutine(FadeIn());
+        PopOut = () => StartCoroutine(FadeOut());
+        //_Mode = _mode;
 
         // 패널을 숨김
-        if (_Mode == Mode.SlideLerp || _Mode == Mode.SlideExpon)
-            mainImage.anchoredPosition = hiddenPosition;
+        //if (_Mode == Mode.SlideLerp || _Mode == Mode.SlideExpon)
+        //    mainImage.anchoredPosition = hiddenPosition;
 
     }
 
     protected override void Start()
     {
-       
+
     }
+
+    //private IEnumerator PushDown()
+    //{
+    //    var targetPos = mainImage.anchoredPosition - new Vector2(0, mainImage.rect.height);
+    //    while (mainImage.anchoredPosition.y > targetPos.y + 0.2f)
+    //    {
+    //        mainImage.anchoredPosition += (targetPos - mainImage.anchoredPosition) * speed * Time.deltaTime;
+
+    //        yield return null;
+    //    }
+
+    //    mainImage.anchoredPosition = targetPos;
+    //}
 
     protected override IEnumerator SlideIn()
     {
@@ -184,14 +189,11 @@ public class Popup : UISlide
     private IEnumerator FadeIn()
     {
         isActing = true;
-       
-        var image = GetComponent<Image>();
-        var text = GetComponentInChildren<TextMeshProUGUI>();
 
         for (var i = 0f; i <= _fadeTime; i += Time.deltaTime)
         {
-            image.tintColor = new Color(0, 0, 0, Mathf.Lerp(0, 1f, i / _fadeTime));
-            text.color = new Color(0, 0, 0, Mathf.Lerp(0, 1f, i / _fadeTime));
+            _image.color = new Color(1f, 1f, 1f, Mathf.Lerp(0, 1f, i / _fadeTime));
+            _textMesh.color = new Color(0, 0, 0, Mathf.Lerp(0, 1f, i / _fadeTime));
 
             yield return null;
         }
@@ -204,13 +206,11 @@ public class Popup : UISlide
     private IEnumerator FadeOut()
     {
         isActing = true;
-        var image = GetComponent<Image>();
-        var text = GetComponentInChildren<TextMeshProUGUI>();
-
+      
         for (var i = 0f; i <= _fadeTime; i += Time.deltaTime)
         {
-            image.tintColor = new Color(0, 0, 0, Mathf.Lerp(1f, 0f, i / _fadeTime));
-            text.color = new Color(0, 0, 0, Mathf.Lerp(1f, 0f, i / _fadeTime));
+            _image.color = new Color(1f, 1f, 1f, Mathf.Lerp(1f, 0f, i / _fadeTime));
+            _textMesh.color = new Color(0, 0, 0, Mathf.Lerp(1f, 0f, i / _fadeTime));
 
             yield return null;
         }
@@ -218,5 +218,7 @@ public class Popup : UISlide
 
         
         isActing = false;
+
+        Destroy(gameObject);
     }
 }
