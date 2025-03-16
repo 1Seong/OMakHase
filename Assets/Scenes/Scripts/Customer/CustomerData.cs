@@ -116,8 +116,11 @@ public class CustomerData : RecipeBase
 
     public void GetOrder() 
     {
-
-        if (CustomerManager.instance.currentPersonality == Personality.Picky)
+        if (CustomerManager.instance.currentPersonality == Personality.Strict)
+        {
+            StrictOrder();
+        }
+        else if (CustomerManager.instance.currentPersonality == Personality.Picky)
         {
             PickyOrder();
         }
@@ -125,15 +128,16 @@ public class CustomerData : RecipeBase
         {
             NormalOrder();
         }
-        else if (CustomerManager.instance.currentPersonality == Personality.Generous)
+        else
         {
             GenerousOrder();
         }
-        else 
-        {
-            StrictOrder();
-        }
-        RandomHate();
+        //RandomHate();
+
+        _hateMeatFish = hateMeatFish;
+        _hateVege = hateVege;
+        _hateBase = hateBase;
+        _hateCategory = hateCategory;
     }
 
     // 수동으로 모두 지정하는 주문 함수들

@@ -586,6 +586,7 @@ MonoBehaviour:
   cook: 0
   _reputationRise: 0
   _requestSatisfied: 0
+  _satisfiedType: 0
 --- !u!1 &80728269
 GameObject:
   m_ObjectHideFlags: 0
@@ -4696,18 +4697,6 @@ MonoBehaviour:
       - m_Target: {fileID: 52828108}
         m_TargetAssemblyTypeName: CookManager, Assembly-CSharp
         m_MethodName: cookFood
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 52828108}
-        m_TargetAssemblyTypeName: CookManager, Assembly-CSharp
-        m_MethodName: initCook
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12405,8 +12394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c788a0fa46d1c4fa9a2cb44f955f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StoryCSV: {fileID: 4900000, guid: 374a5d304c5d1aa4e88b26de4b1c1305, type: 3}
-  RandomCSV: {fileID: 4900000, guid: af08e78030a0fd1489202b057cd17bdc, type: 3}
+  StoryCSV: {fileID: 4900000, guid: 7c093f18b58b7864aa7b4b93b0caa156, type: 3}
+  RandomCSV: {fileID: 4900000, guid: e82703f3656bc5a4e8b38b5d4bf07af5, type: 3}
   nameUI: {fileID: 599945859}
   dialogueUI: {fileID: 381425572}
   nextUI: {fileID: 805522679}

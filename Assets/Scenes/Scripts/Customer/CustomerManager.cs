@@ -139,10 +139,20 @@ public class CustomerManager : MonoBehaviour
         return result;
     }
 
-    // 수동으로 모두 지정하는 주문 함수들
-    public void GetOrder(Personality personality, Ingredient.MeatFish meatfish, Ingredient.Vege vege, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateMeatFish, bool hateVege, bool hateBase) {
+    // 자동으로 지정하는 주문 함수들
+    public void GetOrder(Personality personality) {
+        currentCustomer = GetCustomer(personality, false);
 
-        currentCustomer = GetCustomer(personality, true);
+        currentCustomer.InitializeOrder();
+
+        currentPersonality = currentCustomer.personality;
+        currentCustomer.GetOrder();
+    }
+
+    // 수동으로 모두 지정하는 주문 함수들
+    public void GetOrder(Personality personality, bool isSpecial, Ingredient.MeatFish meatfish, Ingredient.Vege vege, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateMeatFish, bool hateVege, bool hateBase) {
+
+        currentCustomer = GetCustomer(personality, isSpecial);
 
         currentCustomer.InitializeOrder();
 
@@ -150,10 +160,10 @@ public class CustomerManager : MonoBehaviour
         currentPersonality = currentCustomer.personality;
     }
 
-    public void GetOrder(Personality personality, Ingredient.Main main, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateCategory, bool hateBase)
+    public void GetOrder(Personality personality, bool isSpecial, Ingredient.Main main, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateCategory, bool hateBase)
     {
 
-        currentCustomer = GetCustomer(personality, true);
+        currentCustomer = GetCustomer(personality, isSpecial);
 
         currentCustomer.InitializeOrder();
 
@@ -161,10 +171,10 @@ public class CustomerManager : MonoBehaviour
         currentPersonality = currentCustomer.personality;
     }
 
-    public void GetOrder(Personality personality, Ingredient.MeatFish meatfish, Ingredient.Vege vege, CategoryData category, bool hateMeatFish, bool hateVege, bool hateBase)
+    public void GetOrder(Personality personality, bool isSpecial, Ingredient.MeatFish meatfish, Ingredient.Vege vege, CategoryData category, bool hateMeatFish, bool hateVege, bool hateBase)
     {
 
-        currentCustomer = GetCustomer(personality, true);
+        currentCustomer = GetCustomer(personality, isSpecial);
 
         currentCustomer.InitializeOrder();
 
@@ -172,16 +182,18 @@ public class CustomerManager : MonoBehaviour
         currentPersonality = currentCustomer.personality;
     }
 
-    public void GetOrder(Personality personality, Ingredient.Main main, CategoryData category, bool hateCategory, bool hateBase)
+    public void GetOrder(Personality personality, bool isSpecial, Ingredient.Main main, CategoryData category, bool hateCategory, bool hateBase)
     {
 
-        currentCustomer = GetCustomer(personality, true);
+        currentCustomer = GetCustomer(personality, isSpecial);
 
         currentCustomer.InitializeOrder();
 
         currentCustomer.GetOrder(main, category, hateCategory, hateBase);
         currentPersonality = currentCustomer.personality;
     }
+
+
 
 
 
@@ -211,7 +223,7 @@ public class CustomerManager : MonoBehaviour
     }
 
 
-    // Method to get a random guest order
+    // Method to get a random guest order - 이제 사용 안하는 코드
     public void GetRandomOrder() {
 
         Sprite randomSprite = GetRandomSprite();
@@ -247,7 +259,7 @@ public class CustomerManager : MonoBehaviour
         orderText.text = "내가 먹고 싶은 요리는\n";
 
         //currentCustomer.RandomOrder();
-        currentCustomer.GetOrder();
+        //currentCustomer.GetOrder();
         currentPersonality = currentCustomer.personality;
 
         if (currentCustomer.mainIngredCategory == Ingredient.Main.meat)

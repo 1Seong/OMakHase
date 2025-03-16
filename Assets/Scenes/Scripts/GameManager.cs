@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     // 날짜 별 고객 수 목록
     [SerializeField]
     private List<int> customerPerDay;
+    public int GetCustomerNum(int index) { return customerPerDay[index]; }
 
     // 캔버스 ui
     [SerializeField]

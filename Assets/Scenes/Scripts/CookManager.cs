@@ -145,7 +145,7 @@ public class CookManager : MonoBehaviour
             //_OrderButton.gameObject.SetActive(true);
             _DialogueCanvas.gameObject.SetActive(true);
             _SkipButton.gameObject.SetActive(true);
-
+            initCook();
         }
         else 
         {
