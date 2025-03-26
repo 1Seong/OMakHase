@@ -5,6 +5,7 @@ using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 using UnityEngine.XR;
@@ -106,7 +107,8 @@ public class DialogueManager : MonoBehaviour
     };
 
     // 현재 랜덤 대사 출력 중?
-    private bool isRandom = false;
+    private bool _isRandom = false;
+    public bool IsRandom { get => _isRandom; }
 
     // 랜덤 대사 인덱스
     private int indexForRandom = 0;
@@ -157,7 +159,7 @@ public class DialogueManager : MonoBehaviour
 
         nameUI.text = dialogueDic[currentID].name;
         dialogueUI.text = dialogueDic[currentID].line.Replace('`', ','); ;
-        Debug.Log(dialogueDic[currentID].line);
+        //Debug.Log(dialogueDic[currentID].line);
 
 
 
@@ -175,80 +177,86 @@ public class DialogueManager : MonoBehaviour
 
         string[] tmp = _currentID.Split(new char[] { '_' });
 
-        if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOD"))
+        //else
         {
-
-            _Day = int.Parse(tmp[0].Substring(1)) + 1;
-
-            // _currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", 1) + "_" + "01" + "_";
-            _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
-
-            if (_currentID.Contains("O"))
+            if (_isRandom == false)
             {
-                directOrder = true;
+                if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOD"))
+                {
+
+                    //_Day = int.Parse(tmp[0].Substring(1)) + 1;
+
+                    // _currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", 1) + "_" + "01" + "_";
+                    _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
+
+                    if (_currentID.Contains("O"))
+                    {
+                        directOrder = true;
+                    }
+
+                    if (_currentID.Split(new char[] { '_' })[1] != "C00")
+                        GameManager.instance.nextCustomer();
+                }
+
+                else if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOO"))
+                {
+
+                    // _Customer = int.Parse(tmp[1].Substring(1)) + 1;
+
+                    //_currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", _Customer) + "_" + "01" + "_";
+                    _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
+
+                    if (_currentID.Contains("O"))
+                    {
+                        directOrder = true;
+                    }
+
+                    if (_currentID.Split(new char[] { '_' })[1] != "C00")
+                        GameManager.instance.nextCustomer();
+                }
+                else
+                    _currentID = dialogueDic[currentID].nextDialogueID;
             }
 
-            GameManager.instance.nextCustomer();
-
-        }
-
-        else if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOO"))
-        {
-
-            _Customer = int.Parse(tmp[1].Substring(1)) + 1;
-
-            //_currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", _Customer) + "_" + "01" + "_";
-            _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
-
-            if (_currentID.Contains("O"))
-            {
-                directOrder = true;
-            }
-
-            GameManager.instance.nextCustomer();
-
-        }
-
-        else
-        {
-            if(isRandom == false)
-                _currentID = dialogueDic[currentID].nextDialogueID;
-
-            else if (isRandom == true && indexForRandom >= randomDialogues.Length)
+            else if (_isRandom == true && indexForRandom >= randomDialogues.Length)
             {
                 indexForRandom = 0;
-                isRandom = false;
+                _isRandom = false;
                 _currentID = backID;
+
+                if (_currentID.Split(new char[] { '_' })[1] != "C00")
+                    GameManager.instance.nextCustomer();
 
                 nextUI.gameObject.SetActive(false);
                 skipUI.gameObject.SetActive(true);
             }
 
             // 랜덤 대사 가져와야 할 때
-            if (currentID.Contains("GTR") && isRandom == false)
+            if (currentID.Contains("GTR") && _isRandom == false)
             {
-                isRandom = true;
-                int len = int.Parse(_currentID.Split(new char[] { '_' })[1]);
-                backID = _currentID.Split(new char[] { '_' })[2].Replace('~', '_');
+                _isRandom = true;
+                int len = GameManager.instance.GetCustomerNum(GameManager.instance.day)-GameManager.instance.customerNum;
+                Debug.Log(len + "명 랜덤 가져옴");
+
+                backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
                 randomDialogues = new RandomDialogue[len];
                 for (int i = 0; i < len; i++)
                 {
                     int randomIndex = UnityEngine.Random.Range(0, randomDialogueDic.Count);
-                    Debug.Log(randomDialogueDic[randomIndex].line);
+                    Debug.Log(randomDialogueDic[randomIndex].line + " | " + System.Guid.NewGuid());
                     randomDialogues[i] = randomDialogueDic[randomIndex];
                 }
 
                 Debug.Log("랜덤 대사 가져옴!");
             }
 
-            if (isRandom == false || directOrder == true)
+            if (_isRandom == false || directOrder == true)
             {
                 directOrder = false;
 
                 // 주문 ui 활성화
                 if (_currentID.Split(new char[] { '_' })[2] == "O")
                 {
-                    Debug.Log("!!!!!!!!!!!!!!!");
                     nextUI.gameObject.SetActive(true);
 
                     string desireMeatfish = dialogueDic[currentID].desireMain.Contains("&&") ? dialogueDic[currentID].desireMain.Split("&&")[0] : "";
@@ -258,8 +266,9 @@ public class DialogueManager : MonoBehaviour
 
                     // 성격
                     Personality personality = personalityMap.ContainsKey(desirePersonality) ? personalityMap[desirePersonality] : Personality.Generous; //성격이 지정되어 있지 않으며 기본값으로 Generous
-                                                                                                                                                        // 카테고리
+                                                                                                                                                        // 카테고
                     CategoryData category = categoryMap.ContainsKey(desireCategory) ? categoryMap[desireCategory] : null;
+                    //Debug.Log(category);
 
                     // 재료 선택
                     Ingredient.MeatFish meatfish = meatFishMap.ContainsKey(desireMeatfish) ? meatFishMap[desireMeatfish] : Ingredient.MeatFish.noCondition;
@@ -275,17 +284,58 @@ public class DialogueManager : MonoBehaviour
                     bool hateCategory = false;
 
                     // 임시
-                    CustomerManager.instance.GetOrder(personality, true, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
-                    /*
-                    if (meatfish != Ingredient.MeatFish.noCondition )
+                    if (meatfish != Ingredient.MeatFish.noCondition || vege != Ingredient.Vege.noCondition)
                     {
-                        CustomerManager.instance.GetOrder(personality, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
+                        if (baseIngred != Ingredient.Base.noCondition || cook != Ingredient.Cook.noCondition)
+                        {
+                            Debug.Log("01");
+                            CustomerManager.instance.GetOrder(personality, true, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
+                        }
+
+                        else if (category != null)
+                        {
+                            Debug.Log("02");
+                            CustomerManager.instance.GetOrder(personality, true, meatfish, vege, category, hateMeatFish, hateVege, hateBase);
+                        }
+
+                        else
+                        {
+                            Debug.Log("03");
+                            CustomerManager.instance.GetOrder(personality, true, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
+                        }
                     }
+
+                    else if (Main != Ingredient.Main.noCondition)
+                    {
+                        if (baseIngred != Ingredient.Base.noCondition || cook != Ingredient.Cook.noCondition)
+                        {
+                            Debug.Log("04");
+                            CustomerManager.instance.GetOrder(personality, true, Main, baseIngred, cook, hateCategory, hateBase);
+                        }
+                        else if (category != null)
+                        {
+                            Debug.Log("05");
+                            CustomerManager.instance.GetOrder(personality, true, Main, category, hateCategory, hateBase);
+                        }
+
+                        else
+                        {
+                            Debug.Log("06");
+                            CustomerManager.instance.GetOrder(personality, true, Main, baseIngred, cook, hateCategory, hateBase);
+                        }
+                    }
+
+                    else if (category != null)
+                    {
+                        Debug.Log("07");
+                        CustomerManager.instance.GetOrder(personality, true, Main, category, hateCategory, hateBase);
+                    }
+
                     else
                     {
-                        CustomerManager.instance.GetOrder(personality, Main, baseIngred, cook, hateCategory, hateBase);
+                        Debug.Log("오류");
+                        CustomerManager.instance.GetOrder(personality, true, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
                     }
-                    */
 
                     skipUI.gameObject.SetActive(false);
                 }
@@ -306,7 +356,7 @@ public class DialogueManager : MonoBehaviour
                 }
 
 
-                if (currentID.Contains("R"))
+                if (currentID.Contains("R") && !currentID.Contains("GTR"))
                 {
                     string temp = currentID;
                     // 다중 반응 처리
@@ -340,6 +390,7 @@ public class DialogueManager : MonoBehaviour
 
                         nameUI.text = dialogueDic[currentID].name;
                         dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
+
                         return;
                     }
                     // 단일 반응 처리
@@ -351,14 +402,17 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        if (isRandom == false)
+        if (_isRandom == false)
         {
             nameUI.text = dialogueDic[currentID].name;
             dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
-            Debug.Log(dialogueDic[currentID].line);
+            //Debug.Log(dialogueDic[currentID].line);
         }
 
         else {
+            string currentDialogue = randomDialogues[indexForRandom].line;
+
+            CustomerManager.instance.currentCustomer.InitializeOrder();
             string desireMeatfish = "";
             string desireVege = "";
             string desireCategory = randomDialogues[indexForRandom].desireCategory;
@@ -416,11 +470,15 @@ public class DialogueManager : MonoBehaviour
                             desireCategory = "면요리";
                         }
 
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("$$", desireMeatfish);
+                        currentDialogue = currentDialogue.Replace("$$", desireMeatfish);
 
-                        if (randomDialogues[indexForRandom].desireMain[0] == '!') {
+                        if ((desireMeatfish == "육류" || desireMeatfish == "생선류") && randomDialogues[indexForRandom].desireMain[0].Equals('!')) {
+                            hateCategory = true;
+                        }
+                        else if (randomDialogues[indexForRandom].desireMain[0].Equals('!')) {
                             hateMeatFish = true;
                         }
+
                     }
                     else {
                         desireVege = noBatchimVege[UnityEngine.Random.Range(0, noBatchimVege.Length)];
@@ -438,8 +496,12 @@ public class DialogueManager : MonoBehaviour
                             desireCategory = "면요리";
                         }
 
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("$$", desireVege);
-                        if (randomDialogues[indexForRandom].desireMain[0] == '!')
+                        currentDialogue = currentDialogue.Replace("$$", desireVege);
+                        if ((desireVege == "과채류") && randomDialogues[indexForRandom].desireMain[0].Equals('!'))
+                        {
+                            hateCategory = true;
+                        }
+                        else if (randomDialogues[indexForRandom].desireMain[0].Equals('!'))
                         {
                             hateVege = true;
                         }
@@ -464,8 +526,8 @@ public class DialogueManager : MonoBehaviour
                         desireCategory = "면요리";
                     }
 
-                    randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("%%", desireVege);
-                    if (randomDialogues[indexForRandom].desireMain[0] == '!')
+                    currentDialogue = currentDialogue.Replace("%%", desireVege);
+                    if (randomDialogues[indexForRandom].desireMain[0].Equals('!'))
                     {
                         hateVege = true;
                     }
@@ -488,7 +550,7 @@ public class DialogueManager : MonoBehaviour
                     {
                         desireCategory =  noBatchimBase[UnityEngine.Random.Range(0, noBatchimBase.Length)];
 
-                        if (randomDialogues[indexForRandom].desireCategory[0] == '!')
+                        if (randomDialogues[indexForRandom].desireCategory[0].Equals('!'))
                         {
                             hateBase = true;
                         }
@@ -501,19 +563,21 @@ public class DialogueManager : MonoBehaviour
                     else
                     {
                         desireCategory = noBatchimCategory[UnityEngine.Random.Range(0, noBatchimCategory.Length)];
-                        if (randomDialogues[indexForRandom].desireCategory[0] == '!')
+                        /*
+                        if (randomDialogues[indexForRandom].desireCategory[0].Equals('!'))
                         {
                             hateCategory = true;
                         }
+                        */
                     }
 
-                    randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("##", desireCategory);
+                    currentDialogue = currentDialogue.Replace("##", desireCategory);
                     break;
 
                 case "@@":
                 case "!@@":
                     desireCategory = withBatchimCategory[UnityEngine.Random.Range(0, withBatchimCategory.Length)];
-                    randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("@@", desireCategory);
+                    currentDialogue = currentDialogue.Replace("@@", desireCategory);
                     break;
 
                 default:
@@ -529,37 +593,37 @@ public class DialogueManager : MonoBehaviour
                 {
                     case 0:
                         desireMeatfish = noBatchimMeatFish[UnityEngine.Random.Range(0, noBatchimMeatFish.Length)];
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("**", desireMeatfish);
+                        currentDialogue = currentDialogue.Replace("**", desireMeatfish);
                         break;
 
                     case 1:
                         desireVege = noBatchimVege[UnityEngine.Random.Range(0, noBatchimVege.Length)];
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("**", desireVege);
+                        currentDialogue = currentDialogue.Replace("**", desireVege);
                         break;
 
                     case 2:
                         desireVege = withBatchimVege[UnityEngine.Random.Range(0, withBatchimVege.Length)];
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("**", desireVege);
+                        currentDialogue = currentDialogue.Replace("**", desireVege);
                         break;
 
                     case 3:
                         desireCategory = noBatchimBase[UnityEngine.Random.Range(0, noBatchimBase.Length)];
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("**", desireCategory);
+                        currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
                     case 4:
                         desireCategory = noBatchimCook[UnityEngine.Random.Range(0, noBatchimCook.Length)];
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("**", desireCategory);
+                        currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
                     case 5:
                         desireCategory = noBatchimCategory[UnityEngine.Random.Range(0, noBatchimCategory.Length)];
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("**", desireCategory);
+                        currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
                     case 6:
                         desireCategory = withBatchimCategory[UnityEngine.Random.Range(0, withBatchimCategory.Length)];
-                        randomDialogues[indexForRandom].line = randomDialogues[indexForRandom].line.Replace("**", desireCategory);
+                        currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
                     default:
@@ -620,22 +684,43 @@ public class DialogueManager : MonoBehaviour
                 }
             }
 
+            else if (category != null) {
+                Debug.Log(7);
+                CustomerManager.instance.GetOrder(personality, false, Main, category, hateCategory, hateBase);
+            }
+
             else
             {
                 Debug.Log("오류");
                 CustomerManager.instance.GetOrder(personality, false, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
             }
-
+            
+            Debug.Log(desireMeatfish + " | " + System.Guid.NewGuid());
+            Debug.Log(desireVege + " | " + System.Guid.NewGuid());
+            Debug.Log(desireCategory + " | " + System.Guid.NewGuid());
+            Debug.Log(hateMeatFish + " | " + System.Guid.NewGuid());
+            Debug.Log(hateVege + " | " + System.Guid.NewGuid());
+            Debug.Log(hateBase + " | " + System.Guid.NewGuid());
+            Debug.Log(hateCategory + " | " + System.Guid.NewGuid());
+            
             nameUI.text = "손님";
-            dialogueUI.text = randomDialogues[indexForRandom].line.Replace('`', ',');
+            dialogueUI.text = currentDialogue.Replace('`', ',');
             nextUI.gameObject.SetActive(true);
             skipUI.gameObject.SetActive(false);
 
+            Debug.Log("********* " + System.Guid.NewGuid());
+            Debug.Log("indexForRandom: " + indexForRandom + " | " + System.Guid.NewGuid());
+            Debug.Log("dialogueUI.text: " + dialogueUI.text + " | " + System.Guid.NewGuid());
+            Debug.Log("********* " + System.Guid.NewGuid());
+
+
             indexForRandom++;
             _Customer++;
+            if (_currentID.Split(new char[] { '_' })[1] != "C00")
+                GameManager.instance.nextCustomer();
+
 
         }
-
     }
 
     public void GetNextDialogueMultiple(string index)

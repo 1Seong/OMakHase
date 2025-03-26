@@ -94,8 +94,8 @@ public class CookManager : MonoBehaviour
             // 고객 요구조건 검사
             _requestSatisfied = customer.CheckCondition(food);
 
-            Debug.Log(food.recipeName);
-            Debug.Log(requestSatisfied);
+            //Debug.Log(food.recipeName);
+            //Debug.Log(requestSatisfied);
 
             _reputationRise = judge(food);
 
@@ -140,11 +140,16 @@ public class CookManager : MonoBehaviour
             DialogueManager.Instance.GetNextDialogue();
 
             _OrderCanvas.gameObject.SetActive(true);
-            _NextButton.gameObject.SetActive(false);
+
             _CookCanvas.gameObject.SetActive(false);
             //_OrderButton.gameObject.SetActive(true);
             _DialogueCanvas.gameObject.SetActive(true);
-            _SkipButton.gameObject.SetActive(true);
+
+            if (DialogueManager.Instance.IsRandom != true) {
+                _NextButton.gameObject.SetActive(false);
+                _SkipButton.gameObject.SetActive(true);
+            }
+
             initCook();
         }
         else 

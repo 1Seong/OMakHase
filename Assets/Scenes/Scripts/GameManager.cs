@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
         if (customerNum < customerPerDay[day])
         {
             customerNum++;
@@ -81,4 +82,5 @@ public class GameManager : MonoBehaviour
             customerNum = 1;
         }
     }
+
 }
