@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -349,9 +350,18 @@ public class DialogueManager : MonoBehaviour
                     skipUI.gameObject.SetActive(false);
 
                     GameObject firstChoose = multipleskipUI.GetChild(0).gameObject.GetComponent<RectTransform>().GetChild(0).gameObject;
-                    firstChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[0]].line;
+                    if (dialogueDic[chooseTmp[0]].line[0] == '@') {
+                        firstChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[0]].line.Substring(1, dialogueDic[chooseTmp[0]].line.Length - 1);
+                    }
+                    else
+                        firstChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[0]].line;
                     GameObject secondChoose = multipleskipUI.GetChild(1).gameObject.GetComponent<RectTransform>().GetChild(0).gameObject;
-                    secondChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[1]].line;
+                    if (dialogueDic[chooseTmp[1]].line[0] == '%')
+                    {
+                        secondChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[1]].line.Substring(1, dialogueDic[chooseTmp[1]].line.Length - 1);
+                    }
+                    else
+                        secondChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[1]].line;
                     return;
                 }
 
@@ -404,6 +414,21 @@ public class DialogueManager : MonoBehaviour
 
         if (_isRandom == false)
         {
+            // 플래그 처리가 필요할 때면 플래그를 처리
+            if (_currentID.Contains("@@"))
+            {
+                string[] chooseTmp = _currentID.Split("@@");
+
+                if (GameManager.instance.sneakyAdsFlag == true)
+                {
+                    _currentID = chooseTmp[0];
+                }
+                if (GameManager.instance.sneakyAdsFlag == false)
+                {
+                    _currentID = chooseTmp[1];
+                }
+            }
+
             nameUI.text = dialogueDic[currentID].name;
             dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
             //Debug.Log(dialogueDic[currentID].line);
@@ -725,6 +750,7 @@ public class DialogueManager : MonoBehaviour
 
     public void GetNextDialogueMultiple(string index)
     {
+
         string[] chooseTmp = _currentID.Split("&&");
 
         if (index == "a")
@@ -732,7 +758,16 @@ public class DialogueManager : MonoBehaviour
         if (index == "b")
             _currentID = chooseTmp[1];
 
+        // 플래그를 선택하는 선택지에 따라 플래그를 설정
+        if (dialogueDic[_currentID].line.Contains('@'))
+            GameManager.instance.sneakyAdsFlag = true;
+
+        if (dialogueDic[_currentID].line.Contains('%'))
+            GameManager.instance.sneakyAdsFlag = false;
+        
+
         multipleskipUI.gameObject.SetActive(false);
         skipUI.gameObject.SetActive(true);
+
     }
 }

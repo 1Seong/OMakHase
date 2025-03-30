@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header("PlayerInfo")]
     // 플레이어 이름
     public string player_name;
     // 날짜
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public int GetCustomerNum(int index) { return customerPerDay[index]; }
 
     // 캔버스 ui
+    [Header("UI")]
     [SerializeField]
     private RectTransform _Order_Canvas;
     public RectTransform Order_Canvas { get => _Order_Canvas; }
@@ -45,6 +47,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private RectTransform _Dialogue_Canvas;
     public RectTransform Dialogue_Canvas { get => _Dialogue_Canvas; }
+
+    [Header("Flags")]
+    public bool sneakyAdsFlag;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -81,6 +86,11 @@ public class GameManager : MonoBehaviour
             day++;
             customerNum = 1;
         }
+    }
+
+    public void setFlag(bool flag, bool Bool)
+    {
+        flag = Bool;
     }
 
 }

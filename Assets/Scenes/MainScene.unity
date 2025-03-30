@@ -12394,7 +12394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c788a0fa46d1c4fa9a2cb44f955f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StoryCSV: {fileID: 4900000, guid: dd764b7b146e2534295cd3958ed90f6a, type: 3}
+  StoryCSV: {fileID: 4900000, guid: 9e34ae5d9fcea704297793d6fe9ca776, type: 3}
   RandomCSV: {fileID: 4900000, guid: 39b5f91d802863f4696aabb6d285bc03, type: 3}
   nameUI: {fileID: 599945859}
   dialogueUI: {fileID: 381425572}
