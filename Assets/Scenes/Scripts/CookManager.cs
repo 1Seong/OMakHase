@@ -99,45 +99,48 @@ public class CookManager : MonoBehaviour
 
             _reputationRise = judge(food);
 
-            // 평판 증감
-            if (requestSatisfied)
-            {
-                GameManager.instance.reputation += ReputationRise;
-                CustomerManager.instance.orderText.text = "맛있다";
-                setSatisfiedType(Result.positive);
-            }
-            else
-            {
-
-                if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
+            if (GameManager.instance.day != 0) {
+                // 평판 증감
+                if (requestSatisfied)
                 {
                     GameManager.instance.reputation += ReputationRise;
-                    CustomerManager.instance.orderText.text = "먹을만 하다";
-                    setSatisfiedType(Result.neutral);
+                    CustomerManager.instance.orderText.text = "맛있다";
+                    setSatisfiedType(Result.positive);
                 }
-
-                else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
-                {
-                    GameManager.instance.reputation += ReputationRise;
-                    CustomerManager.instance.orderText.text = "먹을만 하다";
-                    setSatisfiedType(Result.neutral);
-                }
-
-                else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
-                {
-                    GameManager.instance.reputation += ReputationRise;
-                    CustomerManager.instance.orderText.text = "먹을만 하다";
-                    setSatisfiedType(Result.neutral);
-                }
-
                 else
                 {
-                    CustomerManager.instance.orderText.text = "맛없다";
-                    setSatisfiedType(Result.negative);
+
+                    if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
+                    {
+                        GameManager.instance.reputation += ReputationRise;
+                        CustomerManager.instance.orderText.text = "먹을만 하다";
+                        setSatisfiedType(Result.neutral);
+                    }
+
+                    else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
+                    {
+                        GameManager.instance.reputation += ReputationRise;
+                        CustomerManager.instance.orderText.text = "먹을만 하다";
+                        setSatisfiedType(Result.neutral);
+                    }
+
+                    else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
+                    {
+                        GameManager.instance.reputation += ReputationRise;
+                        CustomerManager.instance.orderText.text = "먹을만 하다";
+                        setSatisfiedType(Result.neutral);
+                    }
+
+                    else
+                    {
+                        CustomerManager.instance.orderText.text = "맛없다";
+                        setSatisfiedType(Result.negative);
+                    }
                 }
             }
 
             DialogueManager.Instance.GetNextDialogue();
+            Debug.Log("다음 대사 가져옴???");
 
             _OrderCanvas.gameObject.SetActive(true);
 
@@ -145,9 +148,16 @@ public class CookManager : MonoBehaviour
             //_OrderButton.gameObject.SetActive(true);
             _DialogueCanvas.gameObject.SetActive(true);
 
-            if (DialogueManager.Instance.IsRandom != true) {
-                _NextButton.gameObject.SetActive(false);
-                _SkipButton.gameObject.SetActive(true);
+            // GTR 다음 바로 오더가 올 때, 주문 ui 꺼지지 않도록 함
+            string tmp1 = DialogueManager.Instance.currentID;
+            string tmp2 = DialogueManager.Instance.pastID.Replace('~', '_');
+            if (!(!tmp1.Contains("GTR") && tmp1.Contains("O") && tmp2.Contains(tmp1))) {
+                if (DialogueManager.Instance.IsRandom != true)
+                {
+
+                    _NextButton.gameObject.SetActive(false);
+                    _SkipButton.gameObject.SetActive(true);
+                }
             }
 
             initCook();

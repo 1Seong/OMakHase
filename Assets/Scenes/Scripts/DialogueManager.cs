@@ -49,6 +49,10 @@ public class DialogueManager : MonoBehaviour
     private string _Multiple;
     public string Multiple { get { return _Multiple; } }
 
+    [SerializeField]
+    private string _pastID;
+    public string pastID { get { return _pastID; } }
+
     [SerializeField] 
     private string _currentID;
     public string currentID { get { return _currentID; } }
@@ -62,7 +66,7 @@ public class DialogueManager : MonoBehaviour
         { "돼지고기", Ingredient.MeatFish.pork },
         { "참치", Ingredient.MeatFish.tuna },
         { "닭고기", Ingredient.MeatFish.chicken },
-        { "연어", Ingredient.MeatFish.tuna },
+        { "연어", Ingredient.MeatFish.salmon },
         { "소고기", Ingredient.MeatFish.beef },
         { "없음", Ingredient.MeatFish.none }
     };
@@ -108,6 +112,7 @@ public class DialogueManager : MonoBehaviour
     };
 
     // 현재 랜덤 대사 출력 중?
+    [SerializeField]
     private bool _isRandom = false;
     public bool IsRandom { get => _isRandom; }
 
@@ -175,7 +180,7 @@ public class DialogueManager : MonoBehaviour
 
     public void GetNextDialogue()
     {
-
+        _pastID = _currentID;
         string[] tmp = _currentID.Split(new char[] { '_' });
 
         //else
@@ -195,7 +200,7 @@ public class DialogueManager : MonoBehaviour
                         directOrder = true;
                     }
 
-                    if (_currentID.Split(new char[] { '_' })[1] != "C00")
+                    if (_pastID.Split(new char[] { '_' })[1] != "C00")
                         GameManager.instance.nextCustomer();
                 }
 
@@ -212,7 +217,7 @@ public class DialogueManager : MonoBehaviour
                         directOrder = true;
                     }
 
-                    if (_currentID.Split(new char[] { '_' })[1] != "C00")
+                    if (_pastID.Split(new char[] { '_' })[1] != "C00")
                         GameManager.instance.nextCustomer();
                 }
                 else
@@ -225,21 +230,40 @@ public class DialogueManager : MonoBehaviour
                 _isRandom = false;
                 _currentID = backID;
 
-                if (_currentID.Split(new char[] { '_' })[1] != "C00")
+
+                if (_pastID.Split(new char[] { '_' })[1] != "C00")
                     GameManager.instance.nextCustomer();
 
-                nextUI.gameObject.SetActive(false);
-                skipUI.gameObject.SetActive(true);
+                if (_currentID.Contains("O"))
+                {
+                    directOrder = true;
+                }
+                else {
+                    nextUI.gameObject.SetActive(false);
+                    skipUI.gameObject.SetActive(true);
+                }
+
             }
 
             // 랜덤 대사 가져와야 할 때
             if (currentID.Contains("GTR") && _isRandom == false)
             {
                 _isRandom = true;
-                int len = GameManager.instance.GetCustomerNum(GameManager.instance.day)-GameManager.instance.customerNum;
+                backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
+
+                int len;
+
+                string tmp1 = pastID.Split(new char[] { '_' })[1];
+                string tmp2 = backID.Split(new char[] { '_' })[1];
+                if (int.Parse(tmp1.Substring(1, tmp1.Length - 1)) < int.Parse(tmp2.Substring(1, tmp2.Length - 1)))
+                {
+                    len = int.Parse(tmp2.Substring(1, tmp2.Length - 1)) - int.Parse(tmp1.Substring(1, tmp1.Length - 1)) - 1;
+                }
+                else
+                    len = GameManager.instance.GetCustomerNum(GameManager.instance.day)-GameManager.instance.customerNum;
                 Debug.Log(len + "명 랜덤 가져옴");
 
-                backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
+
                 randomDialogues = new RandomDialogue[len];
                 for (int i = 0; i < len; i++)
                 {
@@ -248,13 +272,24 @@ public class DialogueManager : MonoBehaviour
                     randomDialogues[i] = randomDialogueDic[randomIndex];
                 }
 
+
+                if (_currentID.Contains("O"))
+                {
+                    directOrder = true;
+                    //nextUI.gameObject.SetActive(true);
+                    //skipUI.gameObject.SetActive(false);
+                }
+                Debug.Log(directOrder);
                 Debug.Log("랜덤 대사 가져옴!");
             }
 
-            if (_isRandom == false || directOrder == true)
-            {
-                directOrder = false;
 
+            if ((_isRandom == false || directOrder == true) && !(_currentID.Contains("GTR")))
+            {
+
+
+                directOrder = false;
+                Debug.Log(_currentID);
                 // 주문 ui 활성화
                 if (_currentID.Split(new char[] { '_' })[2] == "O")
                 {
@@ -334,7 +369,7 @@ public class DialogueManager : MonoBehaviour
 
                     else
                     {
-                        Debug.Log("오류");
+                        Debug.Log("08");
                         CustomerManager.instance.GetOrder(personality, true, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
                     }
 
@@ -365,9 +400,10 @@ public class DialogueManager : MonoBehaviour
                     return;
                 }
 
-
-                if (currentID.Contains("R") && !currentID.Contains("GTR"))
+                if (currentID.Contains("_R_"))
+                //if (currentID.Contains("R") && !currentID.Contains("GTR"))
                 {
+
                     string temp = currentID;
                     // 다중 반응 처리
                     if (currentID.Contains("&&"))
@@ -407,6 +443,7 @@ public class DialogueManager : MonoBehaviour
                     else
                     {
                         Debug.Log("싱글");
+
                     }
                 }
             }
@@ -427,6 +464,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     _currentID = chooseTmp[1];
                 }
+
             }
 
             nameUI.text = dialogueDic[currentID].name;
@@ -435,6 +473,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         else {
+
             string currentDialogue = randomDialogues[indexForRandom].line;
 
             CustomerManager.instance.currentCustomer.InitializeOrder();
@@ -741,7 +780,7 @@ public class DialogueManager : MonoBehaviour
 
             indexForRandom++;
             _Customer++;
-            if (_currentID.Split(new char[] { '_' })[1] != "C00")
+            if (_pastID.Split(new char[] { '_' })[1] != "C00")
                 GameManager.instance.nextCustomer();
 
 
