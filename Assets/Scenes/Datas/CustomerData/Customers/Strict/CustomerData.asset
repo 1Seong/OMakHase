@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: CustomerData
   m_EditorClassIdentifier: 
   _categoryData: {fileID: 0}
-  _meatfish: 0
+  _meatfish: 3
   _vege: 0
   _baseIngred: 0
   _cook: 0
   _mainIngredCategory: 0
+  _hateMeatFish: 1
+  _hateVege: 0
+  _hateBase: 0
+  _hateCategory: 0
   _personality: 3
   _customerLineData: {fileID: 0}
   _isSpecial: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: -8116202776448379821, guid: 08af930f36042754db4fafbf818346e7, type: 3}
