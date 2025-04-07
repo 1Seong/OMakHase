@@ -58,25 +58,29 @@ public class UnlockManager : MonoBehaviour
     public void Unlock(Ingredient.Base baseIngred)
     {
         PlayerPrefs.SetInt(baseIngred.ToString(), 1);
-        OnUnlock.Invoke();
+        UnlockButton(baseIngred);
+        OnUnlock?.Invoke();
     }
 
     public void Unlock(Ingredient.Cook cook)
     {
         PlayerPrefs.SetInt(cook.ToString(), 1);
-        OnUnlock.Invoke();
+        UnlockButton(cook);
+        OnUnlock?.Invoke();
     }
 
     public void Unlock(Ingredient.MeatFish meatFish)
     {
         PlayerPrefs.SetInt(meatFish.ToString(), 1);
-        OnUnlock.Invoke();
+        UnlockButton(meatFish);
+        OnUnlock?.Invoke();
     }
 
     public void Unlock(Ingredient.Vege vege)
     {
         PlayerPrefs.SetInt(vege.ToString(), 1);
-        OnUnlock.Invoke();
+        UnlockButton(vege);
+        OnUnlock?.Invoke();
     }
 
     private void UnlockButton(Ingredient.Base baseIngred)
