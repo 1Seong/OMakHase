@@ -28,7 +28,7 @@ public class RecipeManager : MonoBehaviour
 
     private void Start()
     {
-        // ����Ʈ�� Dictionary�� ��ȯ
+        // 리스트를 Dictionary로 변환
         foreach (var combination in categoryListDatas)
         {
             foreach (var recipe in combination.recipeDatas) {
@@ -47,7 +47,7 @@ public class RecipeManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("�ش� ������ �����Ǹ� ã�� �� �����ϴ�.");
+            Debug.LogWarning("해당 조합의 레시피를 찾을 수 없습니다.");
             return null;
         }
     }
