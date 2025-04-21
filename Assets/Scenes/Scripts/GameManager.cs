@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using static Ingredient;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,6 +71,28 @@ public class GameManager : MonoBehaviour
         customerNum = 1;
         reputation = 0;
         money = 0;
+
+        UnlockManager.instance.ResetData();
+
+        //UnlockManager.instance.Unlock(Ingredient.Base.noCondition);
+        UnlockManager.instance.Unlock(Ingredient.Base.rice);
+        UnlockManager.instance.Unlock(Ingredient.Base.bread);
+
+        UnlockManager.instance.Unlock(Ingredient.Cook.none);
+        UnlockManager.instance.Unlock(Ingredient.Cook.stirFry);
+        UnlockManager.instance.Unlock(Ingredient.Cook.roast);
+
+        //UnlockManager.instance.Unlock(Ingredient.MeatFish.noCondition);
+        UnlockManager.instance.Unlock(Ingredient.MeatFish.none);
+        UnlockManager.instance.Unlock(Ingredient.MeatFish.pork);
+        UnlockManager.instance.Unlock(Ingredient.MeatFish.tuna);
+        UnlockManager.instance.Unlock(Ingredient.MeatFish.beef);
+
+        //UnlockManager.instance.Unlock(Ingredient.Vege.noCondition);
+        UnlockManager.instance.Unlock(Ingredient.Vege.none);
+        UnlockManager.instance.Unlock(Ingredient.Vege.potato);
+        UnlockManager.instance.Unlock(Ingredient.Vege.tomato);
+
     }
 
     public void nextCustomer() {
@@ -84,6 +107,25 @@ public class GameManager : MonoBehaviour
         }
         else {
             day++;
+            if (GameManager.instance.day == 2)
+            {
+                UnlockManager.instance.Unlock(Ingredient.MeatFish.chicken);
+            }
+            else if (GameManager.instance.day == 4) {
+                UnlockManager.instance.Unlock(Ingredient.Vege.mushroom);
+            }
+            else if (GameManager.instance.day == 5)
+            {
+                UnlockManager.instance.Unlock(Ingredient.Base.noodle);
+            }
+            else if (GameManager.instance.day == 6)
+            {
+                UnlockManager.instance.Unlock(Ingredient.MeatFish.salmon);
+            }
+            else if (GameManager.instance.day == 8)
+            {
+                UnlockManager.instance.Unlock(Ingredient.Vege.carrot);
+            }
             customerNum = 1;
         }
     }

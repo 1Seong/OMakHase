@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Salmon 2
   m_EditorClassIdentifier: 
   _categoryData: {fileID: 11400000, guid: 4fc2b557fe7cf964fac56e8babe5e43d, type: 2}
-  _meatfish: 100
+  _meatfish: 6
   _vege: 3
   _recipeName: "\uC5F0\uC5B4 \uD06C\uB9BC\uD30C\uC774\uC640 \uD1A0\uB9C8\uD1A0 \uC0D0\uB7EC\uB4DC"
   _desc: 

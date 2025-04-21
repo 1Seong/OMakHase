@@ -11,7 +11,7 @@ public static class Ingredient
 
     public enum Main { noCondition, meat, fish, vege }
 
-    public enum MeatFish { noCondition, none, pork, tuna, chicken, beef, salmon = 100 }
+    public enum MeatFish { noCondition, none, pork, tuna, chicken, beef, salmon}
 
     public enum Vege { noCondition, none, potato, tomato, mushroom, carrot }
 

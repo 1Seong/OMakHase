@@ -265,13 +265,33 @@ public class DialogueManager : MonoBehaviour
 
 
                 randomDialogues = new RandomDialogue[len];
+                /* 
                 for (int i = 0; i < len; i++)
                 {
                     int randomIndex = UnityEngine.Random.Range(0, randomDialogueDic.Count);
                     Debug.Log(randomDialogueDic[randomIndex].line + " | " + System.Guid.NewGuid());
                     randomDialogues[i] = randomDialogueDic[randomIndex];
                 }
+                */
+                for (int i = 0; i < len; i++)
+                {
 
+                    String selectedDialogue;
+                    int randomIndex;
+                    do
+                    {
+                        randomIndex = UnityEngine.Random.Range(0, randomDialogueDic.Count);
+                        selectedDialogue = randomDialogueDic[randomIndex].line;
+
+                    } while ( (selectedDialogue.Contains("%%") && GameManager.instance.day < 4) || 
+                              (selectedDialogue.Contains("면") && GameManager.instance.day < 5) 
+                              );
+                    //  버섯 해금 전에 string[] withBatchimVege = { "버섯" }; 접근하는 것을 막기 위해 필요
+                    //  면 해금 전에 "면이랑 ~ 가 잘 어울린대요." 나오는 것을 막기 위해 필요
+
+                    Debug.Log(randomDialogueDic[randomIndex].line + " | " + System.Guid.NewGuid());
+                    randomDialogues[i] = randomDialogueDic[randomIndex];
+                }
 
                 if (_currentID.Contains("O"))
                 {
@@ -496,7 +516,7 @@ public class DialogueManager : MonoBehaviour
 
             // 받침이 있는 글자 목록
             string[] withBatchimMeatFish = { };
-            string[] withBatchimVege = { "버섯" };
+            string[] withBatchimVege = { "버섯" }; // 버섯이 해금되기 전에는 접근하면 안됨
 
 
             // 받침이 없는 글자 목록
@@ -519,8 +539,8 @@ public class DialogueManager : MonoBehaviour
 
                     if (temp == 0)
                     {
-                        desireMeatfish = noBatchimMeatFish[UnityEngine.Random.Range(0, noBatchimMeatFish.Length)];
-
+                        //desireMeatfish = noBatchimMeatFish[UnityEngine.Random.Range(0, noBatchimMeatFish.Length)];
+                        desireMeatfish = getUnlockedMeatFish(noBatchimMeatFish);
                         if (randomDialogues[indexForRandom].line.Contains("밥"))
                         {
                             desireCategory = "밥요리";
@@ -545,8 +565,8 @@ public class DialogueManager : MonoBehaviour
 
                     }
                     else {
-                        desireVege = noBatchimVege[UnityEngine.Random.Range(0, noBatchimVege.Length)];
-
+                        //desireVege = noBatchimVege[UnityEngine.Random.Range(0, noBatchimVege.Length)];
+                        desireVege = getUnlockedVege(noBatchimVege);
                         if (randomDialogues[indexForRandom].line.Contains("밥"))
                         {
                             desireCategory = "밥요리";
@@ -575,8 +595,8 @@ public class DialogueManager : MonoBehaviour
 
                 case "%%":
                 case "!%%":
-                    desireVege = withBatchimVege[UnityEngine.Random.Range(0, withBatchimVege.Length)];
-
+                    //desireVege = withBatchimVege[UnityEngine.Random.Range(0, withBatchimVege.Length)];
+                    desireVege = getUnlockedVege(withBatchimVege); // 버섯이 해금되지 않았을 때는 무한루프
                     if (randomDialogues[indexForRandom].line.Contains("밥"))
                     {
                         desireCategory = "밥요리";
@@ -612,8 +632,8 @@ public class DialogueManager : MonoBehaviour
 
                     if (temp == 0)
                     {
-                        desireCategory =  noBatchimBase[UnityEngine.Random.Range(0, noBatchimBase.Length)];
-
+                        //desireCategory =  noBatchimBase[UnityEngine.Random.Range(0, noBatchimBase.Length)];
+                        desireCategory = getUnlockedBase(noBatchimBase);
                         if (randomDialogues[indexForRandom].desireCategory[0].Equals('!'))
                         {
                             hateBase = true;
@@ -621,18 +641,23 @@ public class DialogueManager : MonoBehaviour
                     }
 
                     else if(temp == 1) {
-                        desireCategory = noBatchimCook[UnityEngine.Random.Range(0, noBatchimCook.Length)];
+                        //desireCategory = noBatchimCook[UnityEngine.Random.Range(0, noBatchimCook.Length)];
+                        desireCategory = getUnlockedCook(noBatchimCook);
                     }
 
                     else
                     {
-                        desireCategory = noBatchimCategory[UnityEngine.Random.Range(0, noBatchimCategory.Length)];
+                        //desireCategory = noBatchimCategory[UnityEngine.Random.Range(0, noBatchimCategory.Length)];
+                        desireCategory = getUnlockedCategory(noBatchimCategory);
+
                         /*
                         if (randomDialogues[indexForRandom].desireCategory[0].Equals('!'))
                         {
                             hateCategory = true;
                         }
                         */
+
+                        desireCategory = desireCategory.TrimEnd();
                     }
 
                     currentDialogue = currentDialogue.Replace("##", desireCategory);
@@ -640,7 +665,9 @@ public class DialogueManager : MonoBehaviour
 
                 case "@@":
                 case "!@@":
-                    desireCategory = withBatchimCategory[UnityEngine.Random.Range(0, withBatchimCategory.Length)];
+                    //desireCategory = withBatchimCategory[UnityEngine.Random.Range(0, withBatchimCategory.Length)];
+                    desireCategory = getUnlockedCategory(withBatchimCategory);
+                    desireCategory = desireCategory.TrimEnd();
                     currentDialogue = currentDialogue.Replace("@@", desireCategory);
                     break;
 
@@ -656,37 +683,52 @@ public class DialogueManager : MonoBehaviour
                 switch (temp)
                 {
                     case 0:
-                        desireMeatfish = noBatchimMeatFish[UnityEngine.Random.Range(0, noBatchimMeatFish.Length)];
+                        //desireMeatfish = noBatchimMeatFish[UnityEngine.Random.Range(0, noBatchimMeatFish.Length)];
+                        desireMeatfish = getUnlockedMeatFish(noBatchimMeatFish);
                         currentDialogue = currentDialogue.Replace("**", desireMeatfish);
                         break;
 
                     case 1:
-                        desireVege = noBatchimVege[UnityEngine.Random.Range(0, noBatchimVege.Length)];
+                        //desireVege = noBatchimVege[UnityEngine.Random.Range(0, noBatchimVege.Length)];
+                        desireVege = getUnlockedVege(noBatchimVege);
                         currentDialogue = currentDialogue.Replace("**", desireVege);
                         break;
 
                     case 2:
-                        desireVege = withBatchimVege[UnityEngine.Random.Range(0, withBatchimVege.Length)];
+                        //desireVege = withBatchimVege[UnityEngine.Random.Range(0, withBatchimVege.Length)];
+
+                        // 임시
+                        if(GameManager.instance.day < 4)
+                            desireVege = getUnlockedVege(noBatchimVege);
+                        else
+                            desireVege = getUnlockedVege(withBatchimVege);
+
                         currentDialogue = currentDialogue.Replace("**", desireVege);
                         break;
 
                     case 3:
-                        desireCategory = noBatchimBase[UnityEngine.Random.Range(0, noBatchimBase.Length)];
+                        //desireCategory = noBatchimBase[UnityEngine.Random.Range(0, noBatchimBase.Length)];
+                        desireCategory = getUnlockedBase(noBatchimBase);
                         currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
                     case 4:
-                        desireCategory = noBatchimCook[UnityEngine.Random.Range(0, noBatchimCook.Length)];
+                        //desireCategory = noBatchimCook[UnityEngine.Random.Range(0, noBatchimCook.Length)];
+                        desireCategory = getUnlockedCook(noBatchimCook);
                         currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
                     case 5:
-                        desireCategory = noBatchimCategory[UnityEngine.Random.Range(0, noBatchimCategory.Length)];
+                        //desireCategory = noBatchimCategory[UnityEngine.Random.Range(0, noBatchimCategory.Length)];
+                        desireCategory = getUnlockedCategory(noBatchimCategory);
+                        desireCategory = desireCategory.TrimEnd();
                         currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
                     case 6:
-                        desireCategory = withBatchimCategory[UnityEngine.Random.Range(0, withBatchimCategory.Length)];
+                        //desireCategory = withBatchimCategory[UnityEngine.Random.Range(0, withBatchimCategory.Length)];
+                        desireCategory = getUnlockedCategory(withBatchimCategory);
+                        desireCategory = desireCategory.TrimEnd();
                         currentDialogue = currentDialogue.Replace("**", desireCategory);
                         break;
 
@@ -758,7 +800,7 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("오류");
                 CustomerManager.instance.GetOrder(personality, false, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
             }
-            
+            /*
             Debug.Log(desireMeatfish + " | " + System.Guid.NewGuid());
             Debug.Log(desireVege + " | " + System.Guid.NewGuid());
             Debug.Log(desireCategory + " | " + System.Guid.NewGuid());
@@ -766,17 +808,17 @@ public class DialogueManager : MonoBehaviour
             Debug.Log(hateVege + " | " + System.Guid.NewGuid());
             Debug.Log(hateBase + " | " + System.Guid.NewGuid());
             Debug.Log(hateCategory + " | " + System.Guid.NewGuid());
-            
+            */
             nameUI.text = "손님";
             dialogueUI.text = currentDialogue.Replace('`', ',');
             nextUI.gameObject.SetActive(true);
             skipUI.gameObject.SetActive(false);
-
+            /*
             Debug.Log("********* " + System.Guid.NewGuid());
             Debug.Log("indexForRandom: " + indexForRandom + " | " + System.Guid.NewGuid());
             Debug.Log("dialogueUI.text: " + dialogueUI.text + " | " + System.Guid.NewGuid());
             Debug.Log("********* " + System.Guid.NewGuid());
-
+            */
 
             indexForRandom++;
             _Customer++;
@@ -808,5 +850,87 @@ public class DialogueManager : MonoBehaviour
         multipleskipUI.gameObject.SetActive(false);
         skipUI.gameObject.SetActive(true);
 
+    }
+
+    private string getUnlockedBase(string[] strings)
+    {
+
+        while (true) {
+            string unlocked;
+
+            while (true)
+            {
+                unlocked = strings[UnityEngine.Random.Range(0, strings.Length)];
+                Debug.Log(unlocked);
+                if (UnlockManager.instance.IsUnlocked(baseMap[unlocked]))
+                {
+
+                    break;
+                }
+            }
+            return unlocked;
+        }
+    }
+    private string getUnlockedCook(string[] strings)
+    {
+        string unlocked;
+
+        while (true)
+        {
+            unlocked = strings[UnityEngine.Random.Range(0, strings.Length)];
+            Debug.Log(unlocked);
+            if (UnlockManager.instance.IsUnlocked(cookMap[unlocked]))
+            {
+                break;
+            }
+        }
+        return unlocked;
+    }
+
+    private string getUnlockedMeatFish(string[] strings)
+    {
+        string unlocked;
+
+        while (true)
+        {
+            unlocked = strings[UnityEngine.Random.Range(0, strings.Length)];
+            Debug.Log(unlocked);
+            if (unlocked == "육류" || unlocked == "생선류" || UnlockManager.instance.IsUnlocked(meatFishMap[unlocked])) {
+                break;
+            }
+        }
+        return unlocked;
+    }
+
+    private string getUnlockedVege(string[] strings)
+    {
+        string unlocked;
+
+        while (true)
+        {
+            unlocked = strings[UnityEngine.Random.Range(0, strings.Length)];
+            Debug.Log(unlocked);
+            if (unlocked == "과채류" || UnlockManager.instance.IsUnlocked(vegeMap[unlocked]))
+            {
+                break;
+            }
+        }
+        return unlocked;
+    }
+
+    private string getUnlockedCategory(string[] strings)
+    {
+        string unlocked;
+
+        while (true)
+        {
+            unlocked = strings[UnityEngine.Random.Range(0, strings.Length)] + "\r";
+            Debug.Log(unlocked);
+            if (UnlockManager.instance.IsUnlocked(categoryMap[unlocked].baseIngred) && UnlockManager.instance.IsUnlocked(categoryMap[unlocked].cook))
+            {
+                break;
+            }
+        }
+        return unlocked;
     }
 }
