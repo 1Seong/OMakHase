@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
         UnlockManager.instance.Unlock(Ingredient.MeatFish.none);
         UnlockManager.instance.Unlock(Ingredient.MeatFish.pork);
         UnlockManager.instance.Unlock(Ingredient.MeatFish.tuna);
-        UnlockManager.instance.Unlock(Ingredient.MeatFish.beef);
 
         //UnlockManager.instance.Unlock(Ingredient.Vege.noCondition);
         UnlockManager.instance.Unlock(Ingredient.Vege.none);
@@ -125,6 +124,10 @@ public class GameManager : MonoBehaviour
             else if (GameManager.instance.day == 8)
             {
                 UnlockManager.instance.Unlock(Ingredient.Vege.carrot);
+            }
+            else if (GameManager.instance.day == 10)
+            {
+                UnlockManager.instance.Unlock(Ingredient.MeatFish.beef);
             }
             customerNum = 1;
         }
