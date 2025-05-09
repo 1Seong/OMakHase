@@ -27,6 +27,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] RectTransform skipUI;
     [SerializeField] RectTransform multipleskipUI;
 
+    public TextMeshProUGUI getDialogueUI { get { return dialogueUI; } }
 
     Dictionary<string, Dialogue> dialogueDic = new Dictionary<string, Dialogue>();
     Dictionary<int, RandomDialogue> randomDialogueDic = new Dictionary<int, RandomDialogue>();

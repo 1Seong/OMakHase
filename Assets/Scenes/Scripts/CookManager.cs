@@ -148,7 +148,22 @@ public class CookManager : MonoBehaviour
                 }
             }
 
-            DialogueManager.Instance.GetNextDialogue();
+            if (DialogueManager.Instance.IsRandom == true) {
+                if (satisfiedType == Result.positive)
+                    DialogueManager.Instance.getDialogueUI.text = "¸ÀÀÖ´Ù";
+                else if (satisfiedType == Result.neutral)
+                    DialogueManager.Instance.getDialogueUI.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                else if (satisfiedType == Result.negative)
+                    DialogueManager.Instance.getDialogueUI.text = "¸À¾ø´Ù";
+                else
+                    Debug.Log("¿À·ù");
+
+                _NextButton.gameObject.SetActive(false);
+                _SkipButton.gameObject.SetActive(true);
+            }
+            else
+                DialogueManager.Instance.GetNextDialogue();
+
             Debug.Log("´ÙÀ½ ´ë»ç °¡Á®¿È???");
 
             _OrderCanvas.gameObject.SetActive(true);
