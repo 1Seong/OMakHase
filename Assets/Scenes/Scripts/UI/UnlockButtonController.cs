@@ -22,6 +22,17 @@ public class UnlockButtonController : MonoBehaviour
 
     public void ClearButton()
     {
+        var count = GetButtonCount();
+
+        for(int i = 0; i != count; ++i)
+        {
+            var child = transform.GetChild(i);
+            child.gameObject.SetActive(false);
+        }
+    }
+
+    protected virtual int GetButtonCount()
+    {
         var count = mode switch
         {
             Mode.Base => transform.childCount - 1,
@@ -31,11 +42,7 @@ public class UnlockButtonController : MonoBehaviour
             _ => throw new System.NotImplementedException()
         };
 
-        for(int i = 0; i != count; ++i)
-        {
-            var child = transform.GetChild(i);
-            child.gameObject.SetActive(false);
-        }
+        return count;
     }
 
     private void OnDestroy()
