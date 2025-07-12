@@ -74,24 +74,6 @@ public class GameManager : MonoBehaviour
 
         UnlockManager.instance.ResetData();
 
-        //UnlockManager.instance.Unlock(Ingredient.Base.noCondition);
-        UnlockManager.instance.Unlock(Ingredient.Base.rice);
-        UnlockManager.instance.Unlock(Ingredient.Base.bread);
-
-        UnlockManager.instance.Unlock(Ingredient.Cook.none);
-        UnlockManager.instance.Unlock(Ingredient.Cook.stirFry);
-        UnlockManager.instance.Unlock(Ingredient.Cook.roast);
-
-        //UnlockManager.instance.Unlock(Ingredient.MeatFish.noCondition);
-        UnlockManager.instance.Unlock(Ingredient.MeatFish.none);
-        UnlockManager.instance.Unlock(Ingredient.MeatFish.pork);
-        UnlockManager.instance.Unlock(Ingredient.MeatFish.tuna);
-
-        //UnlockManager.instance.Unlock(Ingredient.Vege.noCondition);
-        UnlockManager.instance.Unlock(Ingredient.Vege.none);
-        UnlockManager.instance.Unlock(Ingredient.Vege.potato);
-        UnlockManager.instance.Unlock(Ingredient.Vege.tomato);
-
     }
 
     public void nextCustomer() {

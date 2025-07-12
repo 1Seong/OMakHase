@@ -13,6 +13,7 @@ public class UnlockManager : MonoBehaviour
     public event Action<int, int> ButtonUnlockAction; // < child id, mode >
                                                       // mode - base : 0, cook : 1, MeatFish : 2, Vege : 3
     public event Action OnUnlockAction;
+    public event Action ClearAction;
 
     public static UnlockManager instance
     {
@@ -20,7 +21,7 @@ public class UnlockManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                // ¾À¿¡¼­ Ã£±â
+                // find in scene
                 _instance = FindFirstObjectByType<UnlockManager>();
 
             }
@@ -50,42 +51,36 @@ public class UnlockManager : MonoBehaviour
         foreach(var con in unlockButtonControllers)
         {
             ButtonUnlockAction += con.UnlockButton;
+            ClearAction += con.ClearButton;
         }
     }
 
-    // Add this method to game start(Load game) button 
-    public void InitButtons()
+    public void InitUnlocks()
     {
-        foreach (Ingredient.Base i in Enum.GetValues(typeof(Ingredient.Base)))
-            if (IsUnlocked(i))
-            {
-                ButtonUnlockAction?.Invoke((int)i - 1, 0);
-                
-            }
+        //UnlockManager.instance.Unlock(Ingredient.Base.noCondition);
+        Unlock(Ingredient.Base.rice);
+        Unlock(Ingredient.Base.bread);
 
-        foreach (Ingredient.Cook i in Enum.GetValues(typeof(Ingredient.Cook)))
-            if (IsUnlocked(i))
-            {
-                ButtonUnlockAction?.Invoke((int)i - 1, 1);
-            }
+        Unlock(Ingredient.Cook.none);
+        Unlock(Ingredient.Cook.stirFry);
+        Unlock(Ingredient.Cook.roast);
 
-        foreach (Ingredient.MeatFish i in Enum.GetValues(typeof(Ingredient.MeatFish)))
-            if (IsUnlocked(i))
-            {
-                ButtonUnlockAction?.Invoke((int)i - 1, 2);
-            }
+        //UnlockManager.instance.Unlock(Ingredient.MeatFish.noCondition);
+        Unlock(Ingredient.MeatFish.none);
+        Unlock(Ingredient.MeatFish.pork);
+        Unlock(Ingredient.MeatFish.tuna);
 
-        foreach (Ingredient.Vege i in Enum.GetValues(typeof(Ingredient.Vege)))
-            if (IsUnlocked(i))
-            {
-                ButtonUnlockAction?.Invoke((int)i - 1, 3);
-            }
-              
+        //UnlockManager.instance.Unlock(Ingredient.Vege.noCondition);
+        Unlock(Ingredient.Vege.none);
+        Unlock(Ingredient.Vege.potato);
+        Unlock(Ingredient.Vege.tomato);
     }
 
     public void ResetData()
     {
         PlayerPrefs.DeleteAll();
+        ClearAction?.Invoke();
+        InitUnlocks();
     }
 
     public void Unlock(Ingredient.Base baseIngred)
@@ -120,5 +115,38 @@ public class UnlockManager : MonoBehaviour
     {
         return PlayerPrefs.HasKey(item.ToString()) && PlayerPrefs.GetInt(item.ToString()) == 1;
     }
+
+    // Legacy code
+    /*
+    public void InitButtons()
+    {
+        foreach (Ingredient.Base i in Enum.GetValues(typeof(Ingredient.Base)))
+            if (IsUnlocked(i))
+            {
+                ButtonUnlockAction?.Invoke((int)i - 1, 0);
+
+            }
+
+        foreach (Ingredient.Cook i in Enum.GetValues(typeof(Ingredient.Cook)))
+            if (IsUnlocked(i))
+            {
+                ButtonUnlockAction?.Invoke((int)i - 1, 1);
+            }
+
+        foreach (Ingredient.MeatFish i in Enum.GetValues(typeof(Ingredient.MeatFish)))
+            if (IsUnlocked(i))
+            {
+                ButtonUnlockAction?.Invoke((int)i - 1, 2);
+            }
+
+        foreach (Ingredient.Vege i in Enum.GetValues(typeof(Ingredient.Vege)))
+            if (IsUnlocked(i))
+            {
+                ButtonUnlockAction?.Invoke((int)i - 1, 3);
+            }
+
+    }
+    */
+
 }
 
