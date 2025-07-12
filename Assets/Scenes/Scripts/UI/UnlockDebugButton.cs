@@ -11,7 +11,7 @@ public class UnlockDebugButton : MonoBehaviour
         switch (mode)
         {
             case Mode.Base:
-                UnlockManager.instance.Unlock(Ingredient.Base.bread);
+                UnlockManager.instance.Unlock(Ingredient.Base.noodle);
                 break;
             case Mode.Cook:
                 UnlockManager.instance.Unlock(Ingredient.Cook.stirFry);
@@ -20,7 +20,7 @@ public class UnlockDebugButton : MonoBehaviour
                 UnlockManager.instance.Unlock(Ingredient.MeatFish.beef);
                 break;
             case Mode.Vege:
-                UnlockManager.instance.Unlock(Ingredient.Vege.potato);
+                UnlockManager.instance.Unlock(Ingredient.Vege.carrot);
                 break;
         }
     }

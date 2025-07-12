@@ -7,7 +7,11 @@ public class UnlockManager : MonoBehaviour
 {
     public static UnlockManager instance;
 
+    // controllers for base, ingredient, and cook buttons
+    [SerializeField] private List<UnlockButtonController> unlockButtonControllers;
+
     public event Action<int, int> ButtonUnlockAction; // < child id, mode >
+                                                      // mode - base : 0, cook : 1, MeatFish : 2, Vege : 3
     public event Action OnUnlockAction;
 
     private void Awake()
@@ -15,6 +19,16 @@ public class UnlockManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this);
 
+        InitControllers();
+    }
+
+    // initialize button controllers - had to do in here becuase of delayed instantiation (moved from UnlockButtonController)
+    public void InitControllers()
+    {
+        foreach(var con in unlockButtonControllers)
+        {
+            ButtonUnlockAction += con.UnlockButton;
+        }
     }
 
     // Add this method to game start(Load game) button 

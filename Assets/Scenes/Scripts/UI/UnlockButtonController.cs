@@ -9,13 +9,20 @@ public class UnlockButtonController : MonoBehaviour
 
     public Mode mode;
 
+    // moved to UnlockManager due to delayed instantiation ;(
+    /*
     private void Awake()
     {
+        
         UnlockManager.instance.ButtonUnlockAction += UnlockButton;
         Debug.Log("UnlockButtonController - Awake");
-    }
 
-    private void UnlockButton(int i, int m)
+        transform.root.gameObject.SetActive(false);
+        
+    }
+    */
+
+    public void UnlockButton(int i, int m)
     {
         Debug.Log("UnlockButton invoked");
         if ((int)mode != m) return;
