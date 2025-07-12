@@ -55,7 +55,8 @@ public class UnlockManager : MonoBehaviour
         }
     }
 
-    public void InitUnlocks()
+    // default unlocks
+    private void InitUnlocks()
     {
         //UnlockManager.instance.Unlock(Ingredient.Base.noCondition);
         Unlock(Ingredient.Base.rice);
@@ -76,6 +77,7 @@ public class UnlockManager : MonoBehaviour
         Unlock(Ingredient.Vege.tomato);
     }
 
+    // reset data (full reset)
     public void ResetData()
     {
         PlayerPrefs.DeleteAll();
@@ -116,9 +118,8 @@ public class UnlockManager : MonoBehaviour
         return PlayerPrefs.HasKey(item.ToString()) && PlayerPrefs.GetInt(item.ToString()) == 1;
     }
 
-    // Legacy code
-    /*
-    public void InitButtons()
+    // data load
+    public void Load()
     {
         foreach (Ingredient.Base i in Enum.GetValues(typeof(Ingredient.Base)))
             if (IsUnlocked(i))
@@ -146,7 +147,7 @@ public class UnlockManager : MonoBehaviour
             }
 
     }
-    */
+    
 
 }
 
