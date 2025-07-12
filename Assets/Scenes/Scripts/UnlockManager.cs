@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UnlockManager : MonoBehaviour
 {
-    public static UnlockManager instance;
+    private static UnlockManager _instance;
 
     // controllers for base, ingredient, and cook buttons
     [SerializeField] private List<UnlockButtonController> unlockButtonControllers;
@@ -14,10 +14,32 @@ public class UnlockManager : MonoBehaviour
                                                       // mode - base : 0, cook : 1, MeatFish : 2, Vege : 3
     public event Action OnUnlockAction;
 
+    public static UnlockManager instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // ¾À¿¡¼­ Ã£±â
+                _instance = FindFirstObjectByType<UnlockManager>();
+
+            }
+
+            return _instance;
+        }
+    }
+   
     private void Awake()
     {
-        instance = this;
-        DontDestroyOnLoad(this);
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
 
         InitControllers();
     }
