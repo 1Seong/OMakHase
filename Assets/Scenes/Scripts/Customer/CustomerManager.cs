@@ -45,8 +45,8 @@ public class CustomerManager : MonoBehaviour
 
     private void Start()
     {
-        Sprite randomSprite = GetRandomSprite();
-        activeSpriteImage.sprite = randomSprite;
+        //Sprite randomSprite = GetRandomSprite();
+        //activeSpriteImage.sprite = randomSprite;
 
         //test
 
@@ -226,8 +226,8 @@ public class CustomerManager : MonoBehaviour
     // Method to get a random guest order - 이제 사용 안하는 코드
     public void GetRandomOrder() {
 
-        Sprite randomSprite = GetRandomSprite();
-        activeSpriteImage.sprite = randomSprite;
+        //Sprite randomSprite = GetRandomSprite();
+        //activeSpriteImage.sprite = randomSprite;
 
         //test
 

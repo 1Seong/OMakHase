@@ -9,6 +9,7 @@ public class DialogueParser : MonoBehaviour
     public Dialogue[] Parse(TextAsset CSV)
     {
         List<Dialogue> dialogueList = new List<Dialogue>(); // 대화 리스트 생성.
+
         TextAsset csvData = CSV; // csv 파일 가져옴
         //Resources.Load<TextAsset>(_CSVFileName);
 

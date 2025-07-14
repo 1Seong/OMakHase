@@ -490,6 +490,10 @@ public class DialogueManager : MonoBehaviour
 
             nameUI.text = dialogueDic[currentID].name;
             dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
+            if (dialogueDic[currentID].spriteID != "") {
+                Debug.Log(dialogueDic[currentID].spriteID);
+                StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(dialogueDic[currentID].spriteID));
+            }
             //Debug.Log(dialogueDic[currentID].line);
         }
 
@@ -814,6 +818,7 @@ public class DialogueManager : MonoBehaviour
             dialogueUI.text = currentDialogue.Replace('`', ',');
             nextUI.gameObject.SetActive(true);
             skipUI.gameObject.SetActive(false);
+            SpriteManager.Instance.GetRandomSprite();
             /*
             Debug.Log("********* " + System.Guid.NewGuid());
             Debug.Log("indexForRandom: " + indexForRandom + " | " + System.Guid.NewGuid());
