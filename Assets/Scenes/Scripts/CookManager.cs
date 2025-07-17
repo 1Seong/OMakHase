@@ -113,7 +113,8 @@ public class CookManager : MonoBehaviour
                 if (requestSatisfied)
                 {
                     GameManager.instance.reputation += ReputationRise;
-                    CustomerManager.instance.orderText.text = "¸ÀÀÖ´Ù";
+                    //CustomerManager.instance.orderText.text = "¸ÀÀÖ´Ù";
+                    CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(0);
                     setSatisfiedType(Result.positive);
                 }
                 else
@@ -122,27 +123,31 @@ public class CookManager : MonoBehaviour
                     if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        //CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
 
                     else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        //CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
 
                     else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        //CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
 
                     else
                     {
-                        CustomerManager.instance.orderText.text = "¸À¾ø´Ù";
+                        //CustomerManager.instance.orderText.text = "¸À¾ø´Ù";
+                        CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(2);
                         setSatisfiedType(Result.negative);
                     }
                 }
@@ -150,11 +155,20 @@ public class CookManager : MonoBehaviour
 
             if (DialogueManager.Instance.IsRandom == true) {
                 if (satisfiedType == Result.positive)
-                    DialogueManager.Instance.getDialogueUI.text = "¸ÀÀÖ´Ù";
+                {
+                    //DialogueManager.Instance.getDialogueUI.text = "¸ÀÀÖ´Ù";
+                    DialogueManager.Instance.getDialogueUI.text = DialogueManager.Instance.getRandomReaction(0);
+                }
                 else if (satisfiedType == Result.neutral)
-                    DialogueManager.Instance.getDialogueUI.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                {
+                    //DialogueManager.Instance.getDialogueUI.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    DialogueManager.Instance.getDialogueUI.text = DialogueManager.Instance.getRandomReaction(1);
+                }
                 else if (satisfiedType == Result.negative)
-                    DialogueManager.Instance.getDialogueUI.text = "¸À¾ø´Ù";
+                {
+                    //DialogueManager.Instance.getDialogueUI.text = "¸À¾ø´Ù";
+                    DialogueManager.Instance.getDialogueUI.text = DialogueManager.Instance.getRandomReaction(2);
+                }
                 else
                     Debug.Log("¿À·ù");
 

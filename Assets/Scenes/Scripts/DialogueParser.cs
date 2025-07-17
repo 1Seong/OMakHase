@@ -90,4 +90,56 @@ public class DialogueParser : MonoBehaviour
         return dialogueList.ToArray();
 
     }
+
+
+    public RandomReactionDialogue[][] RandomReactionParse(TextAsset CSV)
+    {
+        List<RandomReactionDialogue[]> dialogueList = new List<RandomReactionDialogue[]>(); // 대화 리스트 생성.
+
+        List<RandomReactionDialogue> positiveReactionList = new List<RandomReactionDialogue>(); // 긍정 반응 리스트 생성.
+        List<RandomReactionDialogue> neutralReactionList = new List<RandomReactionDialogue>(); // 긍정 반응 리스트 생성.
+        List<RandomReactionDialogue> negativeReactionList = new List<RandomReactionDialogue>(); // 긍정 반응 리스트 생성.
+
+        TextAsset csvData = CSV; // csv 파일 가져옴
+        //Resources.Load<TextAsset>(_CSVFileName);
+
+        string[] data = csvData.text.Split(new char[] { '\n' }); // 엔터 기준으로 쪼갬(스프레드시트의 행별로 쪼갬)
+
+        for (int i = 1; i < data.Length; i++)
+        {
+            //Debug.Log(data[i]);
+            string[] row = data[i].Split(new char[] { ',' });
+
+
+            RandomReactionDialogue dialogue = new RandomReactionDialogue(); // 대사 데이터 생성
+
+
+            dialogue.line = row[0]; // 텍스트
+            //Debug.Log(row[0]);
+            dialogue.type = row[1]; // 대화 유형
+            //Debug.Log(row[1]);
+            dialogue.desireBase = row[2]; // 요구하는 베이스
+            //Debug.Log(row[2]);
+            dialogue.desireMain = row[3]; // 요구하는 주재료
+            //Debug.Log(row[3]);
+            dialogue.desireCook = row[4]; // 조리법
+            //Debug.Log(row[4]);
+            dialogue.isFormat = row[5]; // 포맷화 여부
+            //Debug.Log(row[5]);
+
+            if(dialogue.type == "positive")
+                positiveReactionList.Add(dialogue);
+            else if (dialogue.type == "neutral")
+                neutralReactionList.Add(dialogue);
+            else
+                negativeReactionList.Add(dialogue);
+
+        }
+
+        dialogueList.Add(positiveReactionList.ToArray());
+        dialogueList.Add(neutralReactionList.ToArray());
+        dialogueList.Add(negativeReactionList.ToArray());
+        return dialogueList.ToArray();
+
+    }
 }
