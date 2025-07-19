@@ -148,6 +148,8 @@ GameObject:
   - component: {fileID: 9219883411651129655}
   - component: {fileID: 4057659261854006911}
   - component: {fileID: 5272012420504965510}
+  - component: {fileID: 6093734272978836112}
+  - component: {fileID: 3967723064137996529}
   m_Layer: 5
   m_Name: stirFry_Button
   m_TagString: Untagged
@@ -203,7 +205,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 970a6715a83d5a148b3e65eee94950b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19a324837a43a1245bf92a2ba3984797, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -242,10 +244,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 970a6715a83d5a148b3e65eee94950b9, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 970a6715a83d5a148b3e65eee94950b9, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: b1a8d096ff137204db83fcb4d2c8dd19, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: 970a6715a83d5a148b3e65eee94950b9, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 19a324837a43a1245bf92a2ba3984797, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 19a324837a43a1245bf92a2ba3984797, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 23f48da1b07c16846bb126c8bed2c945, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 19a324837a43a1245bf92a2ba3984797, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -269,6 +271,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6093734272978836112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698869621120155635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb22d8fa49c8474e9df02dd86767701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alphaThreshold: 0.5
+--- !u!114 &3967723064137996529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698869621120155635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc975dfafd532e43b91b92514f6d684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
 --- !u!1 &724859303654375937
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +430,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2130060590275959077
@@ -550,6 +578,7 @@ GameObject:
   - component: {fileID: 3556235087680108270}
   - component: {fileID: 3450529320960907085}
   - component: {fileID: 6705672806587604010}
+  - component: {fileID: 326341404303000083}
   m_Layer: 5
   m_Name: 'None_Button '
   m_TagString: Untagged
@@ -671,6 +700,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &326341404303000083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627445048846133871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc975dfafd532e43b91b92514f6d684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
 --- !u!1 &4552915772244927466
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +991,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &5160191140710900245
@@ -1313,6 +1355,8 @@ GameObject:
   - component: {fileID: 6172369204383918067}
   - component: {fileID: 1919151248845245686}
   - component: {fileID: 1827305642040863403}
+  - component: {fileID: 253900710035984867}
+  - component: {fileID: 807430467039073916}
   m_Layer: 5
   m_Name: roast_Button
   m_TagString: Untagged
@@ -1368,7 +1412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b397d4d263c505b4eab306cc68e2224a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5433f5f086e5c9b4f84d8ce7ce170791, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1407,10 +1451,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: b397d4d263c505b4eab306cc68e2224a, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: b397d4d263c505b4eab306cc68e2224a, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 5f7c07cf0d5ffaa45a1a45fd896f50b8, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: b397d4d263c505b4eab306cc68e2224a, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 5433f5f086e5c9b4f84d8ce7ce170791, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 5433f5f086e5c9b4f84d8ce7ce170791, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 8d3f27ed203cc22449e05dcd3d8e0636, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 5433f5f086e5c9b4f84d8ce7ce170791, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -1434,6 +1478,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &253900710035984867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8124340549767624013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb22d8fa49c8474e9df02dd86767701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alphaThreshold: 0.5
+--- !u!114 &807430467039073916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8124340549767624013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc975dfafd532e43b91b92514f6d684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
 --- !u!1 &8229201941650351599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,6 +1637,6 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
