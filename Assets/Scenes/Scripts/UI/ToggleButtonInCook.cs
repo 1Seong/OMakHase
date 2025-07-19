@@ -1,15 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ToggleButtonInCook : MonoBehaviour
+public class ToggleButtonInCook : ToggleButtonGroup
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void ReleaseBehavior()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void ButtonSelectedBehavior(Button clickedButton)
     {
         
     }

@@ -2,13 +2,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ButtonScaleEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class ButtonScaleEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     public float scaleFactor = 1.1f;
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         transform.localScale = Vector3.one;
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        transform.localScale = Vector3.one * scaleFactor;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -21,4 +25,5 @@ public class ButtonScaleEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         transform.localScale = Vector3.one;
     }
 
+    
 }

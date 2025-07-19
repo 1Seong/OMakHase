@@ -25,7 +25,7 @@ public class ToggleButtonGroup : MonoBehaviour
         if (activeButton != null)
             ReleaseBehavior();
 
-        ButtonSelectedBehavior(clickedButton);
+        //ButtonSelectedBehavior(clickedButton);
         activeButton = clickedButton;
     }
 
