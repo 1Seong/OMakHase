@@ -7,7 +7,7 @@ public class ToggleButtonGroup : MonoBehaviour
     public Button[] buttons;
     protected Button activeButton = null;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         buttons = GetComponentsInChildren<Button>();
     }
@@ -25,7 +25,7 @@ public class ToggleButtonGroup : MonoBehaviour
         if (activeButton != null)
             ReleaseBehavior();
 
-        //ButtonSelectedBehavior(clickedButton);
+        ButtonSelectedBehavior(clickedButton);
         activeButton = clickedButton;
     }
 
