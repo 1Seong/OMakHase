@@ -5,14 +5,14 @@ using UnityEngine.UI;
 public class ToggleButtonGroup : MonoBehaviour
 {
     public Button[] buttons;
-    private Button activeButton = null;
+    protected Button activeButton = null;
 
     private void Awake()
     {
         buttons = GetComponentsInChildren<Button>();
     }
 
-    void Start()
+    private void Start()
     {
         foreach (Button btn in buttons)
         {
@@ -20,12 +20,24 @@ public class ToggleButtonGroup : MonoBehaviour
         }
     }
 
-    void ToggleButton(Button clickedButton)
+    private void ToggleButton(Button clickedButton)
     {
         if (activeButton != null)
-            activeButton.interactable = true;
+            ReleaseBehavior();
 
-        clickedButton.interactable = false;
+        ButtonSelectedBehavior(clickedButton);
         activeButton = clickedButton;
+    }
+
+    // Template method pattern
+
+    protected virtual void ReleaseBehavior()
+    {
+        activeButton.interactable = true;
+    }
+
+    protected virtual void ButtonSelectedBehavior(Button clickedButton)
+    {
+        clickedButton.interactable = false;
     }
 }

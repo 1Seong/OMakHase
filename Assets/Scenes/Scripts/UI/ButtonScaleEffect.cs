@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class ButtonScaleEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public float scaleFactor = 1.2f;
+    public float scaleFactor = 1.1f;
 
     public void OnPointerClick(PointerEventData eventData)
     {
