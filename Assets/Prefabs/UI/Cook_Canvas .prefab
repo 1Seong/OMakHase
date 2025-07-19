@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 5272012420504965510}
   - component: {fileID: 6093734272978836112}
   - component: {fileID: 3967723064137996529}
+  - component: {fileID: 7326722335207455262}
   m_Layer: 5
   m_Name: stirFry_Button
   m_TagString: Untagged
@@ -174,9 +175,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -192, y: 151.20001}
   m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.4, y: 0.64}
 --- !u!222 &9219883411651129655
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -234,7 +235,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -296,7 +297,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc975dfafd532e43b91b92514f6d684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.2
+  scaleFactor: 1.1
+--- !u!114 &7326722335207455262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698869621120155635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f33a374240eab48a598f9ff0fd72dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedSprite: {fileID: 21300000, guid: 23f48da1b07c16846bb126c8bed2c945, type: 3}
+  buttonOnSprite: {fileID: 21300000, guid: 23f48da1b07c16846bb126c8bed2c945, type: 3}
+  deselectedSprite: {fileID: 21300000, guid: 19a324837a43a1245bf92a2ba3984797, type: 3}
+  image: {fileID: 4057659261854006911}
 --- !u!1 &724859303654375937
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +596,7 @@ GameObject:
   - component: {fileID: 3450529320960907085}
   - component: {fileID: 6705672806587604010}
   - component: {fileID: 326341404303000083}
+  - component: {fileID: 6619444435157388971}
   m_Layer: 5
   m_Name: 'None_Button '
   m_TagString: Untagged
@@ -663,7 +681,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -712,7 +730,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc975dfafd532e43b91b92514f6d684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.2
+  scaleFactor: 1.1
+--- !u!114 &6619444435157388971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627445048846133871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f33a374240eab48a598f9ff0fd72dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  buttonOnSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  deselectedSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  image: {fileID: 3450529320960907085}
 --- !u!1 &4552915772244927466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1252,7 @@ GameObject:
   - component: {fileID: 6697363930236338229}
   - component: {fileID: 4925564129699569577}
   - component: {fileID: 9155170216771519730}
-  - component: {fileID: 5247653277764812094}
+  - component: {fileID: 4500651354571596247}
   m_Layer: 5
   m_Name: 'Cook_Canvas '
   m_TagString: Untagged
@@ -1327,7 +1361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
---- !u!114 &5247653277764812094
+--- !u!114 &4500651354571596247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1336,7 +1370,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7982029864324392353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9086450e121c294db97369d467ae835, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ae0d52dd6260d440bcc422846db2b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
@@ -1357,6 +1391,7 @@ GameObject:
   - component: {fileID: 1827305642040863403}
   - component: {fileID: 253900710035984867}
   - component: {fileID: 807430467039073916}
+  - component: {fileID: 1294806718130474011}
   m_Layer: 5
   m_Name: roast_Button
   m_TagString: Untagged
@@ -1381,9 +1416,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -540}
   m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6172369204383918067
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1441,7 +1476,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1503,7 +1538,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc975dfafd532e43b91b92514f6d684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 1.2
+  scaleFactor: 1.1
+--- !u!114 &1294806718130474011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8124340549767624013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f33a374240eab48a598f9ff0fd72dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedSprite: {fileID: 21300000, guid: 8d3f27ed203cc22449e05dcd3d8e0636, type: 3}
+  buttonOnSprite: {fileID: 21300000, guid: 8d3f27ed203cc22449e05dcd3d8e0636, type: 3}
+  deselectedSprite: {fileID: 21300000, guid: 5433f5f086e5c9b4f84d8ce7ce170791, type: 3}
+  image: {fileID: 1919151248845245686}
 --- !u!1 &8229201941650351599
 GameObject:
   m_ObjectHideFlags: 0
