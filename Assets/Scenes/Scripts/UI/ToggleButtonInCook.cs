@@ -3,10 +3,6 @@ using UnityEngine.UI;
 
 public class ToggleButtonInCook : ToggleButtonGroup
 {
-    protected override void Awake()
-    {
-        
-    }
 
     protected override void ReleaseBehavior()
     {

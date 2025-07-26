@@ -7,11 +7,6 @@ public class ToggleButtonGroup : MonoBehaviour
     public Button[] buttons;
     protected Button activeButton = null;
 
-    protected virtual void Awake()
-    {
-        buttons = GetComponentsInChildren<Button>();
-    }
-
     private void Start()
     {
         foreach (Button btn in buttons)
