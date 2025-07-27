@@ -57,6 +57,31 @@ public class RandomDialogue {
     public string spriteID;
 }
 
+
+[System.Serializable] // 커스텀 클래스를 인스펙터창에서 수정하기 위해서 필요
+public class RandomReactionDialogue
+{
+
+    [Tooltip("텍스트")]
+    public string line;
+
+    [Tooltip("대화 유형")]
+    public string type;
+
+    [Tooltip("요구하는 베이스")]
+    public string desireBase;
+
+    [Tooltip("요구하는 주재료")]
+    public string desireMain;
+
+    [Tooltip("요구하는 조리법")]
+    public string desireCook;
+
+    [Tooltip("포맷화 여부")]
+    public string isFormat;
+
+}
+
 [System.Serializable]
 public class DialogueEvent
 {

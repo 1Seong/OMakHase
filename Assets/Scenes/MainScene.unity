@@ -590,6 +590,63 @@ MonoBehaviour:
   _satisfiedType: 0
   _BaseNextButton: {fileID: 988129118}
   _CookNextButton: {fileID: 653305063}
+--- !u!1 &60742411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 60742413}
+  - component: {fileID: 60742412}
+  m_Layer: 0
+  m_Name: SpriteManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &60742412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60742411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd681d6a7000784aa77ea2a25c4aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 0.1
+  randomSpritePool:
+  - {fileID: 3940517801717844717, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: 6587903341090316865, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: -5618986482094654414, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: -7793537674172127478, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: 581630801858025521, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: -7788242175734408475, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: -4882364976151995833, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: -8116202776448379821, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: -47807674642983910, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  targetImage: {fileID: 1525812947}
+  newSprite: {fileID: 0}
+--- !u!4 &60742413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60742411}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1207.1156, y: 350.2582, z: -9.575052}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &80728269
 GameObject:
   m_ObjectHideFlags: 0
@@ -10766,7 +10823,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3940517801717844717, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12454,6 +12511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StoryCSV: {fileID: 4900000, guid: 9e34ae5d9fcea704297793d6fe9ca776, type: 3}
   RandomCSV: {fileID: 4900000, guid: 39b5f91d802863f4696aabb6d285bc03, type: 3}
+  RandomReactionCSV: {fileID: 4900000, guid: 6047e5193be497b46a6800ba37f515ba, type: 3}
   nameUI: {fileID: 599945859}
   dialogueUI: {fileID: 381425572}
   nextUI: {fileID: 805522679}
@@ -13592,6 +13650,7 @@ SceneRoots:
   - {fileID: 34912543}
   - {fileID: 277592860}
   - {fileID: 1225799}
+  - {fileID: 60742413}
   - {fileID: 52828107}
   - {fileID: 1901451289}
   - {fileID: 1283604919}

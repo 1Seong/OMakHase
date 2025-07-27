@@ -12,6 +12,7 @@ using UnityEngine.Windows;
 using UnityEngine.XR;
 using static Ingredient;
 using static UnityEngine.Rendering.DebugUI;
+using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] TextAsset StoryCSV;
     [SerializeField] TextAsset RandomCSV;
+    [SerializeField] TextAsset RandomReactionCSV;
     //string csv_FileName;
 
     [SerializeField] TextMeshProUGUI nameUI;
@@ -31,6 +33,7 @@ public class DialogueManager : MonoBehaviour
 
     Dictionary<string, Dialogue> dialogueDic = new Dictionary<string, Dialogue>();
     Dictionary<int, RandomDialogue> randomDialogueDic = new Dictionary<int, RandomDialogue>();
+    Dictionary<int, RandomReactionDialogue[]> randomReactionDialogueDic = new Dictionary<int, RandomReactionDialogue[]>();
 
     public static bool isFinish = false;
 
@@ -129,6 +132,26 @@ public class DialogueManager : MonoBehaviour
     // 랜덤 대사 다 출력하고 만약 바로 주문 대사가 올 경우에 사용할 플래그
     bool directOrder = false;
 
+
+    // 받침이 없는 글자 목록
+    string[] noBatchimMeatFish = { "육류", "생선류", "돼지고기", "참치", "닭고기", "연어", "소고기" };
+    string[] noBatchimVege = { "과채류", "감자", "토마토", "당근" };
+
+    // 받침이 있는 글자 목록
+    string[] withBatchimMeatFish = { };
+    string[] withBatchimVege = { "버섯" }; // 버섯이 해금되기 전에는 접근하면 안됨
+
+
+    // 받침이 없는 글자 목록
+    string[] noBatchimBase = { "밥요리", "빵요리", "면요리" };
+    string[] noBatchimCook = { "볶음요리", "구운요리" };
+    string[] noBatchimCategory = { "햄버거", "샌드위치", "고로케", "파이", "피자", "국수", "오븐파스타" };
+
+    // 받침이 있는 글자 목록
+    string[] withBatchimBase = { };
+    string[] withBatchimCook = { };
+    string[] withBatchimCategory = { "덮밥", "볶음밥", "구운주먹밥", "볶음면" };
+
     private void Awake()
     {
         Instance = this;
@@ -175,6 +198,18 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < randomDialogues.Length; i++)
         {
             randomDialogueDic.Add(i, randomDialogues[i]);
+        }
+
+
+        RandomReactionDialogue[][] randomReactionDialogues = theParser.RandomReactionParse(RandomReactionCSV);
+
+
+        for (int i = 0; i < randomReactionDialogues.Length; i++)
+        {
+
+            randomReactionDialogueDic.Add(i, randomReactionDialogues[i]);
+            Debug.Log(randomReactionDialogues[i].Length);
+
         }
 
     }
@@ -490,6 +525,10 @@ public class DialogueManager : MonoBehaviour
 
             nameUI.text = dialogueDic[currentID].name;
             dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
+            if (dialogueDic[currentID].spriteID != "") {
+                Debug.Log(dialogueDic[currentID].spriteID);
+                StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(dialogueDic[currentID].spriteID));
+            }
             //Debug.Log(dialogueDic[currentID].line);
         }
 
@@ -510,7 +549,7 @@ public class DialogueManager : MonoBehaviour
 
             // 성격
             Personality personality = personalityMap.ContainsKey(desirePersonality) ? personalityMap[desirePersonality] : Personality.Generous; //성격이 지정되어 있지 않으며 기본값으로 Generous
-
+            /*
             // 받침이 없는 글자 목록
             string[] noBatchimMeatFish = { "육류", "생선류", "돼지고기", "참치", "닭고기", "연어", "소고기" };
             string[] noBatchimVege = { "과채류", "감자", "토마토", "당근" };
@@ -529,7 +568,7 @@ public class DialogueManager : MonoBehaviour
             string[] withBatchimBase = { };
             string[] withBatchimCook = { };
             string[] withBatchimCategory = { "덮밥", "볶음밥", "구운주먹밥", "볶음면" };
-
+            */
             switch (randomDialogues[indexForRandom].desireMain)
             {
                 case "$$":
@@ -814,6 +853,7 @@ public class DialogueManager : MonoBehaviour
             dialogueUI.text = currentDialogue.Replace('`', ',');
             nextUI.gameObject.SetActive(true);
             skipUI.gameObject.SetActive(false);
+            SpriteManager.Instance.GetRandomSprite();
             /*
             Debug.Log("********* " + System.Guid.NewGuid());
             Debug.Log("indexForRandom: " + indexForRandom + " | " + System.Guid.NewGuid());
@@ -933,5 +973,74 @@ public class DialogueManager : MonoBehaviour
             }
         }
         return unlocked;
+    }
+
+    public string getRandomReaction(int index)
+    {
+
+        int randomIndex = UnityEngine.Random.Range(0, randomReactionDialogueDic[index].Length);
+
+        string line = randomReactionDialogueDic[index][randomIndex].line;
+
+
+        if (line.Contains("$$") || line.Contains("%%"))
+        {
+
+
+            if (CustomerManager.instance.currentCustomer.meatfish != MeatFish.noCondition || CustomerManager.instance.currentCustomer.vege != Vege.noCondition || CustomerManager.instance.currentCustomer.mainIngredCategory != Main.noCondition)
+            {
+                if (line.Contains("$$"))
+                {
+                    string[] tem = noBatchimMeatFish.Concat(noBatchimVege).ToArray();
+                    for (int i = 0; i < tem.Length; i++)
+                    {
+                        if (dialogueUI.text.Contains(tem[i]))
+                        {
+                            line = line.Replace("$$", tem[i]);
+                            break;
+                        }
+                    }
+                }
+
+                else if (line.Contains("%%"))
+                {
+                    string[] tem = withBatchimMeatFish.Concat(withBatchimVege).ToArray();
+                    for (int i = 0; i < tem.Length; i++)
+                    {
+                        if (dialogueUI.text.Contains(tem[i]))
+                        {
+                            line = line.Replace("%%", tem[i]);
+                            break;
+                        }
+                    }
+                }
+
+                // 치환한 단어가 tem에 없으면 다시 출력할 반응 대사 선택
+                while (line.Contains("$$") || line.Contains("%%"))
+                {
+                    randomIndex = UnityEngine.Random.Range(0, randomReactionDialogueDic[index].Length);
+                    line = randomReactionDialogueDic[index][randomIndex].line;
+
+                }
+            }
+            //CustomerManager.instance.orderText.text
+
+            else
+            {
+                while (line.Contains("$$") || line.Contains("%%"))
+                {
+                    randomIndex = UnityEngine.Random.Range(0, randomReactionDialogueDic[index].Length);
+                    line = randomReactionDialogueDic[index][randomIndex].line;
+
+                }
+            }
+        }
+
+        if (line.Contains('`')) { 
+            line = line.Replace('`', ',');
+        }
+
+        return line;
+
     }
 }
