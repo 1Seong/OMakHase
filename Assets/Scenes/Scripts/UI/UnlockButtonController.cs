@@ -11,12 +11,12 @@ public class UnlockButtonController : MonoBehaviour
 
     
 
-    public void UnlockButton(int i, int m)
+    public void UnlockButton(int childIndex, int m)
     {
         //Debug.Log("UnlockButton invoked");
         if ((int)mode != m) return;
 
-        var child = transform.GetChild(i);
+        var child = transform.GetChild(childIndex);
         child.gameObject.SetActive(true);
     }
 

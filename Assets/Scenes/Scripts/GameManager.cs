@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         reputation = 0;
         money = 0;
 
-        UnlockManager.instance.ResetData();
+        UnlockManager.instance.ResetData(); // this is full reset (deletes all playerprefs data)
 
     }
 

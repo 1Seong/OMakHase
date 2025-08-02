@@ -12,7 +12,7 @@ public class UnlockManager : MonoBehaviour
 
     public event Action<int, int> ButtonUnlockAction; // < child id, mode >
                                                       // mode - base : 0, cook : 1, MeatFish : 2, Vege : 3
-    public event Action OnUnlockAction;
+    public event Action OnUnlockAction; // for the actions when unlocked for the first time
     public event Action ClearAction;
 
     public static UnlockManager instance
