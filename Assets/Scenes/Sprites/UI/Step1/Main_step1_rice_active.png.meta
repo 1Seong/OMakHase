@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Main_step1_rice_active_0: 4532107841663115197
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

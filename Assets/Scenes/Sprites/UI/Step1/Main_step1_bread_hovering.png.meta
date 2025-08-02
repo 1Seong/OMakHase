@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Main_step1_bread_hovering_0: 748613788366357513
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

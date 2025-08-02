@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Main_step1_noodle_default_0: -8522783100354974345
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

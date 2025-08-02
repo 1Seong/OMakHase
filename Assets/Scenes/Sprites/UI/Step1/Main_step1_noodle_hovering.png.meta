@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Main_step1_noodle_hovering_0: 2596817212666152352
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Main_step1_rice_hovering_0: -9212536002346500406
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
