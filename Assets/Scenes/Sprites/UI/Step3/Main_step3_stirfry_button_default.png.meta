@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7f7303b2b92c8cb47889b11e1445549e
+guid: 9174d00a941a8ab40a65c6ce85ce93c8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4937868692925532652
-    second: Main_step1_0
+      213: -5402066927413304769
+    second: Main_step3_stirfry_button_default_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,8 +49,8 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 9
+  spritePivot: {x: 0.33, y: 0.465}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Main_step1_0
+      name: Main_step3_stirfry_button_default_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1920
-        height: 1080
+        x: 599
+        y: 467
+        width: 70
+        height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce9495d0a65d68440800000000000000
-      internalID: 4937868692925532652
+      spriteID: f32e4aa30c00805b0800000000000000
+      internalID: -5402066927413304769
       vertices: []
       indices: 
       edges: []
@@ -126,7 +126,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Main_step1_0: 4937868692925532652
+      Main_step3_stirfry_button_default_0: -5402066927413304769
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

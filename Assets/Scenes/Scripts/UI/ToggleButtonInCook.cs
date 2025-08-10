@@ -6,11 +6,17 @@ public class ToggleButtonInCook : ToggleButtonGroup
 
     protected override void ReleaseBehavior()
     {
-        activeButton.GetComponent<ButtonSprites>().OnDeselected();
+        if(activeButton.GetComponent<ButtonSprites>() is not null)
+            activeButton.GetComponent<ButtonSprites>().OnDeselected();
+        else if(activeButton.GetComponent<ButtonSpritesMultiple>() is not null)
+            activeButton.GetComponent<ButtonSpritesMultiple>().OnDeselected();
     }
 
     protected override void ButtonSelectedBehavior(Button clickedButton)
     {
-        clickedButton.GetComponent<ButtonSprites>().OnSelected();
+        if (clickedButton.GetComponent<ButtonSprites>() is not null)
+            clickedButton.GetComponent<ButtonSprites>().OnSelected();
+        else if (clickedButton.GetComponent<ButtonSpritesMultiple>() is not null)
+            clickedButton.GetComponent<ButtonSpritesMultiple>().OnSelected();
     }
 }

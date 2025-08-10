@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 7f7303b2b92c8cb47889b11e1445549e
+guid: 8121d8a20889ce84dbddbf5db109c1da
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4937868692925532652
-    second: Main_step1_0
+      213: -4097516054502071830
+    second: Main_step3_stirfry_active_0
+  - first:
+      213: 3313837275130179660
+    second: Main_step3_stirfry_active_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Main_step1_0
+      name: Main_step3_stirfry_active_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1920
-        height: 1080
+        x: 475
+        y: 592
+        width: 413
+        height: 142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce9495d0a65d68440800000000000000
-      internalID: 4937868692925532652
+      spriteID: ae1a1f5abd2b227c0800000000000000
+      internalID: -4097516054502071830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_step3_stirfry_active_1
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 467
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c40359bb17d1dfd20800000000000000
+      internalID: 3313837275130179660
       vertices: []
       indices: 
       edges: []
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Main_step1_0: 4937868692925532652
+      Main_step3_stirfry_active_0: -4097516054502071830
+      Main_step3_stirfry_active_1: 3313837275130179660
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
