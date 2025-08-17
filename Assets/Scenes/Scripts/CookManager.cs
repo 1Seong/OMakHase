@@ -43,6 +43,7 @@ public class CookManager : MonoBehaviour
 
     private RectTransform _DialogueCanvas;
 
+    [SerializeField]
     private RectTransform _SkipButton;
 
     [SerializeField]
@@ -261,7 +262,7 @@ public class CookManager : MonoBehaviour
         //Debug.Log(_OrderCanvas);
 
         _DialogueCanvas = GameManager.instance.Dialogue_Canvas.GetChild(0).GetComponent<RectTransform>();
-        _SkipButton = GameManager.instance.Dialogue_Canvas.GetChild(0).GetChild(3).GetComponent<RectTransform>();
+        //_SkipButton = GameManager.instance.Dialogue_Canvas.GetChild(0).GetChild(3).GetComponent<RectTransform>();
 
     }
 
