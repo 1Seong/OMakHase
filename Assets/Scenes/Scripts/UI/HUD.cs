@@ -31,7 +31,7 @@ public class HUD : MonoBehaviour
 
                 break;
             case InfoType.ReputationRising:
-                myText.text = string.Format("평판이 {0:F0} 증가했습니다. ->", CookManager.instance.ReputationRise);
+                myText.text = string.Format("평판이 {0:F0} 증가했습니다.", CookManager.instance.ReputationRise);
                 break;
 
         }
