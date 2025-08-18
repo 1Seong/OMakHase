@@ -159,6 +159,8 @@ public class DialogueManager : MonoBehaviour
     {
         Instance = this;
 
+        MultipleTextSetEvent += multipleskipUI.GetComponent<MultipleSkipController>().SetText;
+
         categoryMap = new Dictionary<string, CategoryData>
         {
             {"µ¤¹ä\r", RecipeManager.instance.getCategoryListDatas()[0].categoryData },

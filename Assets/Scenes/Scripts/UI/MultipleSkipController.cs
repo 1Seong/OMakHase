@@ -20,12 +20,13 @@ public class MultipleSkipController : MonoBehaviour
         tmps = GetComponentsInChildren<TextMeshProUGUI>();
     }
 
+    /*
     private void Start()
     {
         DialogueManager.Instance.MultipleTextSetEvent += setText;
     }
-
-    private void setText(string text1, string text2)
+    */
+    public void SetText(string text1, string text2)
     {
         var maxLength = text1.Length > text2.Length ? text1.Length : text2.Length;
 
@@ -68,6 +69,6 @@ public class MultipleSkipController : MonoBehaviour
         for (int i = 0; i != num; i++)
             text1 += "°¡";
 
-        setText(text1, "°¡");
+        SetText(text1, "°¡");
     }
 }
