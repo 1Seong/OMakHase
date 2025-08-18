@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     public event Action<string> DialogueSetEvent;
+    public event Action<string, string> MultipleTextSetEvent;
 
     [SerializeField] TextAsset StoryCSV;
     [SerializeField] TextAsset RandomCSV;
@@ -442,19 +443,23 @@ public class DialogueManager : MonoBehaviour
                     multipleskipUI.gameObject.SetActive(true);
                     skipUI.gameObject.SetActive(false);
 
-                    GameObject firstChoose = multipleskipUI.GetChild(0).gameObject.GetComponent<RectTransform>().GetChild(0).gameObject;
+                    var firstChoose = default(string);
                     if (dialogueDic[chooseTmp[0]].line[0] == '@') {
-                        firstChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[0]].line.Substring(1, dialogueDic[chooseTmp[0]].line.Length - 1);
+                        firstChoose = dialogueDic[chooseTmp[0]].line.Substring(1, dialogueDic[chooseTmp[0]].line.Length - 1);
                     }
                     else
-                        firstChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[0]].line;
-                    GameObject secondChoose = multipleskipUI.GetChild(1).gameObject.GetComponent<RectTransform>().GetChild(0).gameObject;
+                        firstChoose = dialogueDic[chooseTmp[0]].line;
+
+                    var secondChoose = default(string);
                     if (dialogueDic[chooseTmp[1]].line[0] == '%')
                     {
-                        secondChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[1]].line.Substring(1, dialogueDic[chooseTmp[1]].line.Length - 1);
+                        secondChoose = dialogueDic[chooseTmp[1]].line.Substring(1, dialogueDic[chooseTmp[1]].line.Length - 1);
                     }
                     else
-                        secondChoose.GetComponent<TextMeshProUGUI>().text = dialogueDic[chooseTmp[1]].line;
+                        secondChoose = dialogueDic[chooseTmp[1]].line;
+
+                    MultipleTextSetEvent(firstChoose, secondChoose);
+
                     return;
                 }
 

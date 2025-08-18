@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -103,10 +103,10 @@ TextureImporter:
       name: Text_ChoiceB_0
       rect:
         serializedVersion: 2
-        x: 1419
-        y: 387
-        width: 482
-        height: 286
+        x: 1392
+        y: 384
+        width: 174
+        height: 348
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,6 +117,50 @@ TextureImporter:
       bones: []
       spriteID: 455ecccde743fad10800000000000000
       internalID: 2138986067499214164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text_ChoiceB_1
+      rect:
+        serializedVersion: 2
+        x: 1566
+        y: 384
+        width: 174
+        height: 348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63096094d02abfe4aa52ca099e2024f7
+      internalID: -772818064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text_ChoiceB_2
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 384
+        width: 174
+        height: 348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58e9fda34f0672446af299f877743002
+      internalID: 1490345436
       vertices: []
       indices: 
       edges: []
@@ -136,6 +180,8 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Text_ChoiceB_0: 2138986067499214164
+      Text_ChoiceB_1: -772818064
+      Text_ChoiceB_2: 1490345436
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

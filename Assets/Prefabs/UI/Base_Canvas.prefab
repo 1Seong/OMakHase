@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 7360868071306132656}
   - component: {fileID: 4119646594094886525}
   - component: {fileID: 9160646840355161708}
+  - component: {fileID: 2281791284620565892}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -144,6 +145,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2281791284620565892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866906059144137218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfb563cba76cef4cb45907d657a02e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultBackground: {fileID: 21300000, guid: 7f7303b2b92c8cb47889b11e1445549e, type: 3}
+  day5Background: {fileID: 21300000, guid: 67a5a5ea9daad554bb288bfb8c156d0e, type: 3}
 --- !u!1 &5046040686820520574
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleFactor: 1.1
+  TargetImages: []
 --- !u!114 &2139250628185353326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +442,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8241142377495540569
 RectTransform:
   m_ObjectHideFlags: 0
@@ -672,6 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleFactor: 1.1
+  TargetImages: []
 --- !u!114 &7584070889704525478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,6 +940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleFactor: 1.1
+  TargetImages: []
 --- !u!114 &6394069100788591389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,3 +1129,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleFactor: 1.1
+  TargetImages: []
