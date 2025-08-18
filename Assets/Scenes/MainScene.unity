@@ -316,6 +316,7 @@ MonoBehaviour:
   _reputationRise: 0
   _requestSatisfied: 0
   _satisfiedType: 0
+  _SkipButton: {fileID: 2144770027}
   _BaseNextButton: {fileID: 2103240076}
   _CookNextButton: {fileID: 365009358}
 --- !u!1 &60742411
@@ -1615,6 +1616,7 @@ GameObject:
   - component: {fileID: 381425571}
   - component: {fileID: 381425573}
   - component: {fileID: 381425572}
+  - component: {fileID: 381425574}
   m_Layer: 5
   m_Name: Dialogue
   m_TagString: Untagged
@@ -1740,6 +1742,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381425570}
   m_CullTransparentMesh: 1
+--- !u!114 &381425574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381425570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16bbe503e0116942aa42902f1828084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeWriterEffectActive: 0
 --- !u!1 &451907170 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1971837499483977135, guid: 3854c4df7c53cd748a9af02298fff2b3, type: 3}

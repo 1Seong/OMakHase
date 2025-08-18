@@ -18,6 +18,8 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
+    public event Action<string> DialogueSetEvent;
+
     [SerializeField] TextAsset StoryCSV;
     [SerializeField] TextAsset RandomCSV;
     [SerializeField] TextAsset RandomReactionCSV;
@@ -491,7 +493,8 @@ public class DialogueManager : MonoBehaviour
                             Debug.LogWarning("해당되는 반응 대사가 없습니다.");
 
                         nameUI.text = dialogueDic[currentID].name;
-                        dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
+                        var text2 = dialogueDic[currentID].line.Replace('`', ',');
+                        dialogueSet(text2);
 
                         return;
                     }
@@ -524,7 +527,9 @@ public class DialogueManager : MonoBehaviour
             }
 
             nameUI.text = dialogueDic[currentID].name;
-            dialogueUI.text = dialogueDic[currentID].line.Replace('`', ',');
+            var text3 = dialogueDic[currentID].line.Replace('`', ',');
+            dialogueSet(text3);
+
             if (dialogueDic[currentID].spriteID != "") {
                 Debug.Log(dialogueDic[currentID].spriteID);
                 StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(dialogueDic[currentID].spriteID));
@@ -850,7 +855,9 @@ public class DialogueManager : MonoBehaviour
             Debug.Log(hateCategory + " | " + System.Guid.NewGuid());
             */
             nameUI.text = "손님";
-            dialogueUI.text = currentDialogue.Replace('`', ',');
+            var text4 = currentDialogue.Replace('`', ',');
+            dialogueSet(text4);
+
             nextUI.gameObject.SetActive(true);
             skipUI.gameObject.SetActive(false);
             SpriteManager.Instance.GetRandomSprite();
@@ -1042,5 +1049,10 @@ public class DialogueManager : MonoBehaviour
 
         return line;
 
+    }
+
+    private void dialogueSet(string dlg)
+    {
+        DialogueSetEvent!.Invoke(dlg);
     }
 }

@@ -17,6 +17,8 @@ public class CookManager : MonoBehaviour
 
     public Ingredient.Cook cook;
 
+    public event Action<string> DialogueSetEvent;
+
     [SerializeField, HideInInspector]
     private int _reputationRise;  // 인스펙터에서 수정 불가
 
@@ -158,17 +160,20 @@ public class CookManager : MonoBehaviour
                 if (satisfiedType == Result.positive)
                 {
                     //DialogueManager.Instance.getDialogueUI.text = "맛있다";
-                    DialogueManager.Instance.getDialogueUI.text = DialogueManager.Instance.getRandomReaction(0);
+                    var text = DialogueManager.Instance.getRandomReaction(0);
+                    DialogueSetEvent!.Invoke(text);
                 }
                 else if (satisfiedType == Result.neutral)
                 {
                     //DialogueManager.Instance.getDialogueUI.text = "먹을만 하다";
-                    DialogueManager.Instance.getDialogueUI.text = DialogueManager.Instance.getRandomReaction(1);
+                    var text = DialogueManager.Instance.getRandomReaction(1);
+                    DialogueSetEvent!.Invoke(text);
                 }
                 else if (satisfiedType == Result.negative)
                 {
                     //DialogueManager.Instance.getDialogueUI.text = "맛없다";
-                    DialogueManager.Instance.getDialogueUI.text = DialogueManager.Instance.getRandomReaction(2);
+                    var text = DialogueManager.Instance.getRandomReaction(2);
+                    DialogueSetEvent!.Invoke(text);
                 }
                 else
                     Debug.Log("오류");
