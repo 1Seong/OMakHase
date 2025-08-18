@@ -14,6 +14,9 @@ public class MultipleSkipController : MonoBehaviour
     [SerializeField]
     private Image middle;
 
+    [SerializeField]
+    private bool horizontalScaleActive;
+
     private void Awake()
     {
         buttons = GetComponentsInChildren<Button>();
@@ -30,7 +33,8 @@ public class MultipleSkipController : MonoBehaviour
     {
         var maxLength = text1.Length > text2.Length ? text1.Length : text2.Length;
 
-        horizontalScale(maxLength);
+        if(horizontalScaleActive)
+            horizontalScale(maxLength);
 
         tmps[0].text = text1;
         tmps[1].text = text2;

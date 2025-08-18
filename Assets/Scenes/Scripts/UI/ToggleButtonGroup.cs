@@ -1,11 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ToggleButtonGroup : MonoBehaviour
 {
+    public UnityEvent ActiveButtonSetUnityEvent;
+    public UnityEvent ActiveButtonNoneUnityEvent;
+
     public Button[] buttons;
-    protected Button activeButton = null;
+    private Button _activeButton = null;
+    protected Button ActiveButton
+    {
+        get => _activeButton;
+        set
+        {
+            _activeButton = value;
+            if(value is null)
+            {
+                ActiveButtonNoneUnityEvent?.Invoke();
+            }
+            else
+            {
+                ActiveButtonSetUnityEvent?.Invoke(); 
+            }
+        }
+    }
 
     private void Start()
     {
@@ -17,18 +37,18 @@ public class ToggleButtonGroup : MonoBehaviour
 
     private void ToggleButton(Button clickedButton)
     {
-        if (activeButton != null)
+        if (ActiveButton != null)
             ReleaseBehavior();
 
         ButtonSelectedBehavior(clickedButton);
-        activeButton = clickedButton;
+        ActiveButton = clickedButton;
     }
 
     // Template method pattern
 
     protected virtual void ReleaseBehavior()
     {
-        activeButton.interactable = true;
+        ActiveButton.interactable = true;
     }
 
     protected virtual void ButtonSelectedBehavior(Button clickedButton)
@@ -40,6 +60,6 @@ public class ToggleButtonGroup : MonoBehaviour
     {
         ReleaseBehavior();
 
-        activeButton = null;
+        ActiveButton = null;
     }
 }

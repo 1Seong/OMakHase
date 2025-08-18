@@ -6,7 +6,7 @@ public class ToggleIndex : ToggleButtonGroup
 
     protected override void ReleaseBehavior()
     {
-        activeButton.interactable = true;
+        ActiveButton.interactable = true;
 
         //activeButton.transform.Translate(-0.2f, 0f, 0f);
         //activeButton.transform.localScale = new Vector3(1f, 1f, 1f);
