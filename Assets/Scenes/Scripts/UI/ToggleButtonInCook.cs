@@ -19,4 +19,6 @@ public class ToggleButtonInCook : ToggleButtonGroup
         else if (clickedButton.GetComponent<ButtonSpritesMultiple>() is not null)
             clickedButton.GetComponent<ButtonSpritesMultiple>().OnSelected();
     }
+
+    
 }

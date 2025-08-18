@@ -35,4 +35,11 @@ public class ToggleButtonGroup : MonoBehaviour
     {
         clickedButton.interactable = false;
     }
+
+    public virtual void Clear()
+    {
+        ReleaseBehavior();
+
+        activeButton = null;
+    }
 }
