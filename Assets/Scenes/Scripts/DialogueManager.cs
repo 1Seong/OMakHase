@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
 
     public event Action<string> DialogueSetEvent;
     public event Action<string, string> MultipleTextSetEvent;
-    public event Action DialogueBackgroundSetEvent;
+    public event Action SpriteSetEvent;
 
     [SerializeField] TextAsset StoryCSV;
     [SerializeField] TextAsset RandomCSV;
@@ -269,7 +269,7 @@ public class DialogueManager : MonoBehaviour
             {
                 indexForRandom = 0;
                 _isRandom = false;
-                DialogueBackgroundSetEvent();
+                SpriteSetEvent();
                 _currentID = backID;
 
 
@@ -291,7 +291,7 @@ public class DialogueManager : MonoBehaviour
             if (currentID.Contains("GTR") && _isRandom == false)
             {
                 _isRandom = true;
-                DialogueBackgroundSetEvent();
+                SpriteSetEvent();
                 backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
 
                 int len;
