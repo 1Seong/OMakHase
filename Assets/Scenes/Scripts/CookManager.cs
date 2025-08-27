@@ -4,6 +4,7 @@ using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Collections.Specialized.BitVector32;
 
 public class CookManager : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class CookManager : MonoBehaviour
 
     public int ReputationRise => _reputationRise;
 
-
     [SerializeField]
     bool _requestSatisfied;
     public bool requestSatisfied { get => _requestSatisfied; }
@@ -33,7 +33,6 @@ public class CookManager : MonoBehaviour
     [SerializeField]
     private Result _satisfiedType;
     public Result satisfiedType { get => _satisfiedType; }
-    public void setSatisfiedType(Result type) { _satisfiedType = type; }
 
     private RectTransform _OrderCanvas;
 
@@ -259,9 +258,9 @@ public class CookManager : MonoBehaviour
 
         _OrderCanvas = GameManager.instance.Order_Canvas.GetComponent<RectTransform>();
         //Debug.Log(_OrderCanvas);
-        _NextButton = GameManager.instance.Order_Canvas.transform.GetChild(1).GetComponent<RectTransform>();
+        _NextButton = GameManager.instance.Order_Canvas.transform.GetChild(2).GetComponent<RectTransform>();
         //Debug.Log(_NextButton);
-        _OrderButton = GameManager.instance.Order_Canvas.transform.GetChild(2).GetComponent<RectTransform>();
+        _OrderButton = GameManager.instance.Order_Canvas.transform.GetChild(3).GetComponent<RectTransform>();
         //Debug.Log(_OrderButton);
         _CookCanvas = GameManager.instance.Cook_Canvas.GetComponent<RectTransform>();
         //Debug.Log(_OrderCanvas);
@@ -269,6 +268,19 @@ public class CookManager : MonoBehaviour
         _DialogueCanvas = GameManager.instance.Dialogue_Canvas.GetChild(0).GetComponent<RectTransform>();
         //_SkipButton = GameManager.instance.Dialogue_Canvas.GetChild(0).GetChild(3).GetComponent<RectTransform>();
 
+    }
+
+    public void setSatisfiedType(Result type)
+    {
+
+        if (type == Result.positive)
+            DialogueManager.Instance.CustomerReactionSetEvent?.Invoke("Response_positive");
+        else if (type == Result.neutral)
+            DialogueManager.Instance.CustomerReactionSetEvent?.Invoke("Response_neutral");
+        else
+            DialogueManager.Instance.CustomerReactionSetEvent?.Invoke("Response_negative");
+
+        _satisfiedType = type;
     }
 
     // Update is called once per frame

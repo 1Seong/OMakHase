@@ -21,6 +21,8 @@ public class DialogueManager : MonoBehaviour
     public event Action<string> DialogueSetEvent;
     public event Action<string, string> MultipleTextSetEvent;
     public event Action SpriteSetEvent;
+    // 조리 결과에 따른 플레이어 반응 이벤트
+    public Action <string>CustomerReactionSetEvent;
 
     [SerializeField] TextAsset StoryCSV;
     [SerializeField] TextAsset RandomCSV;
@@ -32,8 +34,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] RectTransform nextUI;
     [SerializeField] RectTransform skipUI;
     [SerializeField] RectTransform multipleskipUI;
+    [SerializeField] RectTransform reactionUI;
 
     public TextMeshProUGUI getDialogueUI { get { return dialogueUI; } }
+    public RectTransform getReactionUI { get { return reactionUI; } }
 
     Dictionary<string, Dialogue> dialogueDic = new Dictionary<string, Dialogue>();
     Dictionary<int, RandomDialogue> randomDialogueDic = new Dictionary<int, RandomDialogue>();
@@ -161,6 +165,7 @@ public class DialogueManager : MonoBehaviour
         Instance = this;
 
         MultipleTextSetEvent += multipleskipUI.GetComponent<MultipleSkipController>().SetText;
+        CustomerReactionSetEvent += reactionUI.GetComponent<CustomerReactionChangeController>().setReactionImage;
 
         categoryMap = new Dictionary<string, CategoryData>
         {
@@ -222,6 +227,8 @@ public class DialogueManager : MonoBehaviour
 
     public void GetNextDialogue()
     {
+        
+
         _pastID = _currentID;
         string[] tmp = _currentID.Split(new char[] { '_' });
         //else
@@ -563,26 +570,7 @@ public class DialogueManager : MonoBehaviour
 
             // 성격
             Personality personality = personalityMap.ContainsKey(desirePersonality) ? personalityMap[desirePersonality] : Personality.Generous; //성격이 지정되어 있지 않으며 기본값으로 Generous
-            /*
-            // 받침이 없는 글자 목록
-            string[] noBatchimMeatFish = { "육류", "생선류", "돼지고기", "참치", "닭고기", "연어", "소고기" };
-            string[] noBatchimVege = { "과채류", "감자", "토마토", "당근" };
 
-            // 받침이 있는 글자 목록
-            string[] withBatchimMeatFish = { };
-            string[] withBatchimVege = { "버섯" }; // 버섯이 해금되기 전에는 접근하면 안됨
-
-
-            // 받침이 없는 글자 목록
-            string[] noBatchimBase = { "밥요리", "빵요리", "면요리" };
-            string[] noBatchimCook = { "볶음요리", "구운요리" };
-            string[] noBatchimCategory = { "햄버거", "샌드위치", "고로케", "파이", "피자", "국수", "오븐파스타" };
-
-            // 받침이 있는 글자 목록
-            string[] withBatchimBase = { };
-            string[] withBatchimCook = { };
-            string[] withBatchimCategory = { "덮밥", "볶음밥", "구운주먹밥", "볶음면" };
-            */
             switch (randomDialogues[indexForRandom].desireMain)
             {
                 case "$$":
@@ -854,15 +842,7 @@ public class DialogueManager : MonoBehaviour
                 Debug.Log("오류");
                 CustomerManager.instance.GetOrder(personality, false, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
             }
-            /*
-            Debug.Log(desireMeatfish + " | " + System.Guid.NewGuid());
-            Debug.Log(desireVege + " | " + System.Guid.NewGuid());
-            Debug.Log(desireCategory + " | " + System.Guid.NewGuid());
-            Debug.Log(hateMeatFish + " | " + System.Guid.NewGuid());
-            Debug.Log(hateVege + " | " + System.Guid.NewGuid());
-            Debug.Log(hateBase + " | " + System.Guid.NewGuid());
-            Debug.Log(hateCategory + " | " + System.Guid.NewGuid());
-            */
+
             nameUI.text = "손님";
             var text4 = currentDialogue.Replace('`', ',');
             dialogueSet(text4);
@@ -870,12 +850,6 @@ public class DialogueManager : MonoBehaviour
             nextUI.gameObject.SetActive(true);
             skipUI.gameObject.SetActive(false);
             SpriteManager.Instance.GetRandomSprite();
-            /*
-            Debug.Log("********* " + System.Guid.NewGuid());
-            Debug.Log("indexForRandom: " + indexForRandom + " | " + System.Guid.NewGuid());
-            Debug.Log("dialogueUI.text: " + dialogueUI.text + " | " + System.Guid.NewGuid());
-            Debug.Log("********* " + System.Guid.NewGuid());
-            */
 
             indexForRandom++;
             _Customer++;
