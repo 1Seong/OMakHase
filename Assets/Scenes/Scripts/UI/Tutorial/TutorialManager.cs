@@ -10,11 +10,12 @@ public class TutorialManager : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
+        
     }
 
     private void Start()
     {
-        if (PlayerPrefs.HasKey("Tutorial") && PlayerPrefs.GetInt("Turoail") == 1)
+        if (PlayerPrefs.HasKey("Tutorial") && PlayerPrefs.GetInt("Tutorial") == 1)
             return;
         else
             button.onClick.AddListener(CheckTutorialCondition);
@@ -22,10 +23,8 @@ public class TutorialManager : MonoBehaviour
 
     public void CheckTutorialCondition()
     {
-        //Debug
-        ResetTutorial();
 
-        if (PlayerPrefs.HasKey("Tutorial") && PlayerPrefs.GetInt("Turoail") == 1)
+        if (PlayerPrefs.HasKey("Tutorial") && PlayerPrefs.GetInt("Tutorial") == 1)
             button.onClick.RemoveListener(CheckTutorialCondition);
         else
             startTutorial();

@@ -14,9 +14,9 @@ public class TutorialBase : MonoBehaviour
     }
 
     //public TutorialDirection Direction;
-    public GameObject StartTutorialPanel;
-    public ButtonAndEvent[] ButtonAndEvents;
-    public ButtonAndEvent FinishEvent;
+    [SerializeField] private GameObject StartTutorialPanel;
+    [SerializeField]private ButtonAndEvent[] ButtonAndEvents;
+    [SerializeField] private ButtonAndEvent FinishEvent;
 
 
     private void Start()

@@ -46,6 +46,10 @@ public class GameManager : MonoBehaviour
     {
         TutorialActive = b;
     }
+    public void SaveTutorialFinish()
+    {
+        PlayerPrefs.SetInt("Tutorial", 1);
+    }
 
     [SerializeField]
     private RectTransform _Base_Canvas;
