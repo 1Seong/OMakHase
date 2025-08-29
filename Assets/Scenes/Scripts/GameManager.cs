@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
     //Tutorial
     [Header("Tutorial")]
     public bool TutorialActive = false;
+    public void SetTutorialActive(bool b)
+    {
+        TutorialActive = b;
+    }
 
     [SerializeField]
     private RectTransform _Base_Canvas;

@@ -58,6 +58,9 @@ public class ToggleButtonGroup : MonoBehaviour
 
     public virtual void Clear()
     {
+        if (ActiveButton == null)
+            return;
+
         ReleaseBehavior();
 
         ActiveButton = null;

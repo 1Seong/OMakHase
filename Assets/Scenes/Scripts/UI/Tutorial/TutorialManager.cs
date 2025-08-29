@@ -33,7 +33,7 @@ public class TutorialManager : MonoBehaviour
 
     private void startTutorial()
     {
-        PlayerPrefs.SetInt("Tutorial", 1);
+        //PlayerPrefs.SetInt("Tutorial", 1);
         GameManager.instance.TutorialActive = true;
     }
 

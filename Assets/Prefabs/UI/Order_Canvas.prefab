@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8955174967120607464}
   - component: {fileID: 3252400156870169402}
   - component: {fileID: 8411527744567230899}
+  - component: {fileID: 970928099664797155}
   m_Layer: 5
   m_Name: 'Next_Button '
   m_TagString: Untagged
@@ -173,6 +174,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CookManager, Assembly-CSharp
+        m_MethodName: initCook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &8955174967120607464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +229,18 @@ MonoBehaviour:
   Sprites:
   - {fileID: 21300000, guid: e67302bf118d56f4c82c36efd3b82067, type: 3}
   - {fileID: 21300000, guid: 6c28ef029aafee7438a931bff325cdfa, type: 3}
+--- !u!114 &970928099664797155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171516740114325853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3da5e033d3b23f4a9245e28530bb3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868725140680825313
 GameObject:
   m_ObjectHideFlags: 0

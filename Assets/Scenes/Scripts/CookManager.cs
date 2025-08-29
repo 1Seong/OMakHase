@@ -77,10 +77,10 @@ public class CookManager : MonoBehaviour
     }
 
     public void initCook() { 
-        meatfish = Ingredient.MeatFish.noCondition;
-        vege = Ingredient.Vege.noCondition;
+        meatfish = Ingredient.MeatFish.none;
+        vege = Ingredient.Vege.none;
         baseIngred = Ingredient.Base.noCondition;
-        cook = Ingredient.Cook.noCondition;
+        cook = Ingredient.Cook.none;
     }
 
 
