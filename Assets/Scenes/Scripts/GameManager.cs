@@ -39,6 +39,10 @@ public class GameManager : MonoBehaviour
     private RectTransform _Order_Canvas;
     public RectTransform Order_Canvas { get => _Order_Canvas; }
 
+    //Tutorial
+    [Header("Tutorial")]
+    public bool TutorialActive = false;
+
     [SerializeField]
     private RectTransform _Base_Canvas;
     public RectTransform Base_Canvas { get => _Base_Canvas; }
