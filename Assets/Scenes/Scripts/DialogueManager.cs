@@ -198,8 +198,8 @@ public class DialogueManager : MonoBehaviour
         }
         isFinish = true;
 
-        nameUI.text = dialogueDic[currentID].name;
-        dialogueUI.text = dialogueDic[currentID].line.Replace('`', ','); ;
+        //nameUI.text = dialogueDic[currentID].name;
+        //dialogueUI.text = dialogueDic[currentID].line.Replace('`', ','); ;
         //Debug.Log(dialogueDic[currentID].line);
 
 
@@ -223,6 +223,12 @@ public class DialogueManager : MonoBehaviour
 
         }
 
+    }
+
+    private void Start()
+    {
+        nameUI.text = dialogueDic[currentID].name;
+        dialogueSet(dialogueDic[currentID].line.Replace('`', ','));
     }
 
     public void GetNextDialogue()
