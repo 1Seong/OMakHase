@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    // 날짜 변경시의 이벤트
+    public event Action DayPassEvent;
+
     [Header("PlayerInfo")]
     // 플레이어 이름
     public string player_name;
@@ -38,7 +41,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private RectTransform _Order_Canvas;
     public RectTransform Order_Canvas { get => _Order_Canvas; }
-
+    [SerializeField]
+    private RectTransform _Fade_Panel;
+    public RectTransform Fade_Panel { get => _Fade_Panel; }
     //Tutorial
     [Header("Tutorial")]
     public bool TutorialActive = false;
@@ -99,6 +104,9 @@ public class GameManager : MonoBehaviour
             customerNum++;
         }
         else {
+            Fade_Panel.gameObject.SetActive(true);
+            DayPassEvent();
+
             day++;
             if (GameManager.instance.day == 2)
             {
