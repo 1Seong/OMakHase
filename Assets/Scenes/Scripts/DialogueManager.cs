@@ -231,54 +231,44 @@ public class DialogueManager : MonoBehaviour
         dialogueSet(dialogueDic[currentID].line.Replace('`', ','));
     }
 
-    public void GetNextDialogue()
+    private void GetStoryDialogueID()
     {
-        
-
-        _pastID = _currentID;
-        string[] tmp = _currentID.Split(new char[] { '_' });
-        //else
+        // 다음 Dialogue id 가져오기(두 개의 if문은 첫번째 대사에서 바로 주문을 하는 경우를 위함)
+        if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOD"))
         {
-            if (_isRandom == false)
+            _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
+
+            if (_currentID.Contains("O"))
             {
-                if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOD"))
-                {
+                directOrder = true;
+            }
+            
+            if (_pastID.Split(new char[] { '_' })[1] != "C00")
+                GameManager.instance.nextCustomer();
+        }
 
-                    //_Day = int.Parse(tmp[0].Substring(1)) + 1;
+        else if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOO"))
+        {
+            _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
 
-                    // _currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", 1) + "_" + "01" + "_";
-                    _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
-
-                    if (_currentID.Contains("O"))
-                    {
-                        directOrder = true;
-                    }
-
-                    if (_pastID.Split(new char[] { '_' })[1] != "C00")
-                        GameManager.instance.nextCustomer();
-                }
-
-                else if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOO"))
-                {
-
-                    // _Customer = int.Parse(tmp[1].Substring(1)) + 1;
-
-                    //_currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", _Customer) + "_" + "01" + "_";
-                    _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
-
-                    if (_currentID.Contains("O"))
-                    {
-                        directOrder = true;
-                    }
-
-                    if (_pastID.Split(new char[] { '_' })[1] != "C00")
-                        GameManager.instance.nextCustomer();
-                }
-                else
-                    _currentID = dialogueDic[currentID].nextDialogueID;
+            if (_currentID.Contains("O"))
+            {
+                directOrder = true;
             }
 
-            else if (_isRandom == true && indexForRandom >= randomDialogues.Length)
+            if (_pastID.Split(new char[] { '_' })[1] != "C00")
+                GameManager.instance.nextCustomer();
+        }
+        else
+            _currentID = dialogueDic[currentID].nextDialogueID;
+    }
+
+    private void GetRandomDialogueID()
+    {
+        if (_isRandom == true)
+        {
+            // 랜덤 대사 출력 완료 됬을 때의 처리
+            if (indexForRandom >= randomDialogues.Length)
             {
                 indexForRandom = 0;
                 _isRandom = false;
@@ -289,76 +279,90 @@ public class DialogueManager : MonoBehaviour
                 if (_pastID.Split(new char[] { '_' })[1] != "C00")
                     GameManager.instance.nextCustomer();
 
+                // 첫번째 대사에서 바로 주문을 하는 경우
                 if (_currentID.Contains("O"))
                 {
                     directOrder = true;
                 }
-                else {
+                else
+                {
                     nextUI.gameObject.SetActive(false);
                     skipUI.gameObject.SetActive(true);
                 }
-
             }
+        }
 
-            // 랜덤 대사 가져와야 할 때
-            if (currentID.Contains("GTR") && _isRandom == false)
+        // 랜덤 대사 가져와야 할 때
+        if (currentID.Contains("GTR") && _isRandom == false)
+        {
+            _isRandom = true;
+            SpriteSetEvent();
+            backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
+
+            int len;
+
+            string tmp1 = pastID.Split(new char[] { '_' })[1];
+            string tmp2 = backID.Split(new char[] { '_' })[1];
+            if (int.Parse(tmp1.Substring(1, tmp1.Length - 1)) < int.Parse(tmp2.Substring(1, tmp2.Length - 1)))
             {
-                _isRandom = true;
-                SpriteSetEvent();
-                backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
+                len = int.Parse(tmp2.Substring(1, tmp2.Length - 1)) - int.Parse(tmp1.Substring(1, tmp1.Length - 1)) - 1;
+            }
+            else
+                len = GameManager.instance.GetCustomerNum(GameManager.instance.day) - GameManager.instance.customerNum;
+            Debug.Log(len + "명 랜덤 가져옴");
 
-                int len;
 
-                string tmp1 = pastID.Split(new char[] { '_' })[1];
-                string tmp2 = backID.Split(new char[] { '_' })[1];
-                if (int.Parse(tmp1.Substring(1, tmp1.Length - 1)) < int.Parse(tmp2.Substring(1, tmp2.Length - 1)))
+            randomDialogues = new RandomDialogue[len];
+
+            for (int i = 0; i < len; i++)
+            {
+
+                String selectedDialogue;
+                int randomIndex;
+                do
                 {
-                    len = int.Parse(tmp2.Substring(1, tmp2.Length - 1)) - int.Parse(tmp1.Substring(1, tmp1.Length - 1)) - 1;
-                }
-                else
-                    len = GameManager.instance.GetCustomerNum(GameManager.instance.day)-GameManager.instance.customerNum;
-                Debug.Log(len + "명 랜덤 가져옴");
+                    randomIndex = UnityEngine.Random.Range(0, randomDialogueDic.Count);
+                    selectedDialogue = randomDialogueDic[randomIndex].line;
 
+                } while ((selectedDialogue.Contains("%%") && GameManager.instance.day < 4) ||
+                          (selectedDialogue.Contains("면") && GameManager.instance.day < 5)
+                          );
+                //  버섯 해금 전에 string[] withBatchimVege = { "버섯" }; 접근하는 것을 막기 위해 필요
+                //  면 해금 전에 "면이랑 ~ 가 잘 어울린대요." 나오는 것을 막기 위해 필요
 
-                randomDialogues = new RandomDialogue[len];
-                /* 
-                for (int i = 0; i < len; i++)
-                {
-                    int randomIndex = UnityEngine.Random.Range(0, randomDialogueDic.Count);
-                    Debug.Log(randomDialogueDic[randomIndex].line + " | " + System.Guid.NewGuid());
-                    randomDialogues[i] = randomDialogueDic[randomIndex];
-                }
-                */
-                for (int i = 0; i < len; i++)
-                {
+                Debug.Log(randomDialogueDic[randomIndex].line + " | " + System.Guid.NewGuid());
+                randomDialogues[i] = randomDialogueDic[randomIndex];
+            }
+            // 첫번째 대사에서 바로 주문을 하는 경우
+            if (_currentID.Contains("O"))
+            {
+                directOrder = true;
+            }
+            Debug.Log(directOrder);
+            Debug.Log("랜덤 대사 가져옴!");
+        }
 
-                    String selectedDialogue;
-                    int randomIndex;
-                    do
-                    {
-                        randomIndex = UnityEngine.Random.Range(0, randomDialogueDic.Count);
-                        selectedDialogue = randomDialogueDic[randomIndex].line;
+    }
 
-                    } while ( (selectedDialogue.Contains("%%") && GameManager.instance.day < 4) || 
-                              (selectedDialogue.Contains("면") && GameManager.instance.day < 5) 
-                              );
-                    //  버섯 해금 전에 string[] withBatchimVege = { "버섯" }; 접근하는 것을 막기 위해 필요
-                    //  면 해금 전에 "면이랑 ~ 가 잘 어울린대요." 나오는 것을 막기 위해 필요
+    public void GetNextDialogue()
+    {
+        
+        _pastID = _currentID;
+        string[] tmp = _currentID.Split(new char[] { '_' });
 
-                    Debug.Log(randomDialogueDic[randomIndex].line + " | " + System.Guid.NewGuid());
-                    randomDialogues[i] = randomDialogueDic[randomIndex];
-                }
-
-                if (_currentID.Contains("O"))
-                {
-                    directOrder = true;
-                    //nextUI.gameObject.SetActive(true);
-                    //skipUI.gameObject.SetActive(false);
-                }
-                Debug.Log(directOrder);
-                Debug.Log("랜덤 대사 가져옴!");
+        {
+            // 스토리 대사 ID가 필요한 경우
+            if (_isRandom == false)
+            {
+                GetStoryDialogueID();
+            }
+            // 랜덤 대사 ID가 필요한 경우
+            if (_isRandom == true || (currentID.Contains("GTR") && _isRandom == false))
+            {
+                GetRandomDialogueID();
             }
 
+            
 
             if ((_isRandom == false || directOrder == true) && !(_currentID.Contains("GTR")))
             {
