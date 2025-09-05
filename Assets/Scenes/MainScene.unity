@@ -1233,7 +1233,9 @@ MonoBehaviour:
   - {fileID: 1894652777}
   - {fileID: 1549345502}
   - {fileID: 490272865}
-  fadeDuration: 1
+  _fadeDuration: 1
+  _fadingInProgress: 0
+  _fadingDone: 0
 --- !u!114 &319943491
 MonoBehaviour:
   m_ObjectHideFlags: 0

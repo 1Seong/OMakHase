@@ -1,18 +1,31 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class FadeController : MonoBehaviour
 {
     [SerializeField] private Image targetImage;  // 페이드할 UI 이미지
     [SerializeField] private RectTransform[] UIList;  // 페이드 여부에 따라 활성화시킬 ui들
-    [SerializeField] private float fadeDuration = 1.0f; // 페이드 걸리는 시간 (초 단위)
+    [SerializeField] private float _fadeDuration = 1.0f; // 페이드 걸리는 시간 (초 단위)
+
+    [SerializeField] private bool _fadingInProgress = false; // 페이드 진행 여부
+    public bool fadingInProgress { get => _fadingInProgress; }
+    public void fadeProgressStatusChange() { _fadingInProgress = !_fadingInProgress; }
+
+    [SerializeField] private bool _fadingDone = false; // 페이드 완료 여부
+    public bool fadingDone { get => _fadingDone; }
+    public void fadeDoneStatusChange() { _fadingDone = !_fadingDone; }
+
+    public float fadeDuration { get => _fadeDuration; }
+
 
     private void Awake()
     {
+
         if (targetImage == null)
             targetImage = GetComponent<Image>(); // 만약 지정 안 했다면 자기 자신 Image 가져오기
-        GameManager.instance.DayPassEvent += StartFadeIn;
+        DialogueManager.Instance.DayPassEvent += StartFadeIn;
     }
 
     private void Start()
@@ -31,22 +44,34 @@ public class FadeController : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
+        fadeProgressStatusChange();
+
         float elapsed = 0f;
         Color c = targetImage.color;
         c.a = 0f; // 시작은 투명
         targetImage.color = c;
 
-        while (elapsed < fadeDuration) {
+        while (elapsed < _fadeDuration) {
             elapsed += Time.deltaTime;
-            c.a = Mathf.Clamp01(elapsed / fadeDuration);
+            c.a = Mathf.Clamp01(elapsed / _fadeDuration);
             targetImage.color = c;
             yield return null;
         }
-        if(targetImage.color.a == 1)
+
+        if (targetImage.color.a == 1)
             enableUIs();
+
+        fadeProgressStatusChange();
+
+        DialogueManager.Instance.dialogueReset();
+        if (DialogueManager.Instance.pastID.Contains("GTR"))
+            DialogueManager.Instance.SpriteSetEvent();
+
     }
     private IEnumerator FadeOut()
     {
+        fadeProgressStatusChange();
+
         if (targetImage.color.a == 1)
             disableUIs();
 
@@ -55,13 +80,19 @@ public class FadeController : MonoBehaviour
         c.a = 1f; // 시작은 불투명
         targetImage.color = c;
 
-        while (elapsed < fadeDuration)
+        while (elapsed < _fadeDuration)
         {
             elapsed += Time.deltaTime;
-            c.a = Mathf.Clamp01(1f - (elapsed / fadeDuration));
+            c.a = Mathf.Clamp01(1f - (elapsed / _fadeDuration));
             targetImage.color = c;
             yield return null;
         }
+
+        fadeProgressStatusChange();
+
+        fadeDoneStatusChange();
+
+        DialogueManager.Instance.GetNextDialogue();
 
         gameObject.SetActive(false);
     }

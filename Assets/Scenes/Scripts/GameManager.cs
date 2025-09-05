@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     // 날짜 변경시의 이벤트
-    public event Action DayPassEvent;
+    //public event Action DayPassEvent;
 
     [Header("PlayerInfo")]
     // 플레이어 이름
@@ -104,8 +104,8 @@ public class GameManager : MonoBehaviour
             customerNum++;
         }
         else {
-            Fade_Panel.gameObject.SetActive(true);
-            DayPassEvent();
+            //Fade_Panel.gameObject.SetActive(true);
+            //DayPassEvent();
 
             day++;
             if (GameManager.instance.day == 2)

@@ -20,9 +20,11 @@ public class DialogueManager : MonoBehaviour
 
     public event Action<string> DialogueSetEvent;
     public event Action<string, string> MultipleTextSetEvent;
-    public event Action SpriteSetEvent;
+    public Action SpriteSetEvent;
     // 조리 결과에 따른 플레이어 반응 이벤트
     public Action <string>CustomerReactionSetEvent;
+    // 날짜 변경시의 이벤트
+    public event Action DayPassEvent;
 
     [SerializeField] TextAsset StoryCSV;
     [SerializeField] TextAsset RandomCSV;
@@ -135,7 +137,8 @@ public class DialogueManager : MonoBehaviour
     RandomDialogue[] randomDialogues;
 
     // 랜덤 대사 다 출력하고 돌아올 ID
-    string backID = "";
+    string _backID = "";
+    public string backID { get { return _backID; } }
 
     // 랜덤 대사 다 출력하고 만약 바로 주문 대사가 올 경우에 사용할 플래그
     bool directOrder = false;
@@ -236,6 +239,9 @@ public class DialogueManager : MonoBehaviour
         // 다음 Dialogue id 가져오기(두 개의 if문은 첫번째 대사에서 바로 주문을 하는 경우를 위함)
         if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOD"))
         {
+            GameManager.instance.Fade_Panel.gameObject.SetActive(true);
+            DayPassEvent();
+
             _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
 
             if (_currentID.Contains("O"))
@@ -272,9 +278,11 @@ public class DialogueManager : MonoBehaviour
             {
                 indexForRandom = 0;
                 _isRandom = false;
-                SpriteSetEvent();
+                //SpriteSetEvent();
                 _currentID = backID;
 
+                GameManager.instance.Fade_Panel.gameObject.SetActive(true);
+                DayPassEvent();
 
                 if (_pastID.Split(new char[] { '_' })[1] != "C00")
                     GameManager.instance.nextCustomer();
@@ -297,7 +305,7 @@ public class DialogueManager : MonoBehaviour
         {
             _isRandom = true;
             SpriteSetEvent();
-            backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
+            _backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
 
             int len;
 
@@ -786,23 +794,39 @@ public class DialogueManager : MonoBehaviour
 
     public void GetNextDialogue()
     {
-        
-        _pastID = _currentID;
-        string[] tmp = _currentID.Split(new char[] { '_' });
-
-        
-        // 스토리 대사 ID가 필요한 경우
-        if (_isRandom == false)
+ 
+        if (GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadingDone == false) // 페이드 연출이 완료된 후(페이드 아웃 후)에 또 ID를 가져오면 안됨
         {
-            GetStoryDialogueID();
-        }
-        // 랜덤 대사 ID가 필요한 경우
-        if (_isRandom == true || (currentID.Contains("GTR") && _isRandom == false))
-        {
-            GetRandomDialogueID();
+            _pastID = _currentID;
+            string[] tmp = _currentID.Split(new char[] { '_' });
+
+
+            // 스토리 대사 ID가 필요한 경우
+            if (_isRandom == false)
+            {
+                GetStoryDialogueID();
+            }
+            // 랜덤 대사 ID가 필요한 경우
+            if (_isRandom == true || (currentID.Contains("GTR") && _isRandom == false))
+            {
+                GetRandomDialogueID();
+            }
+
         }
 
-            
+        // 페이드 연출 중에는 대사가 더 이상 진행되지 않도록 강제 리턴
+        if (GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadingInProgress == true) {
+            return;
+        }
+
+        // 페이드가 끝났으면 fadingDone = false
+        if (GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadingDone == true)
+        {
+            GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadeDoneStatusChange();
+
+        }
+
+
         // 스토리 주문 * 결과 처리
         if ((_isRandom == false || directOrder == true) && !(_currentID.Contains("GTR")))
         {
@@ -1070,6 +1094,11 @@ public class DialogueManager : MonoBehaviour
 
         return line;
 
+    }
+
+    public void dialogueReset() {
+        nameUI.text = "";
+        dialogueSet("");
     }
 
     private void dialogueSet(string dlg)
