@@ -21,7 +21,7 @@ public class CustomerReactionChangeController : MonoBehaviour
     public void setReactionImage(string p_SpriteName)
     {
         DialogueManager.Instance.getReactionUI.gameObject.SetActive(true);
-        newSprite = Resources.Load<Sprite>("UI/" + p_SpriteName);
+        newSprite = Resources.Load<Sprite>("UI/New/" + p_SpriteName);
         if (newSprite != null)
         {
 
