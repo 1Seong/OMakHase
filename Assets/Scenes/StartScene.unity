@@ -699,8 +699,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uAC8C\uC784 \uC2DC\uC791!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1a99bf32e0af03a45beffe390fa8715d, type: 2}
-  m_sharedMaterial: {fileID: 8708435716669226108, guid: 1a99bf32e0af03a45beffe390fa8715d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9504d77a9a1ec674e8dd4015208ee21c, type: 2}
+  m_sharedMaterial: {fileID: 7749593030329325340, guid: 9504d77a9a1ec674e8dd4015208ee21c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
