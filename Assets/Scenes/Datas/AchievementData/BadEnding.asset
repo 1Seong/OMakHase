@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df773b160a9c1234e801d43fce88bd47, type: 3}
+  m_Name: BadEnding
+  m_EditorClassIdentifier: 
+  achievementTitle: "\uC124\uB801\uD0D5\uC744 \uB9CC\uB4E4\uC5B4\uC654\uB294\uB370
+    \uC65C \uBA39\uC9C0\uB97C \uBABB\uD574"
+  achievementDescription: "\uBC30\uB4DC \uC5D4\uB529\uC744 \uD074\uB9AC\uC5B4 \uD588\uB2E4."
