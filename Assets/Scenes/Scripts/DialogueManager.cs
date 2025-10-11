@@ -13,6 +13,7 @@ using UnityEngine.XR;
 using static Ingredient;
 using static UnityEngine.Rendering.DebugUI;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -26,17 +27,24 @@ public class DialogueManager : MonoBehaviour
     // 날짜 변경시의 이벤트
     public event Action DayPassEvent;
 
+    [Header("CSV")]
     [SerializeField] TextAsset StoryCSV;
     [SerializeField] TextAsset RandomCSV;
     [SerializeField] TextAsset RandomReactionCSV;
+    [SerializeField] TextAsset HappyEndingCSV;
+    [SerializeField] TextAsset NormalEndingCSV;
+    [SerializeField] TextAsset BadEndingCSV;
     //string csv_FileName;
 
+    [Header("UI")]
     [SerializeField] TextMeshProUGUI nameUI;
     [SerializeField] TextMeshProUGUI dialogueUI;
     [SerializeField] RectTransform nextUI;
     [SerializeField] RectTransform skipUI;
     [SerializeField] RectTransform multipleskipUI;
     [SerializeField] RectTransform reactionUI;
+    [SerializeField] RectTransform letterUI;
+
 
     public TextMeshProUGUI getDialogueUI { get { return dialogueUI; } }
     public RectTransform getReactionUI { get { return reactionUI; } }
@@ -44,9 +52,13 @@ public class DialogueManager : MonoBehaviour
     Dictionary<string, Dialogue> dialogueDic = new Dictionary<string, Dialogue>();
     Dictionary<int, RandomDialogue> randomDialogueDic = new Dictionary<int, RandomDialogue>();
     Dictionary<int, RandomReactionDialogue[]> randomReactionDialogueDic = new Dictionary<int, RandomReactionDialogue[]>();
+    Dictionary<string, EndingDialogue> endingDialogueDic = new Dictionary<string, EndingDialogue>();
 
-    public static bool isFinish = false;
 
+    [SerializeField] private bool _isFinish = false;
+    public bool isFinish { get { return _isFinish; } }
+
+    [Header("Dialogue Data")]
     [SerializeField]
     private int _Day;
     public int Day { get { return _Day; } }
@@ -163,6 +175,10 @@ public class DialogueManager : MonoBehaviour
     string[] withBatchimCook = { };
     string[] withBatchimCategory = { "덮밥", "볶음밥", "구운주먹밥", "볶음면" };
 
+
+    EndingDialogue[] endingDialogues;
+    DialogueParser theParser;
+
     private void Awake()
     {
         Instance = this;
@@ -191,7 +207,7 @@ public class DialogueManager : MonoBehaviour
 
         _currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", _Customer) + "_" + _Sequence + "_";
 
-        DialogueParser theParser = gameObject.GetComponent<DialogueParser>();
+        theParser = gameObject.GetComponent<DialogueParser>();
         
         Dialogue[] dialogues = theParser.Parse(StoryCSV);
 
@@ -199,7 +215,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueDic.Add(dialogues[i].dialogueID, dialogues[i]);
         }
-        isFinish = true;
+        //isFinish = true;
 
         //nameUI.text = dialogueDic[currentID].name;
         //dialogueUI.text = dialogueDic[currentID].line.Replace('`', ','); ;
@@ -794,7 +810,16 @@ public class DialogueManager : MonoBehaviour
 
     public void GetNextDialogue()
     {
- 
+
+        if (isFinish == true) {
+            nameUI.text = endingDialogueDic[currentID].name;
+            var text = endingDialogueDic[currentID].line.Replace('`', ',');
+            dialogueSet(text);
+            _pastID = _currentID;
+            _currentID = endingDialogueDic[currentID].nextDialogueID;
+            return;
+        }
+
         if (GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadingDone == false) // 페이드 연출이 완료된 후(페이드 아웃 후)에 또 ID를 가져오면 안됨
         {
             _pastID = _currentID;
@@ -812,6 +837,39 @@ public class DialogueManager : MonoBehaviour
                 GetRandomDialogueID();
             }
 
+        }
+
+        if (_currentID == "") {
+            _isFinish = true;
+            int score = GameManager.instance.reputation;
+            if (score >= GameManager.instance.GoodEndingCriteria) {
+                endingDialogues = theParser.EndingParse(HappyEndingCSV);
+
+                for (int i = 0; i < endingDialogues.Length; i++)
+                {
+                    endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
+                }
+            }
+            else if (score >= GameManager.instance.NormalCriteria)
+            {
+                endingDialogues = theParser.EndingParse(NormalEndingCSV);
+
+                for (int i = 0; i < endingDialogues.Length; i++)
+                {
+                    endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
+                }
+            }
+            else{
+                endingDialogues = theParser.EndingParse(BadEndingCSV);
+
+                for (int i = 0; i < endingDialogues.Length; i++)
+                {
+                    endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
+                }
+            }
+            letterUI.gameObject.SetActive(true);
+            _currentID = endingDialogues[0].dialogueID;
+            return;
         }
 
         // 페이드 연출 중에는 대사가 더 이상 진행되지 않도록 강제 리턴

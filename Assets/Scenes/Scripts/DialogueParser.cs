@@ -142,4 +142,46 @@ public class DialogueParser : MonoBehaviour
         return dialogueList.ToArray();
 
     }
+
+
+    public EndingDialogue[] EndingParse(TextAsset CSV)
+    {
+        List<EndingDialogue> dialogueList = new List<EndingDialogue>(); // 대화 리스트 생성.
+        TextAsset csvData = CSV; // csv 파일 가져옴
+        //Resources.Load<TextAsset>(_CSVFileName);
+
+        string[] data = csvData.text.Split(new char[] { '\n' }); // 엔터 기준으로 쪼갬(스프레드시트의 행별로 쪼갬)
+
+        for (int i = 1; i < data.Length; i++)
+        {
+            //Debug.Log(data[i]);
+            string[] row = data[i].Split(new char[] { ',' });
+
+
+            EndingDialogue dialogue = new EndingDialogue(); // 대사 데이터 생성
+
+
+            dialogue.dialogueID = row[0]; // 대사 ID
+            //Debug.Log(row[0]);
+            dialogue.nextDialogueID = row[1]; // 다음 대사 ID
+            //Debug.Log(row[1]);
+            dialogue.name = row[2]; // 현재 대사치는 인물의 이름
+            //Debug.Log(row[2]);
+            dialogue.line = row[3]; // 현재 대사
+            //Debug.Log(row[3]);
+            dialogue.spriteID = row[4]; // 캐릭터 스프라이트 ID
+            //Debug.Log(row[4]);
+            dialogue.directing = row[5]; // 연출
+            //Debug.Log(row[5]);
+            dialogue.background = row[6]; // 배경
+            //Debug.Log(row[6]);
+
+
+            dialogueList.Add(dialogue);
+
+        }
+
+        return dialogueList.ToArray();
+
+    }
 }

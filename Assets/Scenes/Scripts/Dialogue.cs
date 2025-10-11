@@ -82,6 +82,33 @@ public class RandomReactionDialogue
 
 }
 
+[System.Serializable] // 커스텀 클래스를 인스펙터창에서 수정하기 위해서 필요
+public class EndingDialogue
+{
+
+    [Tooltip("대사 ID")]
+    public string dialogueID;
+
+    [Tooltip("다음 대사 ID")]
+    public string nextDialogueID;
+
+    [Tooltip("발화자 이름")]
+    public string name;
+
+    [Tooltip("텍스트")]
+    public string line;
+
+    [Tooltip("캐릭터 스프라이트 ID")]
+    public string spriteID;
+
+    [Tooltip("연출")]
+    public string directing;
+
+    [Tooltip("배경")]
+    public string background;
+
+}
+
 [System.Serializable]
 public class DialogueEvent
 {

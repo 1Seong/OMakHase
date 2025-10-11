@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
     public int reputation;
     // 돈 수치
     public int money;
-    // 엔딩 모드 클리어?
-    public bool sawEnding;
 
     // 업적 목록
     public List<bool> achievements;
@@ -35,6 +33,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<int> customerPerDay;
     public int GetCustomerNum(int index) { return customerPerDay[index]; }
+
+    [Header("EndingInfo")]
+    public int GoodEndingCriteria;
+    public int NormalCriteria;
+    // 엔딩 모드 클리어?
+    public bool sawEnding;
 
     // 캔버스 ui
     [Header("UI")]
