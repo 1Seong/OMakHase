@@ -25,7 +25,9 @@ public class DialogueManager : MonoBehaviour
     // 조리 결과에 따른 플레이어 반응 이벤트
     public Action <string>CustomerReactionSetEvent;
     // 날짜 변경시의 이벤트
-    public event Action DayPassEvent;
+    public event Action<int> DayPassEvent;
+    // 페이드 이벤트
+    public event Action<int> FadeEvent;
 
     [Header("CSV")]
     [SerializeField] TextAsset StoryCSV;
@@ -250,6 +252,7 @@ public class DialogueManager : MonoBehaviour
         dialogueSet(dialogueDic[currentID].line.Replace('`', ','));
 
         GameManager.instance.Order_Canvas.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/New/" + "Main_restaurant");
+
     }
 
     private void GetStoryDialogueID()
@@ -258,7 +261,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogueDic.ContainsKey(currentID) && dialogueDic[currentID].nextDialogueID.Contains("EOD"))
         {
             GameManager.instance.Fade_Panel.gameObject.SetActive(true);
-            DayPassEvent();
+            DayPassEvent(1);
 
             _currentID = dialogueDic[currentID].nextDialogueID.Split(new char[] { '_' })[1].Replace('~', '_');
 
@@ -300,7 +303,7 @@ public class DialogueManager : MonoBehaviour
                 _currentID = backID;
 
                 GameManager.instance.Fade_Panel.gameObject.SetActive(true);
-                DayPassEvent();
+                DayPassEvent(1);
 
                 if (_pastID.Split(new char[] { '_' })[1] != "C00")
                     GameManager.instance.nextCustomer();
@@ -812,8 +815,14 @@ public class DialogueManager : MonoBehaviour
 
     public void GetNextDialogue()
     {
-
+        /*
         if (isFinish == true) {
+
+            if (endingDialogueDic[currentID].directing == "fade_in") {
+                GameManager.instance.Fade_Panel.gameObject.SetActive(true);
+                FadeEvent(0);
+            }
+
             nameUI.text = endingDialogueDic[currentID].name;
             var text = endingDialogueDic[currentID].line.Replace('`', ',');
             dialogueSet(text);
@@ -821,33 +830,48 @@ public class DialogueManager : MonoBehaviour
             _currentID = endingDialogueDic[currentID].nextDialogueID;
             return;
         }
-
+        */
         if (GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadingDone == false) // 페이드 연출이 완료된 후(페이드 아웃 후)에 또 ID를 가져오면 안됨
         {
             _pastID = _currentID;
             string[] tmp = _currentID.Split(new char[] { '_' });
 
+            if (!isFinish) {
+                // 스토리 대사 ID가 필요한 경우
+                if (_isRandom == false)
+                {
+                    GetStoryDialogueID();
 
-            // 스토리 대사 ID가 필요한 경우
-            if (_isRandom == false)
-            {
-                GetStoryDialogueID();
+                    if (_currentID == "D05_C01_R_positive")
+                    {
+                        GameManager.instance.Order_Canvas.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/New/" + "Main_restaurant_Day5");
+                    }
 
-                if (_currentID == "D05_C01_R_positive") {
-                    GameManager.instance.Order_Canvas.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/New/" + "Main_restaurant_Day5");
                 }
-
+                // 랜덤 대사 ID가 필요한 경우
+                if (_isRandom == true || (currentID.Contains("GTR") && _isRandom == false))
+                {
+                    GetRandomDialogueID();
+                }
             }
-            // 랜덤 대사 ID가 필요한 경우
-            if (_isRandom == true || (currentID.Contains("GTR") && _isRandom == false))
+
+            // 엔딩 대사 ID가 필요한 경우
+            else
             {
-                GetRandomDialogueID();
+                _pastID = _currentID;
+                _currentID = endingDialogueDic[currentID].nextDialogueID;
+
+                if (endingDialogueDic[currentID].directing == "fade")
+                {
+                    GameManager.instance.Fade_Panel.gameObject.SetActive(true);
+                    FadeEvent(0);
+                }
             }
 
         }
 
         // 스토리 CSV 끝났을 때, 엔딩 CSV 가져오기
-        if (_currentID == "") {
+        if (_currentID == "" && _isFinish == false) {
             _isFinish = true;
             int score = GameManager.instance.reputation;
             if (score >= GameManager.instance.GoodEndingCriteria) {
@@ -892,6 +916,15 @@ public class DialogueManager : MonoBehaviour
 
         }
 
+        // 엔딩 대사 출력
+        if (isFinish == true) {
+
+            nameUI.text = endingDialogueDic[currentID].name;
+            var text = endingDialogueDic[currentID].line.Replace('`', ',');
+            dialogueSet(text);
+
+            return;
+        }
 
         // 스토리 주문 * 결과 처리
         if ((_isRandom == false || directOrder == true) && !(_currentID.Contains("GTR")))

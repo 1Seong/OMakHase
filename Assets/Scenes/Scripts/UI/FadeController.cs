@@ -26,23 +26,29 @@ public class FadeController : MonoBehaviour
         if (targetImage == null)
             targetImage = GetComponent<Image>(); // 만약 지정 안 했다면 자기 자신 Image 가져오기
         DialogueManager.Instance.DayPassEvent += StartFadeIn;
+        DialogueManager.Instance.FadeEvent += StartFade;
+
     }
 
     private void Start()
     {
     }
 
-    public void StartFadeIn()
+    public void StartFadeIn(int fadeMode)
     {
-        StartCoroutine(FadeIn());
+        StartCoroutine(FadeIn(fadeMode));
     }
 
-    public void StartFadeOut()
+    public void StartFadeOut(int fadeMode)
     {
-        StartCoroutine(FadeOut());
+        StartCoroutine(FadeOut(fadeMode));
     }
 
-    private IEnumerator FadeIn()
+    public void StartFade(int fadeMode) {
+        StartCoroutine(Fade(fadeMode));
+    }
+
+    private IEnumerator FadeIn(int fadeMode)
     {
         fadeProgressStatusChange();
 
@@ -58,7 +64,7 @@ public class FadeController : MonoBehaviour
             yield return null;
         }
 
-        if (targetImage.color.a == 1)
+        if (targetImage.color.a == 1 && fadeMode == 1)
             enableUIs();
 
         fadeProgressStatusChange();
@@ -68,11 +74,11 @@ public class FadeController : MonoBehaviour
             DialogueManager.Instance.SpriteSetEvent();
 
     }
-    private IEnumerator FadeOut()
+    private IEnumerator FadeOut(int fadeMode)
     {
         fadeProgressStatusChange();
 
-        if (targetImage.color.a == 1)
+        if (targetImage.color.a == 1 && fadeMode == 1)
             disableUIs();
 
         float elapsed = 0f;
@@ -96,6 +102,14 @@ public class FadeController : MonoBehaviour
 
         gameObject.SetActive(false);
     }
+
+    private IEnumerator Fade(int fadeMode)
+    {
+        StartCoroutine(FadeIn(fadeMode));
+        yield return new WaitForSeconds(2.0f);
+        StartCoroutine(FadeOut(fadeMode));
+    }
+
     private void enableUIs() {
         for (int i = 0; i < UIList.Length; i++) {
             UIList[i].gameObject.SetActive(true);
