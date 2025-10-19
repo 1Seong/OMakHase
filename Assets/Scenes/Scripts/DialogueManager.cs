@@ -248,6 +248,8 @@ public class DialogueManager : MonoBehaviour
     {
         nameUI.text = dialogueDic[currentID].name;
         dialogueSet(dialogueDic[currentID].line.Replace('`', ','));
+
+        GameManager.instance.Order_Canvas.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/New/" + "Main_restaurant");
     }
 
     private void GetStoryDialogueID()
@@ -830,6 +832,11 @@ public class DialogueManager : MonoBehaviour
             if (_isRandom == false)
             {
                 GetStoryDialogueID();
+
+                if (_currentID == "D05_C01_R_positive") {
+                    GameManager.instance.Order_Canvas.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/New/" + "Main_restaurant_Day5");
+                }
+
             }
             // 랜덤 대사 ID가 필요한 경우
             if (_isRandom == true || (currentID.Contains("GTR") && _isRandom == false))
@@ -839,6 +846,7 @@ public class DialogueManager : MonoBehaviour
 
         }
 
+        // 스토리 CSV 끝났을 때, 엔딩 CSV 가져오기
         if (_currentID == "") {
             _isFinish = true;
             int score = GameManager.instance.reputation;
