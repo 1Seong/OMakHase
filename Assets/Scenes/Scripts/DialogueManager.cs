@@ -39,6 +39,7 @@ public class DialogueManager : MonoBehaviour
     //string csv_FileName;
 
     [Header("UI")]
+    [SerializeField] RectTransform portraitUI;
     [SerializeField] TextMeshProUGUI nameUI;
     [SerializeField] TextMeshProUGUI dialogueUI;
     [SerializeField] RectTransform nextUI;
@@ -1003,6 +1004,16 @@ public class DialogueManager : MonoBehaviour
 
             if (dialogueDic[currentID].spriteID != "") {
                 Debug.Log(dialogueDic[currentID].spriteID);
+                
+                if (nameUI.text == "³ª" && portraitUI.gameObject.activeSelf == true)
+                {
+                    togglePortraitUI();
+                }
+                else if(nameUI.text != "³ª" && portraitUI.gameObject.activeSelf == false)
+                {
+                    togglePortraitUI();
+                }
+                
                 StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(dialogueDic[currentID].spriteID));
             }
 
@@ -1208,5 +1219,9 @@ public class DialogueManager : MonoBehaviour
     private void dialogueSet(string dlg)
     {
         DialogueSetEvent!.Invoke(dlg);
+    }
+
+    public void togglePortraitUI() {
+        portraitUI.gameObject.SetActive(!portraitUI.gameObject.activeSelf);
     }
 }
