@@ -900,6 +900,7 @@ public class DialogueManager : MonoBehaviour
                 }
             }
             letterUI.gameObject.SetActive(true);
+            skipUI.gameObject.SetActive(false);
             _currentID = endingDialogues[0].dialogueID;
             return;
         }
@@ -918,6 +919,10 @@ public class DialogueManager : MonoBehaviour
 
         // 엔딩 대사 출력
         if (isFinish == true) {
+
+            if (_currentID != "") {
+                skipUI.gameObject.SetActive(true);
+            }
 
             nameUI.text = endingDialogueDic[currentID].name;
             var text = endingDialogueDic[currentID].line.Replace('`', ',');
