@@ -929,6 +929,22 @@ public class DialogueManager : MonoBehaviour
             var text = endingDialogueDic[currentID].line.Replace('`', ',');
             dialogueSet(text);
 
+
+            Debug.Log(endingDialogueDic[currentID].spriteID);
+
+            if (nameUI.text.CompareTo("나") == 0 && portraitUI.gameObject.activeSelf == true)
+            {
+                togglePortraitUI();
+            }
+            else if (nameUI.text.CompareTo("") != 0 && nameUI.text.CompareTo("나") != 0 && portraitUI.gameObject.activeSelf == false)
+            {
+                togglePortraitUI();
+            }
+
+
+            StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(endingDialogueDic[currentID].spriteID));
+            
+
             return;
         }
 
@@ -998,24 +1014,24 @@ public class DialogueManager : MonoBehaviour
 
             }
 
+
+            Debug.Log(dialogueDic[currentID].spriteID);
+
+            if (dialogueDic[currentID].name.CompareTo("나") == 0 && portraitUI.gameObject.activeSelf == true)
+            {
+                togglePortraitUI();
+            }
+            else if (dialogueDic[currentID].name.CompareTo("나") != 0 && portraitUI.gameObject.activeSelf == false)
+            {
+                togglePortraitUI();
+            }
+
+            StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(dialogueDic[currentID].spriteID));
+            
+
             nameUI.text = dialogueDic[currentID].name;
             var text3 = dialogueDic[currentID].line.Replace('`', ',');
             dialogueSet(text3);
-
-            if (dialogueDic[currentID].spriteID != "") {
-                Debug.Log(dialogueDic[currentID].spriteID);
-                
-                if (nameUI.text == "나" && portraitUI.gameObject.activeSelf == true)
-                {
-                    togglePortraitUI();
-                }
-                else if(nameUI.text != "나" && portraitUI.gameObject.activeSelf == false)
-                {
-                    togglePortraitUI();
-                }
-                
-                StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(dialogueDic[currentID].spriteID));
-            }
 
         }
         // 랜덤 주문 대사 처리
