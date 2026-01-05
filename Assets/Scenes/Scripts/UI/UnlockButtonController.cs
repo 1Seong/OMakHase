@@ -1,7 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class UnlockButtonController : MonoBehaviour
 {
@@ -9,7 +6,14 @@ public class UnlockButtonController : MonoBehaviour
 
     public Mode mode;
 
-    
+    private void Awake()
+    {
+
+        UnlockManager.ButtonUnlockAction += UnlockButton;
+        UnlockManager.ClearAction += ClearButton;
+        //transform.root.gameObject.SetActive(false);
+
+    }
 
     public void UnlockButton(int childIndex, int m)
     {
@@ -47,9 +51,8 @@ public class UnlockButtonController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (UnlockManager.instance == null) return;
-        UnlockManager.instance.ButtonUnlockAction -= UnlockButton;
-        UnlockManager.instance.ClearAction -= ClearButton;
+        UnlockManager.ButtonUnlockAction -= UnlockButton;
+        UnlockManager.ClearAction -= ClearButton;
     }
 
 

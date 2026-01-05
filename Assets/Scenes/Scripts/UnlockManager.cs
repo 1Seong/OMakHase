@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UnlockManager : MonoBehaviour
 {
     private static UnlockManager _instance;
 
-    // controllers for base, ingredient, and cook buttons
-    [SerializeField] private List<UnlockButtonController> unlockButtonControllers;
-
-    public event Action<int, int> ButtonUnlockAction; // < child id, mode >
+    public static event Action<int, int> ButtonUnlockAction; // < child id, mode >
                                                       // mode - base : 0, cook : 1, MeatFish : 2, Vege : 3
     public event Action OnUnlockAction; // for the actions when unlocked for the first time
-    public event Action ClearAction;
+    public static event Action ClearAction;
 
     public static UnlockManager instance
     {
@@ -40,18 +35,6 @@ public class UnlockManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
-        }
-
-        InitControllers();
-    }
-
-    // initialize button controllers - had to do in here becuase of delayed instantiation (moved from UnlockButtonController)
-    public void InitControllers()
-    {
-        foreach(var con in unlockButtonControllers)
-        {
-            ButtonUnlockAction += con.UnlockButton;
-            ClearAction += con.ClearButton;
         }
     }
 
