@@ -864,9 +864,19 @@ public class DialogueManager : MonoBehaviour
 
                 if (endingDialogueDic[currentID].directing == "fade")
                 {
-                    GameManager.instance.Fade_Panel.gameObject.SetActive(true);
-                    FadeEvent(0);
+                    // 엔딩 크레딧 필요할 때
+                    if (endingDialogueDic[currentID].line == "The End")
+                    {
+                        GameManager.instance.Fade_Panel.gameObject.SetActive(true);
+                        DayPassEvent(2);
+                    }
+
+                    else {
+                        GameManager.instance.Fade_Panel.gameObject.SetActive(true);
+                        FadeEvent(0);
+                    }
                 }
+
             }
 
         }

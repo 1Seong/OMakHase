@@ -7,6 +7,7 @@ public class FadeController : MonoBehaviour
 {
     [SerializeField] private Image targetImage;  // 페이드할 UI 이미지
     [SerializeField] private RectTransform[] UIList;  // 페이드 여부에 따라 활성화시킬 ui들
+    [SerializeField] private RectTransform[] CreditUIList;  // 페이드 여부에 따라 활성화시킬 크레딧 전용 ui들
     [SerializeField] private float _fadeDuration = 1.0f; // 페이드 걸리는 시간 (초 단위)
 
     [SerializeField] private bool _fadingInProgress = false; // 페이드 진행 여부
@@ -65,7 +66,15 @@ public class FadeController : MonoBehaviour
         }
 
         if (targetImage.color.a == 1 && fadeMode == 1)
-            enableUIs();
+        {
+            enableUIs(0);
+        }
+
+        // 엔딩 크레딧 전용
+        if (targetImage.color.a == 1 && fadeMode == 2)
+        {
+            enableUIs(1);
+        }
 
         fadeProgressStatusChange();
 
@@ -79,7 +88,13 @@ public class FadeController : MonoBehaviour
         fadeProgressStatusChange();
 
         if (targetImage.color.a == 1 && fadeMode == 1)
-            disableUIs();
+            disableUIs(0);
+
+        // 엔딩 크레딧 전용
+        if (targetImage.color.a == 1 && fadeMode == 2)
+        {
+            disableUIs(1);
+        }
 
         float elapsed = 0f;
         Color c = targetImage.color;
@@ -110,17 +125,37 @@ public class FadeController : MonoBehaviour
         StartCoroutine(FadeOut(fadeMode));
     }
 
-    private void enableUIs() {
-        for (int i = 0; i < UIList.Length; i++) {
-            UIList[i].gameObject.SetActive(true);
+    private void enableUIs(int uiMode) {
+        if (uiMode == 0) {
+            for (int i = 0; i < UIList.Length; i++)
+            {
+                UIList[i].gameObject.SetActive(true);
+            }
+        }
+        if (uiMode == 1) {
+            for (int i = 0; i < CreditUIList.Length; i++)
+            {
+                CreditUIList[i].gameObject.SetActive(true);
+            }
         }
     }
 
-    private void disableUIs()
+    private void disableUIs(int uiMode)
     {
-        for (int i = 0; i < UIList.Length; i++)
+        if (uiMode == 0)
         {
-            UIList[i].gameObject.SetActive(false);
+            for (int i = 0; i < UIList.Length; i++)
+            {
+                UIList[i].gameObject.SetActive(false);
+            }
         }
+        if (uiMode == 1)
+        {
+            for (int i = 0; i < CreditUIList.Length; i++)
+            {
+                CreditUIList[i].gameObject.SetActive(true);
+            }
+        }
+
     }
 }
