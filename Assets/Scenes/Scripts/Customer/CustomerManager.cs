@@ -21,6 +21,9 @@ public class CustomerManager : MonoBehaviour
     private List<Sprite> spritePool;
 
     [SerializeField]
+    private Dictionary<Sprite, bool> spriteDuplicationPool;
+
+    [SerializeField]
     public List<CategoryData> categoryPool;
 
     [Serializable]
@@ -37,6 +40,11 @@ public class CustomerManager : MonoBehaviour
     {
         instance = this;
         DontDestroyOnLoad(this);
+
+        spriteDuplicationPool = new Dictionary<Sprite, bool>();
+        for (int i = 0; i < spritePool.Count; i++) {
+            spriteDuplicationPool.Add(spritePool[i], false);
+        }
 
         //spritePool = new List<Sprite>();
     }
@@ -106,7 +114,7 @@ public class CustomerManager : MonoBehaviour
                     else
                     {
                         data = i.normalCustomerDatas[randomIndex];
-                        data.sprite = spritePool[UnityEngine.Random.Range(0, spritePool.Count)];
+                        data.sprite = GetUniqueSprite();
                         result.Add(data);
                     } 
                 }
@@ -132,12 +140,54 @@ public class CustomerManager : MonoBehaviour
                 else
                 {
                     result = i.normalCustomerDatas[randomIndex];
-                    result.sprite = spritePool[UnityEngine.Random.Range(0, spritePool.Count)];
+                    result.sprite = GetUniqueSprite();
                 }
             }
         }
         return result;
     }
+
+    // 중복 안되는 스프라이트 가져오기
+    private Sprite GetUniqueSprite()
+    {
+        // 아직 사용되지 않은 스프라이트들만 모음
+        List<Sprite> availableSprites = new List<Sprite>();
+
+        foreach (var pair in spriteDuplicationPool)
+        {
+            if (!pair.Value)
+                availableSprites.Add(pair.Key);
+        }
+
+        // 전부 사용됐을 경우 예외 처리
+        if (availableSprites.Count == 0)
+        {
+            Debug.LogWarning("모든 Sprite가 사용됨. Duplication Pool 리셋");
+            ResetSpriteDuplicationPool();
+            return GetUniqueSprite();
+        }
+
+        // 랜덤 선택
+        Debug.Log("랜덤 스프라이트 가져옴");
+        Sprite selected = availableSprites[UnityEngine.Random.Range(0, availableSprites.Count)];
+        spriteDuplicationPool[selected] = true;
+
+        return selected;
+    }
+
+    public void ResetSpriteDuplicationPool()
+    {
+
+        Debug.LogWarning("랜덤 손님 시작  Duplication Pool 리셋");
+        List<Sprite> keys = new List<Sprite>(spriteDuplicationPool.Keys);
+
+        foreach (var key in keys)
+        {
+            spriteDuplicationPool[key] = false;
+        }
+    }
+
+
 
     // 자동으로 지정하는 주문 함수들
     public void GetOrder(Personality personality) {

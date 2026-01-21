@@ -325,6 +325,8 @@ public class DialogueManager : MonoBehaviour
         // 랜덤 대사를 처음으로 가져와야 할 때
         if (currentID.Contains("GTR") && _isRandom == false)
         {
+            CustomerManager.instance.ResetSpriteDuplicationPool();
+
             _isRandom = true;
             SpriteSetEvent();
             _backID = _currentID.Split(new char[] { '_' })[1].Replace('~', '_');
