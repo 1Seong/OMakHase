@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
         reputation = 0;
         money = 0;
 
+        AudioManager.Instance.BGMTrackChange("restaurant");
         UnlockManager.instance.ResetData(); // this is full reset (deletes all playerprefs data)
 
     }

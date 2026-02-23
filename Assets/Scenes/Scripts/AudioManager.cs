@@ -33,11 +33,9 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
 
-    private void Start()
-    {
-        for (int i = 0; i < BGMList.Length; i++) {
+        for (int i = 0; i < BGMList.Length; i++)
+        {
             BGMDict.Add(BGMList[i].name, BGMList[i]);
         }
 
@@ -45,6 +43,11 @@ public class AudioManager : MonoBehaviour
         {
             SFXDict.Add(SFXList[i].name, SFXList[i]);
         }
+    }
+
+    private void Start()
+    {
+
     }
 
     private void Update()

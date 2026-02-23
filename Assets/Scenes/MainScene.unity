@@ -4450,6 +4450,50 @@ PrefabInstance:
       propertyPath: MasterSlider
       value: 
       objectReference: {fileID: 647498617}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: BGMList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: SFXList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'BGMList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: baec30afe80146245bde6f647c6a76d3, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'BGMList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e8885f634323cda4aaef06f480cc3be5, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'BGMList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fa62f8e7fedb9e44b1a940043a21eda, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'BGMList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9de55bf7ef06ee645a794c942c283f62, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'BGMList.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9de55bf7ef06ee645a794c942c283f62, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'SFXList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 70d76fcf961bd4f44b7eca1df8d07ef3, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'SFXList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c931ec187b6260a4f80317bd2378b8a7, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'SFXList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 6683534df8abada4bbd66a0fe11012e4, type: 3}
+    - target: {fileID: 4599853701340543061, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
+      propertyPath: 'SFXList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 37af5ff69e8436745a00986997813b1a, type: 3}
     - target: {fileID: 4940628275321155417, guid: 1304a1830fa1cd54db9356be4089d5ec, type: 3}
       propertyPath: m_Name
       value: AudioManager
