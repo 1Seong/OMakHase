@@ -68,6 +68,7 @@ public class FadeController : MonoBehaviour
         if (targetImage.color.a == 1 && fadeMode == 1)
         {
             enableUIs(0);
+            AudioManager.Instance.SFXTrackChange("turnpage");
         }
 
         // 엔딩 크레딧 전용

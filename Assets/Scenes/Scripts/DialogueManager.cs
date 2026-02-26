@@ -182,6 +182,9 @@ public class DialogueManager : MonoBehaviour
     EndingDialogue[] endingDialogues;
     DialogueParser theParser;
 
+    // 재생시킬 엔딩 트랙명
+    string endingTrack;
+
     private void Awake()
     {
         Instance = this;
@@ -889,7 +892,7 @@ public class DialogueManager : MonoBehaviour
             int score = GameManager.instance.reputation;
             if (score >= GameManager.instance.GoodEndingCriteria) {
                 endingDialogues = theParser.EndingParse(HappyEndingCSV);
-
+                endingTrack = "good_ending";
                 for (int i = 0; i < endingDialogues.Length; i++)
                 {
                     endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
@@ -898,7 +901,7 @@ public class DialogueManager : MonoBehaviour
             else if (score >= GameManager.instance.NormalCriteria)
             {
                 endingDialogues = theParser.EndingParse(NormalEndingCSV);
-
+                endingTrack = "normal_ending";
                 for (int i = 0; i < endingDialogues.Length; i++)
                 {
                     endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
@@ -906,7 +909,7 @@ public class DialogueManager : MonoBehaviour
             }
             else{
                 endingDialogues = theParser.EndingParse(BadEndingCSV);
-
+                endingTrack = "bad_ending";
                 for (int i = 0; i < endingDialogues.Length; i++)
                 {
                     endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
@@ -935,6 +938,12 @@ public class DialogueManager : MonoBehaviour
 
             if (_currentID != "") {
                 skipUI.gameObject.SetActive(true);
+
+                if (endingTrack != "") {
+                    AudioManager.Instance.BGMTrackChange(endingTrack);
+                    endingTrack = "";
+                }
+
             }
 
             nameUI.text = endingDialogueDic[currentID].name;

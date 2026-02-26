@@ -127,4 +127,10 @@ public class AudioManager : MonoBehaviour
             SFXSource.Play();
     }
 
+    public void SFXTrackChange(AudioSource source, string name)
+    {
+        source.clip = SFXDict[name];
+        source.Play();
+    }
+
 }
