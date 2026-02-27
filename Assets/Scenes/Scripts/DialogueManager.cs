@@ -397,6 +397,12 @@ public class DialogueManager : MonoBehaviour
             Personality personality = personalityMap.ContainsKey(desirePersonality) ? personalityMap[desirePersonality] : Personality.Generous; //성격이 지정되어 있지 않으며 기본값으로 Generous
                                                                                                                                                 // 카테고
             CategoryData category = categoryMap.ContainsKey(desireCategory) ? categoryMap[desireCategory] : null;
+
+            if (desireCategory.Contains("||"))
+            {
+                Debug.Log(category);
+            }
+
             //Debug.Log(category);
 
             // 재료 선택
