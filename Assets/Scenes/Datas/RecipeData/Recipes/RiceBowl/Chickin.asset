@@ -19,3 +19,4 @@ MonoBehaviour:
   _desc: 
   _taste: 6
   isNew: 0
+  BookSprite: {fileID: 21300000, guid: 3f415aebb4f39d14eb453bb6b204e3c6, type: 3}

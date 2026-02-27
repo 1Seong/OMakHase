@@ -16,4 +16,6 @@ public class RecipeData : RecipeBase
     public int taste { get => _taste; }
 
     public bool isNew;
+
+    public Sprite BookSprite;
 }

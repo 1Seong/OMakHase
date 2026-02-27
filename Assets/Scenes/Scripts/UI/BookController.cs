@@ -63,24 +63,27 @@ public class BookController : MonoBehaviour
     private void UpdateRightPage()
     {
         var data = RecipeManager.instance.GetRecipe(baseIngred, cook, meatFish, vege);
+        /*
         var combinationImages = combinationPanel.GetComponentsInChildren<Image>();
         var baseIcon = combinationImages[1];
         var ingredIcon1 = combinationImages[2];
         var ingredIcon2 = combinationImages[3];
         var cookIcon = combinationImages[4];
-
+        */
         if (data != null)
         {
             if (RightPageUI.localScale.x == 0) RightPageUI.localScale = new Vector3(1, 1, 1);
 
-            image.sprite = data.categoryData.sprite;
+            image.sprite = data.BookSprite;
+            image.SetNativeSize();
             title.text = data.recipeName;
-            taste.value = data.taste;
-
+            //taste.value = data.taste;
+            /*
             baseIcon.sprite = baseSprite;
             ingredIcon1.sprite = ingred1Sprite;
             ingredIcon2.sprite = ingred2Sprite;
             cookIcon.sprite = cookSprite;
+            */
         }
         
     }
