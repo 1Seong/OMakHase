@@ -102,6 +102,9 @@ public class FadeController : MonoBehaviour
             disableUIs(1);
         }
 
+        if(DialogueManager.Instance.isFinish)
+            DialogueManager.Instance.endingBackground();
+
         float elapsed = 0f;
         Color c = targetImage.color;
         c.a = 1f; // 시작은 불투명

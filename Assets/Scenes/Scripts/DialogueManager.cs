@@ -1031,7 +1031,7 @@ public class DialogueManager : MonoBehaviour
 
 
             StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(endingDialogueDic[currentID].spriteID));
-
+            GameManager.instance.Order_Canvas.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/New/Ending/" + endingDialogueDic[currentID].background.Trim());
 
             return;
         }
@@ -1334,5 +1334,9 @@ public class DialogueManager : MonoBehaviour
     public void togglePortraitUI()
     {
         portraitUI.gameObject.SetActive(!portraitUI.gameObject.activeSelf);
+    }
+
+    public void endingBackground() {
+        GameManager.instance.Order_Canvas.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/New/Ending/" + endingDialogueDic[currentID].background.Trim());
     }
 }
