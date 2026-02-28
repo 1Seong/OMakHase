@@ -5341,6 +5341,7 @@ GameObject:
   - component: {fileID: 1046058412}
   - component: {fileID: 1046058414}
   - component: {fileID: 1046058413}
+  - component: {fileID: 1046058415}
   m_Layer: 5
   m_Name: AchievementPopup
   m_TagString: Untagged
@@ -5365,7 +5366,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 85}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 700, y: 85}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1046058413
@@ -5381,7 +5382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5406,6 +5407,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046058411}
   m_CullTransparentMesh: 1
+--- !u!114 &1046058415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046058411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3c7d61fc03faa04c8e95c6474e2671b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 1046058413}
+  speed: 5
+  isActing: 0
+  _fadeTime: 0.3
+  _popDuration: 4
 --- !u!1 &1055123840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5593,7 +5611,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36ab54ce41a12a544b8eee6453ba3511, type: 2}
   - {fileID: 11400000, guid: 29293a6c690260d4da3277376b9bb93d, type: 2}
   - {fileID: 11400000, guid: 31837ebeeb872fd4c84e1849bbbf4fa3, type: 2}
-  achievementUI: {fileID: 1046058412}
+  achievementUI: {fileID: 1046058415}
   achievementUItext: {fileID: 2065880987}
 --- !u!4 &1224029307
 Transform:
@@ -8078,8 +8096,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 0
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
