@@ -23,7 +23,7 @@ public class DialogueManager : MonoBehaviour
     public event Action<string, string> MultipleTextSetEvent;
     public Action SpriteSetEvent;
     // 조리 결과에 따른 플레이어 반응 이벤트
-    public Action <string>CustomerReactionSetEvent;
+    public Action<string> CustomerReactionSetEvent;
     // 날짜 변경시의 이벤트
     public event Action<int> DayPassEvent;
     // 페이드 이벤트
@@ -82,13 +82,13 @@ public class DialogueManager : MonoBehaviour
     private string _pastID;
     public string pastID { get { return _pastID; } }
 
-    [SerializeField] 
+    [SerializeField]
     private string _currentID;
     public string currentID { get { return _currentID; } }
 
     [SerializeField]
     private string _currentDialogue;
-    public string currentDialogue {  get { return _currentDialogue; } }
+    public string currentDialogue { get { return _currentDialogue; } }
 
     Dictionary<string, Ingredient.MeatFish> meatFishMap = new Dictionary<string, Ingredient.MeatFish>
     {
@@ -182,6 +182,9 @@ public class DialogueManager : MonoBehaviour
     EndingDialogue[] endingDialogues;
     DialogueParser theParser;
 
+    // 재생시킬 엔딩 트랙명
+    string endingTrack;
+
     private void Awake()
     {
         Instance = this;
@@ -211,7 +214,7 @@ public class DialogueManager : MonoBehaviour
         _currentID = "D" + string.Format("{0:D2}", _Day) + "_C" + string.Format("{0:D2}", _Customer) + "_" + _Sequence + "_";
 
         theParser = gameObject.GetComponent<DialogueParser>();
-        
+
         Dialogue[] dialogues = theParser.Parse(StoryCSV);
 
         for (int i = 0; i < dialogues.Length; i++)
@@ -270,7 +273,7 @@ public class DialogueManager : MonoBehaviour
             {
                 directOrder = true;
             }
-            
+
             if (_pastID.Split(new char[] { '_' })[1] != "C00")
                 GameManager.instance.nextCustomer();
         }
@@ -376,7 +379,7 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    private void GetStoryOrder() 
+    private void GetStoryOrder()
     {
         directOrder = false;
         Debug.Log(_currentID);
@@ -393,7 +396,13 @@ public class DialogueManager : MonoBehaviour
             // 성격
             Personality personality = personalityMap.ContainsKey(desirePersonality) ? personalityMap[desirePersonality] : Personality.Generous; //성격이 지정되어 있지 않으며 기본값으로 Generous
                                                                                                                                                 // 카테고
-            CategoryData category = categoryMap.ContainsKey(desireCategory) ? categoryMap[desireCategory] : null;
+            CategoryData category = categoryMap.ContainsKey(desireCategory + '\r') ? categoryMap[desireCategory + '\r'] : null;
+
+            if (desireCategory.Contains("||"))
+            {
+                Debug.Log(category);
+            }
+
             //Debug.Log(category);
 
             // 재료 선택
@@ -424,9 +433,25 @@ public class DialogueManager : MonoBehaviour
                     CustomerManager.instance.GetOrder(personality, true, meatfish, vege, category, hateMeatFish, hateVege, hateBase);
                 }
 
+                else if (desireCategory.Contains("||"))
+                {
+                    string[] categories = desireCategory.Split("||");
+                    List<CategoryData> desireCategories = new List<CategoryData>();
+                    foreach (string categoryData in categories)
+                    {
+                        if (categoryMap.ContainsKey(categoryData + '\r'))
+                        {
+                            desireCategories.Add(categoryMap[categoryData + '\r']);
+                        }
+                    }
+
+                    Debug.Log("03");
+                    CustomerManager.instance.GetOrder(personality, true, meatfish, vege, desireCategories, hateMeatFish, hateVege, hateBase);
+                }
+
                 else
                 {
-                    Debug.Log("03");
+                    Debug.Log("04");
                     CustomerManager.instance.GetOrder(personality, true, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
                 }
             }
@@ -435,18 +460,34 @@ public class DialogueManager : MonoBehaviour
             {
                 if (baseIngred != Ingredient.Base.noCondition || cook != Ingredient.Cook.noCondition)
                 {
-                    Debug.Log("04");
+                    Debug.Log("05");
                     CustomerManager.instance.GetOrder(personality, true, Main, baseIngred, cook, hateCategory, hateBase);
                 }
                 else if (category != null)
                 {
-                    Debug.Log("05");
+                    Debug.Log("06");
                     CustomerManager.instance.GetOrder(personality, true, Main, category, hateCategory, hateBase);
+                }
+
+                else if (desireCategory.Contains("||"))
+                {
+                    string[] categories = desireCategory.Split("||");
+                    List<CategoryData> desireCategories = new List<CategoryData>();
+                    foreach (string categoryData in categories)
+                    {
+                        if (categoryMap.ContainsKey(categoryData + '\r'))
+                        {
+                            desireCategories.Add(categoryMap[categoryData + '\r']);
+                        }
+                    }
+
+                    Debug.Log("07");
+                    CustomerManager.instance.GetOrder(personality, true, Main, desireCategories, hateCategory, hateBase);
                 }
 
                 else
                 {
-                    Debug.Log("06");
+                    Debug.Log("08");
                     CustomerManager.instance.GetOrder(personality, true, Main, baseIngred, cook, hateCategory, hateBase);
                 }
             }
@@ -457,9 +498,28 @@ public class DialogueManager : MonoBehaviour
                 CustomerManager.instance.GetOrder(personality, true, Main, category, hateCategory, hateBase);
             }
 
+
+            // 주재료 없이 || 카테고리인 형식인 경우에는 03의 경우와 동일하게 처리
+            else if (desireCategory.Contains("||"))
+            {
+                string[] categories = desireCategory.Split("||");
+                List<CategoryData> desireCategories = new List<CategoryData>();
+                foreach (string categoryData in categories)
+                {
+                    if (categoryMap.ContainsKey(categoryData + "\r"))
+                    {
+                        desireCategories.Add(categoryMap[categoryData + '\r']);
+                    }
+                }
+
+                Debug.Log("08");
+                CustomerManager.instance.GetOrder(personality, true, meatfish, vege, desireCategories, hateMeatFish, hateVege, hateBase);
+            }
+
+            // 지정된 주재료, 카테고리가 없는 경우에는 01의 경우와 동일하게 처리
             else
             {
-                Debug.Log("08");
+                Debug.Log("09");
                 CustomerManager.instance.GetOrder(personality, true, meatfish, vege, baseIngred, cook, hateMeatFish, hateVege, hateBase);
             }
 
@@ -467,7 +527,8 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private string GetStoryResult() {
+    private string GetStoryResult()
+    {
 
         string temp = currentID;
         // 다중 반응 처리
@@ -513,7 +574,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private string GetRandomOrder() 
+    private string GetRandomOrder()
     {
         string currentDialogue = randomDialogues[indexForRandom].line;
 
@@ -839,7 +900,8 @@ public class DialogueManager : MonoBehaviour
             _pastID = _currentID;
             string[] tmp = _currentID.Split(new char[] { '_' });
 
-            if (!isFinish) {
+            if (!isFinish)
+            {
                 // 스토리 대사 ID가 필요한 경우
                 if (_isRandom == false)
                 {
@@ -873,7 +935,8 @@ public class DialogueManager : MonoBehaviour
                         DayPassEvent(2);
                     }
 
-                    else {
+                    else
+                    {
                         GameManager.instance.Fade_Panel.gameObject.SetActive(true);
                         FadeEvent(0);
                     }
@@ -884,12 +947,14 @@ public class DialogueManager : MonoBehaviour
         }
 
         // 스토리 CSV 끝났을 때, 엔딩 CSV 가져오기
-        if (_currentID == "" && _isFinish == false) {
+        if (_currentID == "" && _isFinish == false)
+        {
             _isFinish = true;
             int score = GameManager.instance.reputation;
-            if (score >= GameManager.instance.GoodEndingCriteria) {
+            if (score >= GameManager.instance.GoodEndingCriteria)
+            {
                 endingDialogues = theParser.EndingParse(HappyEndingCSV);
-
+                endingTrack = "good_ending";
                 for (int i = 0; i < endingDialogues.Length; i++)
                 {
                     endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
@@ -898,15 +963,16 @@ public class DialogueManager : MonoBehaviour
             else if (score >= GameManager.instance.NormalCriteria)
             {
                 endingDialogues = theParser.EndingParse(NormalEndingCSV);
-
+                endingTrack = "normal_ending";
                 for (int i = 0; i < endingDialogues.Length; i++)
                 {
                     endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
                 }
             }
-            else{
+            else
+            {
                 endingDialogues = theParser.EndingParse(BadEndingCSV);
-
+                endingTrack = "bad_ending";
                 for (int i = 0; i < endingDialogues.Length; i++)
                 {
                     endingDialogueDic.Add(endingDialogues[i].dialogueID, endingDialogues[i]);
@@ -919,7 +985,8 @@ public class DialogueManager : MonoBehaviour
         }
 
         // 페이드 연출 중에는 대사가 더 이상 진행되지 않도록 강제 리턴
-        if (GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadingInProgress == true) {
+        if (GameManager.instance.Fade_Panel.GetComponent<FadeController>().fadingInProgress == true)
+        {
             return;
         }
 
@@ -931,10 +998,19 @@ public class DialogueManager : MonoBehaviour
         }
 
         // 엔딩 대사 출력
-        if (isFinish == true) {
+        if (isFinish == true)
+        {
 
-            if (_currentID != "") {
+            if (_currentID != "")
+            {
                 skipUI.gameObject.SetActive(true);
+
+                if (endingTrack != "")
+                {
+                    AudioManager.Instance.BGMTrackChange(endingTrack);
+                    endingTrack = "";
+                }
+
             }
 
             nameUI.text = endingDialogueDic[currentID].name;
@@ -955,7 +1031,7 @@ public class DialogueManager : MonoBehaviour
 
 
             StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(endingDialogueDic[currentID].spriteID));
-            
+
 
             return;
         }
@@ -976,7 +1052,8 @@ public class DialogueManager : MonoBehaviour
                 skipUI.gameObject.SetActive(false);
 
                 var firstChoose = default(string);
-                if (dialogueDic[chooseTmp[0]].line[0] == '@') {
+                if (dialogueDic[chooseTmp[0]].line[0] == '@')
+                {
                     firstChoose = dialogueDic[chooseTmp[0]].line.Substring(1, dialogueDic[chooseTmp[0]].line.Length - 1);
                 }
                 else
@@ -999,14 +1076,15 @@ public class DialogueManager : MonoBehaviour
             if (currentID.Contains("_R_"))
             {
                 string result = GetStoryResult();
-                if (result != null) {
+                if (result != null)
+                {
                     nameUI.text = dialogueDic[currentID].name;
                     dialogueSet(result);
                     return;
                 }
             }
         }
-        
+
         // 스토리 주문과 관련 없는 일반 대사 처리
         if (_isRandom == false)
         {
@@ -1039,7 +1117,7 @@ public class DialogueManager : MonoBehaviour
             }
 
             StartCoroutine(SpriteManager.Instance.SpriteChangeCoroutine(dialogueDic[currentID].spriteID));
-            
+
 
             nameUI.text = dialogueDic[currentID].name;
             var text3 = dialogueDic[currentID].line.Replace('`', ',');
@@ -1081,7 +1159,7 @@ public class DialogueManager : MonoBehaviour
 
         if (dialogueDic[_currentID].line.Contains('%'))
             GameManager.instance.sneakyAdsFlag = false;
-        
+
 
         multipleskipUI.gameObject.SetActive(false);
         skipUI.gameObject.SetActive(true);
@@ -1091,7 +1169,8 @@ public class DialogueManager : MonoBehaviour
     private string getUnlockedBase(string[] strings)
     {
 
-        while (true) {
+        while (true)
+        {
             string unlocked;
 
             while (true)
@@ -1131,7 +1210,8 @@ public class DialogueManager : MonoBehaviour
         {
             unlocked = strings[UnityEngine.Random.Range(0, strings.Length)];
             Debug.Log(unlocked);
-            if (unlocked == "육류" || unlocked == "생선류" || UnlockManager.instance.IsUnlocked(meatFishMap[unlocked])) {
+            if (unlocked == "육류" || unlocked == "생선류" || UnlockManager.instance.IsUnlocked(meatFishMap[unlocked]))
+            {
                 break;
             }
         }
@@ -1231,7 +1311,8 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        if (line.Contains('`')) { 
+        if (line.Contains('`'))
+        {
             line = line.Replace('`', ',');
         }
 
@@ -1239,7 +1320,8 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    public void dialogueReset() {
+    public void dialogueReset()
+    {
         nameUI.text = "";
         dialogueSet("");
     }
@@ -1249,7 +1331,8 @@ public class DialogueManager : MonoBehaviour
         DialogueSetEvent!.Invoke(dlg);
     }
 
-    public void togglePortraitUI() {
+    public void togglePortraitUI()
+    {
         portraitUI.gameObject.SetActive(!portraitUI.gameObject.activeSelf);
     }
 }

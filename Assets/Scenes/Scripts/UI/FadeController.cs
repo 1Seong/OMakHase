@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FadeController : MonoBehaviour
@@ -26,8 +27,12 @@ public class FadeController : MonoBehaviour
 
         if (targetImage == null)
             targetImage = GetComponent<Image>(); // 만약 지정 안 했다면 자기 자신 Image 가져오기
-        DialogueManager.Instance.DayPassEvent += StartFadeIn;
-        DialogueManager.Instance.FadeEvent += StartFade;
+
+        if (SceneManager.GetActiveScene().name == "MainScene")
+        {
+            DialogueManager.Instance.DayPassEvent += StartFadeIn;
+            DialogueManager.Instance.FadeEvent += StartFade;
+        }
 
     }
 
@@ -68,6 +73,7 @@ public class FadeController : MonoBehaviour
         if (targetImage.color.a == 1 && fadeMode == 1)
         {
             enableUIs(0);
+            AudioManager.Instance.SFXTrackChange("turnpage");
         }
 
         // 엔딩 크레딧 전용

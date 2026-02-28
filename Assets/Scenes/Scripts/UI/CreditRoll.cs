@@ -31,19 +31,19 @@ public class CreditRoll : MonoBehaviour
 
     IEnumerator rollCredit() {
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
 
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, transform.position);
 
         while (screenPos.y <= Screen.height) {
-            Debug.Log("rolling");
+            //Debug.Log("rolling");
             rectTransform.Translate(Vector3.up * Time.deltaTime * 100.0f);
             yield return null;
             screenPos = RectTransformUtility.WorldToScreenPoint(null, transform.position);
 
         }
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
 
         SceneManager.LoadScene("StartScene");
     }

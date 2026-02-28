@@ -52,6 +52,9 @@ public class CookManager : MonoBehaviour
     [SerializeField]
     private GameObject _CookNextButton;
 
+    // 손님 반응 SFX 담당 AudioSoource
+    AudioSource audioSource;
+
     public void getMeatFish(int index) 
     {
         meatfish = GetDataFromEnum<Ingredient.MeatFish>(index);
@@ -255,6 +258,7 @@ public class CookManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        audioSource = DialogueManager.Instance.GetComponent<AudioSource>();
 
         _OrderCanvas = GameManager.instance.Order_Canvas.GetComponent<RectTransform>();
         //Debug.Log(_OrderCanvas);
@@ -274,11 +278,20 @@ public class CookManager : MonoBehaviour
     {
 
         if (type == Result.positive)
+        {
             DialogueManager.Instance.CustomerReactionSetEvent?.Invoke("Response_positive");
+            AudioManager.Instance.SFXTrackChange(audioSource, "positive");
+        }
         else if (type == Result.neutral)
+        {
             DialogueManager.Instance.CustomerReactionSetEvent?.Invoke("Response_neutral");
+            AudioManager.Instance.SFXTrackChange(audioSource, "neutral");
+        }
         else
+        {
             DialogueManager.Instance.CustomerReactionSetEvent?.Invoke("Response_negative");
+            AudioManager.Instance.SFXTrackChange(audioSource, "negative");
+        }
 
         _satisfiedType = type;
     }
