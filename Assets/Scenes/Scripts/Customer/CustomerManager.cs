@@ -42,7 +42,8 @@ public class CustomerManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         spriteDuplicationPool = new Dictionary<Sprite, bool>();
-        for (int i = 0; i < spritePool.Count; i++) {
+        for (int i = 0; i < spritePool.Count; i++)
+        {
             spriteDuplicationPool.Add(spritePool[i], false);
         }
 
@@ -59,8 +60,8 @@ public class CustomerManager : MonoBehaviour
         //test
 
         //GetRandomOrder();
-        
-        
+
+
         //Debug.Log(currentCustomer);
     }
 
@@ -88,15 +89,15 @@ public class CustomerManager : MonoBehaviour
 
         foreach (var i in categoryListDatas)
         {
-            if(i.personality == personality)
+            if (i.personality == personality)
             {
-                if(isSpecial && num > i.specialCustomerDatas.Count || !isSpecial && num > i.normalCustomerDatas.Count)
+                if (isSpecial && num > i.specialCustomerDatas.Count || !isSpecial && num > i.normalCustomerDatas.Count)
                 {
                     Debug.Log("num out of list range");
                     return null;
                 }
 
-                for (int j = 0; j  < num; j++)
+                for (int j = 0; j < num; j++)
                 {
                     while (true)
                     {
@@ -109,14 +110,14 @@ public class CustomerManager : MonoBehaviour
                         }
                     }
 
-                    if (isSpecial) 
+                    if (isSpecial)
                         result.Add(i.specialCustomerDatas[randomIndex]);
                     else
                     {
                         data = i.normalCustomerDatas[randomIndex];
                         data.sprite = GetUniqueSprite();
                         result.Add(data);
-                    } 
+                    }
                 }
             }
         }
@@ -129,9 +130,9 @@ public class CustomerManager : MonoBehaviour
         CustomerData result = null;
         int randomIndex;
 
-        foreach(var i in categoryListDatas)
+        foreach (var i in categoryListDatas)
         {
-            if(i.personality == personality)
+            if (i.personality == personality)
             {
                 randomIndex = isSpecial ? UnityEngine.Random.Range(0, i.specialCustomerDatas.Count) : UnityEngine.Random.Range(0, i.normalCustomerDatas.Count);
 
@@ -190,7 +191,8 @@ public class CustomerManager : MonoBehaviour
 
 
     // 자동으로 지정하는 주문 함수들
-    public void GetOrder(Personality personality) {
+    public void GetOrder(Personality personality)
+    {
         currentCustomer = GetCustomer(personality, false);
 
         currentCustomer.InitializeOrder();
@@ -200,7 +202,8 @@ public class CustomerManager : MonoBehaviour
     }
 
     // 수동으로 모두 지정하는 주문 함수들
-    public void GetOrder(Personality personality, bool isSpecial, Ingredient.MeatFish meatfish, Ingredient.Vege vege, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateMeatFish, bool hateVege, bool hateBase) {
+    public void GetOrder(Personality personality, bool isSpecial, Ingredient.MeatFish meatfish, Ingredient.Vege vege, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateMeatFish, bool hateVege, bool hateBase)
+    {
 
         currentCustomer = GetCustomer(personality, isSpecial);
 
@@ -243,8 +246,29 @@ public class CustomerManager : MonoBehaviour
         currentPersonality = currentCustomer.personality;
     }
 
+    // 손님에게 대접할 수 있는 카테고리의 종류가 여러개일 때
 
+    public void GetOrder(Personality personality, bool isSpecial, Ingredient.MeatFish meatfish, Ingredient.Vege vege, List<CategoryData> categories, bool hateMeatFish, bool hateVege, bool hateBase)
+    {
 
+        currentCustomer = GetCustomer(personality, isSpecial);
+
+        currentCustomer.InitializeOrder();
+
+        currentCustomer.GetOrder(meatfish, vege, categories, hateMeatFish, hateVege, hateBase);
+        currentPersonality = currentCustomer.personality;
+    }
+
+    public void GetOrder(Personality personality, bool isSpecial, Ingredient.Main main, List<CategoryData> categories, bool hateCategory, bool hateBase)
+    {
+
+        currentCustomer = GetCustomer(personality, isSpecial);
+
+        currentCustomer.InitializeOrder();
+
+        currentCustomer.GetOrder(main, categories, hateCategory, hateBase);
+        currentPersonality = currentCustomer.personality;
+    }
 
 
 
@@ -274,7 +298,8 @@ public class CustomerManager : MonoBehaviour
 
 
     // Method to get a random guest order - 이제 사용 안하는 코드
-    public void GetRandomOrder() {
+    public void GetRandomOrder()
+    {
 
         //Sprite randomSprite = GetRandomSprite();
         //activeSpriteImage.sprite = randomSprite;
@@ -316,7 +341,7 @@ public class CustomerManager : MonoBehaviour
         {
             orderText.text += "육류 ";
 
-            if(currentCustomer.hateMeatFish == true)
+            if (currentCustomer.hateMeatFish == true)
                 orderText.text += "싫어 ";
         }
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.fish)
@@ -409,9 +434,10 @@ public class CustomerManager : MonoBehaviour
                 orderText.text += "과채류 넣지말고 ";
             }
         }
-        
 
-        if (currentCustomer.baseIngred == Ingredient.Base.rice) {
+
+        if (currentCustomer.baseIngred == Ingredient.Base.rice)
+        {
             orderText.text += "쌀 ";
 
             if (currentCustomer.hateBase == true)

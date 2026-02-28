@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static Ingredient;
 
@@ -18,6 +20,10 @@ public class CustomerData : RecipeBase
     [SerializeField]
     private Ingredient.Main _mainIngredCategory;
     public Ingredient.Main mainIngredCategory { get => _mainIngredCategory; }
+
+    [SerializeField]
+    private CategoryData[] _categories;
+    public CategoryData[] categories { get => _categories; }
 
     [Header("hate data")]
 
@@ -56,8 +62,25 @@ public class CustomerData : RecipeBase
     public bool CheckCondition(RecipeData recipe)
     {
 
-        if (categoryData != null && _hateMeatFish == false && _hateVege == false && _hateBase == false && _hateCategory == false)
-            if (!categoryData.Equals(recipe.categoryData)) return false;
+        if (_categories != null && _categories.Length > 0)
+        {
+            bool flag = false;
+            foreach (var category in _categories)
+            {
+                if (category.Equals(recipe.categoryData))
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag == false) {
+                return false;
+            }
+        }
+        else {
+            if (categoryData != null && _hateMeatFish == false && _hateVege == false && _hateBase == false && _hateCategory == false)
+                if (!categoryData.Equals(recipe.categoryData)) return false;
+        }
 
         if (meatfish != Ingredient.MeatFish.noCondition)
         {
@@ -107,6 +130,7 @@ public class CustomerData : RecipeBase
         _baseIngred = Ingredient.Base.noCondition;
         _cook = Ingredient.Cook.noCondition;
         _mainIngredCategory = Ingredient.Main.noCondition;
+        _categories = null;
 
         _hateMeatFish = false;
         _hateVege = false;
@@ -176,6 +200,27 @@ public class CustomerData : RecipeBase
         _mainIngredCategory = main;
         _baseIngred = category.baseIngred;
         _cook = category.cook;
+
+        _hateCategory = hateCategory;
+        _hateBase = hateBase;
+    }
+
+
+    public void GetOrder(Ingredient.MeatFish meatfish, Ingredient.Vege vege, List<CategoryData> categories, bool hateMeatFish, bool hateVege, bool hateBase)
+    {
+        GetIngredient(meatfish, vege);
+
+        
+        _categories = categories.ToArray(); 
+
+        _hateMeatFish = hateMeatFish;
+        _hateVege = hateVege;
+        _hateBase = hateBase;
+    }
+    public void GetOrder(Ingredient.Main main, List<CategoryData> categories, bool hateCategory, bool hateBase)
+    {
+        _mainIngredCategory = main;
+        _categories = categories.ToArray();
 
         _hateCategory = hateCategory;
         _hateBase = hateBase;
