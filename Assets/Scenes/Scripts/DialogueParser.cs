@@ -79,7 +79,7 @@ public class DialogueParser : MonoBehaviour
             //Debug.Log(row[4]);
             dialogue.isFormat = row[5]; // 포맷화 여부
             //Debug.Log(row[5]);
-            dialogue.spriteID = row[6]; // 캐릭터 스프라이트 ID
+            //dialogue.spriteID = row[6]; // 캐릭터 스프라이트 ID
             //Debug.Log(row[6]);
 
 

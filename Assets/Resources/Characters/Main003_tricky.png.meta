@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ca70363f2d750da40895cd70ef7d79b9
+guid: 7d8ecdd8ca800d24ea12d2be6a152193
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4310058441719260700
-    second: Main_006_default_0
+      213: -8718939991326008726
+    second: Main003_tricky_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Main_006_default_0
+      name: Main003_tricky_0
       rect:
         serializedVersion: 2
-        x: 76
+        x: 51
         y: 0
-        width: 322
-        height: 462
+        width: 362
+        height: 663
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e95624dea89f24c0800000000000000
-      internalID: -4310058441719260700
+      spriteID: a6ad017d54a100780800000000000000
+      internalID: -8718939991326008726
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Main_006_default_0: -4310058441719260700
+      Main003_tricky_0: -8718939991326008726
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

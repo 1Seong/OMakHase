@@ -8000,12 +8000,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c788a0fa46d1c4fa9a2cb44f955f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StoryCSV: {fileID: 4900000, guid: 53e553acb8e55b94faa095266318a537, type: 3}
-  RandomCSV: {fileID: 4900000, guid: 39b5f91d802863f4696aabb6d285bc03, type: 3}
-  RandomReactionCSV: {fileID: 4900000, guid: 6047e5193be497b46a6800ba37f515ba, type: 3}
-  HappyEndingCSV: {fileID: 4900000, guid: 8e145ada6d2b21f4e9047c7a248f01f9, type: 3}
-  NormalEndingCSV: {fileID: 4900000, guid: 76ec6a4b0f2c33b41992bd9e6591d7be, type: 3}
-  BadEndingCSV: {fileID: 4900000, guid: 995af8944785cb348941d254f8022b2b, type: 3}
+  StoryCSV: {fileID: 4900000, guid: aeeac39b634011f4bb0bdb40d05eab9c, type: 3}
+  RandomCSV: {fileID: 4900000, guid: 6eedf6b532cda514ca5e42db796d6a46, type: 3}
+  RandomReactionCSV: {fileID: 4900000, guid: efdd8cb4f7516c84e974f1cffaa9d0eb, type: 3}
+  HappyEndingCSV: {fileID: 4900000, guid: 4710f941a17e27d4aa6d59debc2da85a, type: 3}
+  NormalEndingCSV: {fileID: 4900000, guid: 0762d231e7f2545469a02ce8f08989f7, type: 3}
+  BadEndingCSV: {fileID: 4900000, guid: 670cf93aa18fd294f8fec2fd94dc0fc6, type: 3}
   portraitUI: {fileID: 1525812948}
   nameUI: {fileID: 599945859}
   dialogueUI: {fileID: 381425572}
