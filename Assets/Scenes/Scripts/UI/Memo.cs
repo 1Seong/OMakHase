@@ -4,18 +4,19 @@ using UnityEngine;
 public class Memo : MonoBehaviour
 {
     TextMeshProUGUI _textMesh;
+    [SerializeField] TextMeshProUGUI dialogueUI;
 
     private void Awake()
     {
         _textMesh = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private void OnEnable()
+    public void GetOrderText()
     {
-        //_textMesh.text = DialogueManager.Instance.currentDialogue;
+        _textMesh.text = dialogueUI.text;
     }
 
-    private void OnDisable()
+    public void EraseOrderText()
     {
         _textMesh.text = null;
     }
