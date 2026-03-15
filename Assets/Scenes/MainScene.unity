@@ -11287,6 +11287,10 @@ PrefabInstance:
       propertyPath: 'Sprites.Array.data[1]'
       value: 
       objectReference: {fileID: 3250166386658430623, guid: 51e22b3c0afb75e44885d1fd98dab33e, type: 3}
+    - target: {fileID: 8467059565809243805, guid: 0221ec3e25e21da4b8f4e4aa87c1bfa5, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6767476658745697492, guid: 0221ec3e25e21da4b8f4e4aa87c1bfa5, type: 3}
