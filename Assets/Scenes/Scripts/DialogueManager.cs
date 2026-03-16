@@ -1018,7 +1018,7 @@ public class DialogueManager : MonoBehaviour
             dialogueSet(text);
 
 
-            Debug.Log(endingDialogueDic[currentID].spriteID);
+            //Debug.Log(endingDialogueDic[currentID].spriteID);
 
             if (nameUI.text.CompareTo("³ª") == 0 && portraitUI.gameObject.activeSelf == true)
             {

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class FadeController : MonoBehaviour
 {
     [SerializeField] private Image targetImage;  // 페이드할 UI 이미지
+    [SerializeField] private Image dialogueUI;
+    [SerializeField] private RectTransform[] dialogueUIList;  // 페이드 여부에 따라 활성화시킬 dialogueUI의 자식 ui들
     [SerializeField] private RectTransform[] UIList;  // 페이드 여부에 따라 활성화시킬 ui들
     [SerializeField] private RectTransform[] CreditUIList;  // 페이드 여부에 따라 활성화시킬 크레딧 전용 ui들
     [SerializeField] private float _fadeDuration = 1.0f; // 페이드 걸리는 시간 (초 단위)
@@ -27,6 +29,10 @@ public class FadeController : MonoBehaviour
 
         if (targetImage == null)
             targetImage = GetComponent<Image>(); // 만약 지정 안 했다면 자기 자신 Image 가져오기
+
+
+        if (dialogueUI == null)
+            dialogueUI = GetComponent<Image>(); 
 
         if (SceneManager.GetActiveScene().name == "MainScene")
         {
@@ -58,17 +64,48 @@ public class FadeController : MonoBehaviour
     {
         fadeProgressStatusChange();
 
+        // fadeMode == 2 일 때만 먼저 dialogueUI를 천천히 사라지게 함
+        if (fadeMode == 2)
+        {
+            disableUIs(2);
+
+            float dialogueElapsed = 0f;
+            Color dialogueC = dialogueUI.color;
+            dialogueC.a = 1f; // 시작은 불투명
+            dialogueUI.color = dialogueC;
+
+            while (dialogueElapsed < _fadeDuration)
+            {
+                dialogueElapsed += Time.deltaTime;
+                dialogueC.a = Mathf.Clamp01(1f - (dialogueElapsed / _fadeDuration)); // 1 -> 0
+                dialogueUI.color = dialogueC;
+                yield return null;
+            }
+
+            // 마지막 값 보정
+            dialogueC.a = 0f;
+            dialogueUI.color = dialogueC;
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        // 그 다음 배경이 어두워지는 기능 실행
         float elapsed = 0f;
         Color c = targetImage.color;
         c.a = 0f; // 시작은 투명
         targetImage.color = c;
 
-        while (elapsed < _fadeDuration) {
+        while (elapsed < _fadeDuration)
+        {
             elapsed += Time.deltaTime;
             c.a = Mathf.Clamp01(elapsed / _fadeDuration);
             targetImage.color = c;
             yield return null;
         }
+
+        // 마지막 값 보정
+        c.a = 1f;
+        targetImage.color = c;
 
         if (targetImage.color.a == 1 && fadeMode == 1)
         {
@@ -79,6 +116,7 @@ public class FadeController : MonoBehaviour
         // 엔딩 크레딧 전용
         if (targetImage.color.a == 1 && fadeMode == 2)
         {
+            enableUIs(2);
             enableUIs(1);
         }
 
@@ -87,7 +125,6 @@ public class FadeController : MonoBehaviour
         DialogueManager.Instance.dialogueReset();
         if (DialogueManager.Instance.pastID.Contains("GTR"))
             DialogueManager.Instance.SpriteSetEvent();
-
     }
     private IEnumerator FadeOut(int fadeMode)
     {
@@ -147,6 +184,14 @@ public class FadeController : MonoBehaviour
                 CreditUIList[i].gameObject.SetActive(true);
             }
         }
+
+        if (uiMode == 2)
+        {
+            for (int i = 0; i < dialogueUIList.Length; i++)
+            {
+                dialogueUIList[i].gameObject.SetActive(true);
+            }
+        }
     }
 
     private void disableUIs(int uiMode)
@@ -162,9 +207,15 @@ public class FadeController : MonoBehaviour
         {
             for (int i = 0; i < CreditUIList.Length; i++)
             {
-                CreditUIList[i].gameObject.SetActive(true);
+                CreditUIList[i].gameObject.SetActive(false);
             }
         }
-
+        if (uiMode == 2)
+        {
+            for (int i = 0; i < dialogueUIList.Length; i++)
+            {
+                dialogueUIList[i].gameObject.SetActive(false);
+            }
+        }
     }
 }
