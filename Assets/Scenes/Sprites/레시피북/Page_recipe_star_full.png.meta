@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 19f0dff2871ef7b45a9e97010a12114a
+guid: fe2d6f4ab1cfb5f4f873d5b6b67755a0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1218560212770351883
-    second: Page_letter_0
+      213: -5542231308457056044
+    second: Page_recipe_star_full_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Page_letter_0
+      name: Page_recipe_star_full_0
       rect:
         serializedVersion: 2
-        x: 372
-        y: 91
-        width: 1185
-        height: 879
+        x: 11
+        y: 11
+        width: 98
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b0be99bae0239e010800000000000000
-      internalID: 1218560212770351883
+      spriteID: 4d86e5c2df90613b0800000000000000
+      internalID: -5542231308457056044
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Page_letter_0: 1218560212770351883
+      Page_recipe_star_full_0: -5542231308457056044
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

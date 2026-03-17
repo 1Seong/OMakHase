@@ -10,6 +10,10 @@ public class BookController : MonoBehaviour
     [SerializeField] private GameObject combinationPanel;
     [SerializeField] private Slider taste;
     [SerializeField] private RectTransform RightPageUI;
+    [SerializeField] private Image[] stars;
+    [SerializeField] private Sprite emptyStar;
+    [SerializeField] private Sprite fullStar;
+    [SerializeField] private Sprite halfStar;
 
     private Sprite baseSprite;
     private Sprite ingred1Sprite;
@@ -77,6 +81,17 @@ public class BookController : MonoBehaviour
             image.sprite = data.BookSprite;
             image.SetNativeSize();
             title.text = data.recipeName;
+
+            for (var i = 0; i != stars.Length; ++i)
+            {
+                var p = data.taste - 2 * i;
+                stars[i].sprite = p switch
+                {
+                    < 2 => emptyStar,
+                    2 => halfStar,
+                    _ => fullStar
+                };
+            }
             //taste.value = data.taste;
             /*
             baseIcon.sprite = baseSprite;
