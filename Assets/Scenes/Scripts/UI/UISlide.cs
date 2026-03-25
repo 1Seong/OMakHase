@@ -12,6 +12,16 @@ public class UISlide : MonoBehaviour
     protected Vector2 hiddenPosition;
     protected Vector2 visiblePosition;
 
+    public Vector2 getAnchoredPosition()
+    {
+        return mainImage.anchoredPosition;
+    }
+
+
+    public Vector2 getVisiblePosition() {
+        return visiblePosition;
+    }
+
     public bool isActing;
 
     protected virtual void Awake()

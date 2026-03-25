@@ -6,9 +6,12 @@ public class Memo : MonoBehaviour
     TextMeshProUGUI _textMesh;
     [SerializeField] TextMeshProUGUI dialogueUI;
 
+    UISlide _uiSlide;
+
     private void Awake()
     {
         _textMesh = GetComponentInChildren<TextMeshProUGUI>();
+        _uiSlide = GetComponentInChildren<UISlide>();
     }
 
     public void GetOrderText()
@@ -18,6 +21,7 @@ public class Memo : MonoBehaviour
 
     public void EraseOrderText()
     {
-        _textMesh.text = null;
+        if(_uiSlide.isActing == false && _uiSlide.getAnchoredPosition().y == _uiSlide.getVisiblePosition().y)
+            _textMesh.text = null;
     }
 }
