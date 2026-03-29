@@ -7710,9 +7710,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c788a0fa46d1c4fa9a2cb44f955f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StoryCSV: {fileID: 4900000, guid: aeeac39b634011f4bb0bdb40d05eab9c, type: 3}
-  RandomCSV: {fileID: 4900000, guid: 6eedf6b532cda514ca5e42db796d6a46, type: 3}
-  RandomReactionCSV: {fileID: 4900000, guid: efdd8cb4f7516c84e974f1cffaa9d0eb, type: 3}
+  StoryCSV: {fileID: 4900000, guid: c0b861ea75b3eaa4c9adb731e84d2608, type: 3}
+  RandomCSV: {fileID: 4900000, guid: 3fbb52d0d8e98bb45b9bd19423c1bd4f, type: 3}
+  RandomReactionCSV: {fileID: 4900000, guid: 341bce3673dffd84fadc3daa3475333e, type: 3}
   HappyEndingCSV: {fileID: 4900000, guid: 4710f941a17e27d4aa6d59debc2da85a, type: 3}
   NormalEndingCSV: {fileID: 4900000, guid: 0762d231e7f2545469a02ce8f08989f7, type: 3}
   BadEndingCSV: {fileID: 4900000, guid: 670cf93aa18fd294f8fec2fd94dc0fc6, type: 3}
