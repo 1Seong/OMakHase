@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-using UnityEngine.UI;
-using static Ingredient;
 
 public class GameManager : MonoBehaviour
 {

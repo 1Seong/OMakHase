@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using static Ingredient;
-using static UnityEditor.Progress;
-
 public class TutorialManager : MonoBehaviour
 {
     private Button button;

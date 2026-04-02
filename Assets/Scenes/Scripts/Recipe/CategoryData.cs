@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CategoryData", menuName = "Scriptable Objects/CategoryData")]

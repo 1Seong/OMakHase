@@ -3,8 +3,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
-using static Ingredient;
 
 
 public class CustomerManager : MonoBehaviour

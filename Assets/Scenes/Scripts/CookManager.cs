@@ -1,10 +1,5 @@
-using NUnit.Framework;
 using System;
-using TreeEditor;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using static System.Collections.Specialized.BitVector32;
 
 public class CookManager : MonoBehaviour
 {

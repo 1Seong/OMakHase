@@ -1,19 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.Windows;
-using UnityEngine.XR;
 using static Ingredient;
-using static UnityEngine.Rendering.DebugUI;
 using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -298,7 +289,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (_isRandom == true)
         {
-            // 랜덤 대사 출력 완료 됬을 때의 처리
+            // 랜덤 대사 출력 완료 ?瑛? 때의 처리
             if (indexForRandom >= randomDialogues.Length)
             {
                 indexForRandom = 0;

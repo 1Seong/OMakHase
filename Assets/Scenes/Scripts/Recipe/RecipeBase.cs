@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static Ingredient;
 
 [CreateAssetMenu(fileName = "RecipeBase", menuName = "Scriptable Objects/RecipeBase")]
 public class RecipeBase : ScriptableObject
