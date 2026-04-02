@@ -130,7 +130,16 @@ public class UnlockManager : MonoBehaviour
             }
 
     }
-    
+
+    public void UnlockRecipe(string name)
+    {
+        PlayerPrefs.SetInt(name, 1);
+    }
+
+    public bool IsRecipeUnlocked(string name)
+    {
+        return PlayerPrefs.GetInt(name, 0) == 1;
+    }
 
 }
 

@@ -67,6 +67,12 @@ public class BookController : MonoBehaviour
     private void UpdateRightPage()
     {
         var data = RecipeManager.instance.GetRecipe(baseIngred, cook, meatFish, vege);
+        if (data == null || !UnlockManager.instance.IsRecipeUnlocked(data.recipeName))
+        {
+            RightPageUI.localScale =  Vector3.zero;
+            return;
+        }
+        
         /*
         var combinationImages = combinationPanel.GetComponentsInChildren<Image>();
         var baseIcon = combinationImages[1];

@@ -21,7 +21,7 @@ public class CookManager : MonoBehaviour
     public event Action<string> DialogueSetEvent;
 
     [SerializeField, HideInInspector]
-    private int _reputationRise;  // ÀÎ½ºÆåÅÍ¿¡¼­ ¼öÁ¤ ºÒ°¡
+    private int _reputationRise;  // ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
 
     public int ReputationRise => _reputationRise;
 
@@ -52,7 +52,7 @@ public class CookManager : MonoBehaviour
     [SerializeField]
     private GameObject _CookNextButton;
 
-    // ¼Õ´Ô ¹ÝÀÀ SFX ´ã´ç AudioSoource
+    // ï¿½Õ´ï¿½ ï¿½ï¿½ï¿½ï¿½ SFX ï¿½ï¿½ï¿½ AudioSoource
     AudioSource audioSource;
 
     public void getMeatFish(int index) 
@@ -98,14 +98,15 @@ public class CookManager : MonoBehaviour
 
     public void cookFood()
     {
-        // À½½Ä ¿ä¸®
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ä¸®
 
         RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
         CustomerData customer = CustomerManager.instance.currentCustomer;
 
         if (food != null)
         {
-            // °í°´ ¿ä±¸Á¶°Ç °Ë»ç
+            UnlockManager.instance.UnlockRecipe(food.recipeName);
+            // ï¿½ï¿½ ï¿½ä±¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
             _requestSatisfied = customer.CheckCondition(food);
 
             //Debug.Log(food.recipeName);
@@ -114,11 +115,11 @@ public class CookManager : MonoBehaviour
             _reputationRise = judge(food);
 
             if (GameManager.instance.day != 0) {
-                // ÆòÆÇ Áõ°¨
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (requestSatisfied)
                 {
                     GameManager.instance.reputation += ReputationRise;
-                    //CustomerManager.instance.orderText.text = "¸ÀÀÖ´Ù";
+                    //CustomerManager.instance.orderText.text = "ï¿½ï¿½ï¿½Ö´ï¿½";
                     CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(0);
                     setSatisfiedType(Result.positive);
                 }
@@ -128,7 +129,7 @@ public class CookManager : MonoBehaviour
                     if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        //CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        //CustomerManager.instance.orderText.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
@@ -136,7 +137,7 @@ public class CookManager : MonoBehaviour
                     else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        //CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        //CustomerManager.instance.orderText.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
@@ -144,14 +145,14 @@ public class CookManager : MonoBehaviour
                     else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        //CustomerManager.instance.orderText.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                        //CustomerManager.instance.orderText.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
 
                     else
                     {
-                        //CustomerManager.instance.orderText.text = "¸À¾ø´Ù";
+                        //CustomerManager.instance.orderText.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(2);
                         setSatisfiedType(Result.negative);
                     }
@@ -161,24 +162,24 @@ public class CookManager : MonoBehaviour
             if (DialogueManager.Instance.IsRandom == true) {
                 if (satisfiedType == Result.positive)
                 {
-                    //DialogueManager.Instance.getDialogueUI.text = "¸ÀÀÖ´Ù";
+                    //DialogueManager.Instance.getDialogueUI.text = "ï¿½ï¿½ï¿½Ö´ï¿½";
                     var text = DialogueManager.Instance.getRandomReaction(0);
                     DialogueSetEvent!.Invoke(text);
                 }
                 else if (satisfiedType == Result.neutral)
                 {
-                    //DialogueManager.Instance.getDialogueUI.text = "¸ÔÀ»¸¸ ÇÏ´Ù";
+                    //DialogueManager.Instance.getDialogueUI.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½";
                     var text = DialogueManager.Instance.getRandomReaction(1);
                     DialogueSetEvent!.Invoke(text);
                 }
                 else if (satisfiedType == Result.negative)
                 {
-                    //DialogueManager.Instance.getDialogueUI.text = "¸À¾ø´Ù";
+                    //DialogueManager.Instance.getDialogueUI.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     var text = DialogueManager.Instance.getRandomReaction(2);
                     DialogueSetEvent!.Invoke(text);
                 }
                 else
-                    Debug.Log("¿À·ù");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½");
 
                 _NextButton.gameObject.SetActive(false);
                 _SkipButton.gameObject.SetActive(true);
@@ -186,7 +187,7 @@ public class CookManager : MonoBehaviour
             else
                 DialogueManager.Instance.GetNextDialogue();
 
-            Debug.Log("´ÙÀ½ ´ë»ç °¡Á®¿È???");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½???");
 
             _OrderCanvas.gameObject.SetActive(true);
 
@@ -194,7 +195,7 @@ public class CookManager : MonoBehaviour
             //_OrderButton.gameObject.SetActive(true);
             _DialogueCanvas.gameObject.SetActive(true);
 
-            // GTR ´ÙÀ½ ¹Ù·Î ¿À´õ°¡ ¿Ã ¶§, ÁÖ¹® ui ²¨ÁöÁö ¾Êµµ·Ï ÇÔ
+            // GTR ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½, ï¿½Ö¹ï¿½ ui ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½
             string tmp1 = DialogueManager.Instance.currentID;
             string tmp2 = DialogueManager.Instance.pastID.Replace('~', '_');
             if (!(!tmp1.Contains("GTR") && tmp1.Contains("O") && tmp2.Contains(tmp1))) {
@@ -210,7 +211,7 @@ public class CookManager : MonoBehaviour
         }
         else 
         {
-            Debug.Log("¾ø´Â ·¹½ÃÇÇÀÔ´Ï´Ù");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
         }
 
     }
