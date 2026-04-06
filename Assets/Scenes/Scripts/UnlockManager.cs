@@ -134,6 +134,7 @@ public class UnlockManager : MonoBehaviour
     public void UnlockRecipe(string name)
     {
         PlayerPrefs.SetInt(name, 1);
+        //PlayerPrefs.Save(); // 즉시 디스크에 기록
     }
 
     public bool IsRecipeUnlocked(string name)

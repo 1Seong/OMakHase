@@ -14,6 +14,7 @@ public class BookController : MonoBehaviour
     [SerializeField] private Sprite emptyStar;
     [SerializeField] private Sprite fullStar;
     [SerializeField] private Sprite halfStar;
+    [SerializeField] private Sprite lockSprite;
 
     private Sprite baseSprite;
     private Sprite ingred1Sprite;
@@ -67,9 +68,21 @@ public class BookController : MonoBehaviour
     private void UpdateRightPage()
     {
         var data = RecipeManager.instance.GetRecipe(baseIngred, cook, meatFish, vege);
-        if (data == null || !UnlockManager.instance.IsRecipeUnlocked(data.recipeName))
+        if (data == null)
         {
             RightPageUI.localScale =  Vector3.zero;
+            return;
+        }
+
+        if (!UnlockManager.instance.IsRecipeUnlocked(data.recipeName))
+        {
+            if (RightPageUI.localScale.x == 0) RightPageUI.localScale = new Vector3(1, 1, 1);
+
+            image.sprite = lockSprite;
+            image.SetNativeSize();
+            title.text = "아직 해금되지 않은 메뉴입니다.";
+            foreach(var i in stars)
+                i.gameObject.SetActive(false);
             return;
         }
         
@@ -91,10 +104,11 @@ public class BookController : MonoBehaviour
             for (var i = 0; i != stars.Length; ++i)
             {
                 var p = data.taste - 2 * i;
+                stars[i].gameObject.SetActive(true);
                 stars[i].sprite = p switch
                 {
-                    < 2 => emptyStar,
-                    2 => halfStar,
+                    < 1 => emptyStar,
+                    1 => halfStar,
                     _ => fullStar
                 };
             }
