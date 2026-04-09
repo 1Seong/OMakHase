@@ -65,7 +65,7 @@ public class BookController : MonoBehaviour
         }
     }
 
-    private void UpdateRightPage()
+    public void UpdateRightPage()
     {
         var data = RecipeManager.instance.GetRecipe(baseIngred, cook, meatFish, vege);
         if (data == null)
@@ -80,7 +80,7 @@ public class BookController : MonoBehaviour
 
             image.sprite = lockSprite;
             image.SetNativeSize();
-            title.text = "아직 해금되지 않은 메뉴입니다.";
+            title.text = "아직 만들어 본 적 없는 메뉴입니다.";
             foreach(var i in stars)
                 i.gameObject.SetActive(false);
             return;

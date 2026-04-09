@@ -11,5 +11,6 @@
     <file url="file://$PROJECT_DIR$/Assets/Scenes/Scripts/GameManager.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/Scenes/Scripts/IntroAnim.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/Scenes/Scripts/SpriteManager.cs" charset="EUC-KR" />
+    <file url="file://$PROJECT_DIR$/Assets/Scenes/Scripts/UI/UISlide.cs" charset="EUC-KR" />
   </component>
 </project>
