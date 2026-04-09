@@ -16,12 +16,6 @@ public class CustomerManager : MonoBehaviour
     public CustomerData currentCustomer;
 
     [SerializeField]
-    private List<Sprite> spritePool;
-
-    [SerializeField]
-    private Dictionary<Sprite, bool> spriteDuplicationPool;
-
-    [SerializeField]
     public List<CategoryData> categoryPool;
 
     [Serializable]
@@ -38,12 +32,6 @@ public class CustomerManager : MonoBehaviour
     {
         instance = this;
         DontDestroyOnLoad(this);
-
-        spriteDuplicationPool = new Dictionary<Sprite, bool>();
-        for (int i = 0; i < spritePool.Count; i++)
-        {
-            spriteDuplicationPool.Add(spritePool[i], false);
-        }
 
         //spritePool = new List<Sprite>();
     }
@@ -113,7 +101,7 @@ public class CustomerManager : MonoBehaviour
                     else
                     {
                         data = i.normalCustomerDatas[randomIndex];
-                        data.sprite = GetUniqueSprite();
+                        //data.sprite = SpriteManager.Instance.GetUniqueSprite();
                         result.Add(data);
                     }
                 }
@@ -139,56 +127,18 @@ public class CustomerManager : MonoBehaviour
                 else
                 {
                     result = i.normalCustomerDatas[randomIndex];
-                    result.sprite = GetUniqueSprite();
+                    //result.sprite = SpriteManager.Instance.GetUniqueSprite();
                 }
             }
         }
         return result;
     }
 
-    // Áßº¹ ¾ÈµÇ´Â ½ºÇÁ¶óÀÌÆ® °¡Á®¿À±â
-    private Sprite GetUniqueSprite()
-    {
-        // ¾ÆÁ÷ »ç¿ëµÇÁö ¾ÊÀº ½ºÇÁ¶óÀÌÆ®µé¸¸ ¸ğÀ½
-        List<Sprite> availableSprites = new List<Sprite>();
-
-        foreach (var pair in spriteDuplicationPool)
-        {
-            if (!pair.Value)
-                availableSprites.Add(pair.Key);
-        }
-
-        // ÀüºÎ »ç¿ëµÆÀ» °æ¿ì ¿¹¿Ü Ã³¸®
-        if (availableSprites.Count == 0)
-        {
-            Debug.LogWarning("¸ğµç Sprite°¡ »ç¿ëµÊ. Duplication Pool ¸®¼Â");
-            ResetSpriteDuplicationPool();
-            return GetUniqueSprite();
-        }
-
-        // ·£´ı ¼±ÅÃ
-        Debug.Log("·£´ı ½ºÇÁ¶óÀÌÆ® °¡Á®¿È");
-        Sprite selected = availableSprites[UnityEngine.Random.Range(0, availableSprites.Count)];
-        spriteDuplicationPool[selected] = true;
-
-        return selected;
-    }
-
-    public void ResetSpriteDuplicationPool()
-    {
-
-        Debug.LogWarning("·£´ı ¼Õ´Ô ½ÃÀÛ  Duplication Pool ¸®¼Â");
-        List<Sprite> keys = new List<Sprite>(spriteDuplicationPool.Keys);
-
-        foreach (var key in keys)
-        {
-            spriteDuplicationPool[key] = false;
-        }
-    }
+   
 
 
 
-    // ÀÚµ¿À¸·Î ÁöÁ¤ÇÏ´Â ÁÖ¹® ÇÔ¼öµé
+    // ìë™ìœ¼ë¡œ ì§€ì •í•˜ëŠ” ì£¼ë¬¸ í•¨ìˆ˜ë“¤
     public void GetOrder(Personality personality)
     {
         currentCustomer = GetCustomer(personality, false);
@@ -199,7 +149,7 @@ public class CustomerManager : MonoBehaviour
         currentCustomer.GetOrder();
     }
 
-    // ¼öµ¿À¸·Î ¸ğµÎ ÁöÁ¤ÇÏ´Â ÁÖ¹® ÇÔ¼öµé
+    // ìˆ˜ë™ìœ¼ë¡œ ëª¨ë‘ ì§€ì •í•˜ëŠ” ì£¼ë¬¸ í•¨ìˆ˜ë“¤
     public void GetOrder(Personality personality, bool isSpecial, Ingredient.MeatFish meatfish, Ingredient.Vege vege, Ingredient.Base baseIngred, Ingredient.Cook cook, bool hateMeatFish, bool hateVege, bool hateBase)
     {
 
@@ -244,7 +194,7 @@ public class CustomerManager : MonoBehaviour
         currentPersonality = currentCustomer.personality;
     }
 
-    // ¼Õ´Ô¿¡°Ô ´ëÁ¢ÇÒ ¼ö ÀÖ´Â Ä«Å×°í¸®ÀÇ Á¾·ù°¡ ¿©·¯°³ÀÏ ¶§
+    // ì†ë‹˜ì—ê²Œ ëŒ€ì ‘í•  ìˆ˜ ìˆëŠ” ì¹´í…Œê³ ë¦¬ì˜ ì¢…ë¥˜ê°€ ì—¬ëŸ¬ê°œì¼ ë•Œ
 
     public void GetOrder(Personality personality, bool isSpecial, Ingredient.MeatFish meatfish, Ingredient.Vege vege, List<CategoryData> categories, bool hateMeatFish, bool hateVege, bool hateBase)
     {
@@ -281,21 +231,9 @@ public class CustomerManager : MonoBehaviour
 
     /// ////////////////////////////////////////////////////////////////////////////////
 
-    // Method to get a random guest sprite
-    Sprite GetRandomSprite()
-    {
-        if (spritePool.Count == 0)
-        {
-            Debug.LogError("½ºÇÁ¶óÀÌÆ® Ç®ÀÌ ºñ¾îÀÖ´Ù");
-            return null;
-        }
-
-        int randomIndex = UnityEngine.Random.Range(0, spritePool.Count);
-        return spritePool[randomIndex];
-    }
 
 
-    // Method to get a random guest order - ÀÌÁ¦ »ç¿ë ¾ÈÇÏ´Â ÄÚµå
+    // Method to get a random guest order - ì´ì œ ì‚¬ìš© ì•ˆí•˜ëŠ” ì½”ë“œ
     public void GetRandomOrder()
     {
 
@@ -308,28 +246,28 @@ public class CustomerManager : MonoBehaviour
 
         if (randomIndex == 0)
         {
-            Debug.Log("±î´Ù·Î¿î ¼Õ´Ô");
+            Debug.Log("ê¹Œë‹¤ë¡œìš´ ì†ë‹˜");
             currentCustomer = GetCustomer(Personality.Picky, false);
         }
         else if (randomIndex == 1)
         {
-            Debug.Log("º¸Åë ¼Õ´Ô");
+            Debug.Log("ë³´í†µ ì†ë‹˜");
             currentCustomer = GetCustomer(Personality.Normal, false);
         }
         else if (randomIndex == 2)
         {
-            Debug.Log("°ü´ëÇÑ ¼Õ´Ô");
+            Debug.Log("ê´€ëŒ€í•œ ì†ë‹˜");
             currentCustomer = GetCustomer(Personality.Generous, false);
         }
         else
         {
-            Debug.Log("¾ö°İÇÑ ¼Õ´Ô");
+            Debug.Log("ì—„ê²©í•œ ì†ë‹˜");
             currentCustomer = GetCustomer(Personality.Strict, false);
         }
 
         currentCustomer.InitializeOrder();
 
-        orderText.text = "³»°¡ ¸Ô°í ½ÍÀº ¿ä¸®´Â\n";
+        orderText.text = "ë‚´ê°€ ë¨¹ê³  ì‹¶ì€ ìš”ë¦¬ëŠ”\n";
 
         //currentCustomer.RandomOrder();
         //currentCustomer.GetOrder();
@@ -337,140 +275,140 @@ public class CustomerManager : MonoBehaviour
 
         if (currentCustomer.mainIngredCategory == Ingredient.Main.meat)
         {
-            orderText.text += "À°·ù ";
+            orderText.text += "ìœ¡ë¥˜ ";
 
             if (currentCustomer.hateMeatFish == true)
-                orderText.text += "½È¾î ";
+                orderText.text += "ì‹«ì–´ ";
         }
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.fish)
         {
-            orderText.text += "»ı¼±·ù ";
+            orderText.text += "ìƒì„ ë¥˜ ";
 
             if (currentCustomer.hateMeatFish == true)
-                orderText.text += "½È¾î ";
+                orderText.text += "ì‹«ì–´ ";
         }
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.vege)
         {
-            orderText.text += "°úÃ¤·ù ";
+            orderText.text += "ê³¼ì±„ë¥˜ ";
 
             if (currentCustomer.hateVege == true)
-                orderText.text += "½È¾î ";
+                orderText.text += "ì‹«ì–´ ";
         }
 
         else if (currentCustomer.mainIngredCategory == Ingredient.Main.noCondition)
         {
             if (currentCustomer.meatfish == Ingredient.MeatFish.beef)
             {
-                orderText.text += "¼Ò°í±â ";
+                orderText.text += "ì†Œê³ ê¸° ";
 
                 if (currentCustomer.hateMeatFish == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.salmon)
             {
-                orderText.text += "¿¬¾î ";
+                orderText.text += "ì—°ì–´ ";
 
                 if (currentCustomer.hateMeatFish == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.tuna)
             {
-                orderText.text += "ÂüÄ¡ ";
+                orderText.text += "ì°¸ì¹˜ ";
 
                 if (currentCustomer.hateMeatFish == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.pork)
             {
-                orderText.text += "µÅÁö°í±â ";
+                orderText.text += "ë¼ì§€ê³ ê¸° ";
 
                 if (currentCustomer.hateMeatFish == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.chicken)
             {
-                orderText.text += "´ß°í±â ";
+                orderText.text += "ë‹­ê³ ê¸° ";
 
                 if (currentCustomer.hateMeatFish == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.meatfish == Ingredient.MeatFish.none)
             {
-                orderText.text += "À°·ù, »ı¼±·ù ³ÖÁö¸»°í ";
+                orderText.text += "ìœ¡ë¥˜, ìƒì„ ë¥˜ ë„£ì§€ë§ê³  ";
             }
 
             if (currentCustomer.vege == Ingredient.Vege.potato)
             {
-                orderText.text += "°¨ÀÚ ";
+                orderText.text += "ê°ì ";
 
                 if (currentCustomer.hateVege == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.tomato)
             {
-                orderText.text += "Åä¸¶Åä ";
+                orderText.text += "í† ë§ˆí†  ";
 
                 if (currentCustomer.hateVege == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.carrot)
             {
-                orderText.text += "´ç±Ù ";
+                orderText.text += "ë‹¹ê·¼ ";
 
                 if (currentCustomer.hateVege == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.mushroom)
             {
-                orderText.text += "¹ö¼¸ ";
+                orderText.text += "ë²„ì„¯ ";
 
                 if (currentCustomer.hateVege == true)
-                    orderText.text += "½È¾î ";
+                    orderText.text += "ì‹«ì–´ ";
             }
             else if (currentCustomer.vege == Ingredient.Vege.none)
             {
-                orderText.text += "°úÃ¤·ù ³ÖÁö¸»°í ";
+                orderText.text += "ê³¼ì±„ë¥˜ ë„£ì§€ë§ê³  ";
             }
         }
 
 
         if (currentCustomer.baseIngred == Ingredient.Base.rice)
         {
-            orderText.text += "½Ò ";
+            orderText.text += "ìŒ€ ";
 
             if (currentCustomer.hateBase == true)
-                orderText.text += "½È¾î ";
+                orderText.text += "ì‹«ì–´ ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.bread)
         {
-            orderText.text += "»§ ";
+            orderText.text += "ë¹µ ";
 
             if (currentCustomer.hateBase == true)
-                orderText.text += "½È¾î ";
+                orderText.text += "ì‹«ì–´ ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.noodle)
         {
-            orderText.text += "¸é ";
+            orderText.text += "ë©´ ";
 
             if (currentCustomer.hateBase == true)
-                orderText.text += "½È¾î ";
+                orderText.text += "ì‹«ì–´ ";
         }
         else if (currentCustomer.baseIngred == Ingredient.Base.noCondition)
         {
-            orderText.text += "½Ò, »§, ¸é ¾Æ¹«°Å³ª ";
+            orderText.text += "ìŒ€, ë¹µ, ë©´ ì•„ë¬´ê±°ë‚˜ ";
         }
 
         if (currentCustomer.cook == Ingredient.Cook.none)
         {
-            orderText.text += "\nÀ» Á¶¸®ÇÏÁö ¾ÊÀº ¿ä¸®¾ß";
+            orderText.text += "\nì„ ì¡°ë¦¬í•˜ì§€ ì•Šì€ ìš”ë¦¬ì•¼";
         }
         else if (currentCustomer.cook == Ingredient.Cook.stirFry)
         {
-            orderText.text += "\nÀ» ººÀº ¿ä¸®¾ß";
+            orderText.text += "\nì„ ë³¶ì€ ìš”ë¦¬ì•¼";
         }
         else if (currentCustomer.cook == Ingredient.Cook.roast)
         {
-            orderText.text += "\nÀ» ±¸¿î ¿ä¸®¾ß";
+            orderText.text += "\nì„ êµ¬ìš´ ìš”ë¦¬ì•¼";
         }
 
     }

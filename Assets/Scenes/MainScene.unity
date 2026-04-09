@@ -166,12 +166,6 @@ MonoBehaviour:
   activeSpriteImage: {fileID: 1525812947}
   currentPersonality: 0
   currentCustomer: {fileID: 0}
-  spritePool:
-  - {fileID: 21300000, guid: 87e6d6cf0c4b9d54485887ab4c30dd5d, type: 3}
-  - {fileID: 21300000, guid: 7bc1f99288944f14184d6481ba8e8196, type: 3}
-  - {fileID: 21300000, guid: 488a3a4f3768b0d43ab9861103f0e618, type: 3}
-  - {fileID: 21300000, guid: b54479f29d46d41428affcd21712ea6c, type: 3}
-  - {fileID: 21300000, guid: 7ae1956a69307b148b1ef839aeac23af, type: 3}
   categoryPool:
   - {fileID: 11400000, guid: 47ebf3e0c4d8ff245bad0fb42671528f, type: 2}
   - {fileID: 11400000, guid: 9632eecc0c5c42146aec889b22a94e67, type: 2}
@@ -350,15 +344,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeSpeed: 0.1
   randomSpritePool:
-  - {fileID: 3940517801717844717, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: 6587903341090316865, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: -5618986482094654414, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: -7793537674172127478, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: 581630801858025521, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: -7788242175734408475, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: -4882364976151995833, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: -8116202776448379821, guid: 08af930f36042754db4fafbf818346e7, type: 3}
-  - {fileID: -47807674642983910, guid: 08af930f36042754db4fafbf818346e7, type: 3}
+  - {fileID: 21300000, guid: 87e6d6cf0c4b9d54485887ab4c30dd5d, type: 3}
+  - {fileID: 21300000, guid: 8a070725809b9954891218afe74936f6, type: 3}
+  - {fileID: 21300000, guid: 242b9f99b4f5dc544915c5d4713cfefd, type: 3}
+  - {fileID: 21300000, guid: d8a5482ea99f26743a86ff7da46e52ac, type: 3}
+  - {fileID: 21300000, guid: c68595711edac5246be12fd2a5e3b806, type: 3}
   targetImage: {fileID: 1525812947}
   newSprite: {fileID: 0}
 --- !u!4 &60742413
