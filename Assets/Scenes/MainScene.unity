@@ -930,6 +930,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2786264009209634932, guid: 3d3bdd5bd3789f44393629ecd105ad00, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2834130892424834166, guid: 3d3bdd5bd3789f44393629ecd105ad00, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 3
@@ -5305,6 +5309,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4424768628264470721, guid: 3d3bdd5bd3789f44393629ecd105ad00, type: 3}
   m_PrefabInstance: {fileID: 216096835}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &729853725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2786264009209634932, guid: 3d3bdd5bd3789f44393629ecd105ad00, type: 3}
+  m_PrefabInstance: {fileID: 216096835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &740698645
 GameObject:
   m_ObjectHideFlags: 0
@@ -5419,6 +5428,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 729853725}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
