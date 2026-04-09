@@ -42,6 +42,7 @@ public class AudioManager : MonoBehaviour
         {
             SFXDict.Add(SFXList[i].name, SFXList[i]);
         }
+
     }
 
     private void Start()
@@ -60,6 +61,31 @@ public class AudioManager : MonoBehaviour
             SFXTrackChange("sound2");
         }
         */
+    }
+
+    public void sliderInit()
+    {
+        InitSlider(EAudioMixerType.Master, MasterSlider);
+        InitSlider(EAudioMixerType.BGM, BGMSlider);
+        InitSlider(EAudioMixerType.SFX, SFXSlider);
+    }
+
+    private void InitSlider(EAudioMixerType type, Slider slider)
+    {
+        if (slider == null) return;
+
+        // AudioMixer는 dB(-80~0)를 쓰고, Slider는 선형(0~1)이라서 역변환 필요
+        // SetAudioVolume: dB = log10(v) * 20  ->  v = 10^(dB/20)
+        if (audioMixer != null && audioMixer.GetFloat(type.ToString(), out float db))
+        {
+            float linear = Mathf.Pow(10f, db / 20f);          // 0.0001 ~ 1 근처
+            linear = Mathf.Clamp(linear, 0.0001f, 1f);        // 0 방지(로그 변환 대비)
+            slider.SetValueWithoutNotify(linear);             // 초기화 시 리스너 호출 방지
+        }
+        else
+        {
+            slider.SetValueWithoutNotify(1f);                 // 못 읽으면 기본값
+        }
     }
 
     public void SetAudioVolume(EAudioMixerType audioMixerType, float volume)
