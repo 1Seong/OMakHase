@@ -16,7 +16,7 @@ public class CookManager : MonoBehaviour
     public event Action<string> DialogueSetEvent;
 
     [SerializeField, HideInInspector]
-    private int _reputationRise;  // �ν����Ϳ��� ���� �Ұ�
+    private int _reputationRise;  // 인스펙터에서 수정 불가
 
     public int ReputationRise => _reputationRise;
 
@@ -47,7 +47,7 @@ public class CookManager : MonoBehaviour
     [SerializeField]
     private GameObject _CookNextButton;
 
-    // �մ� ���� SFX ��� AudioSoource
+    // 손님 반응 SFX 담당 AudioSoource
     AudioSource audioSource;
 
     public void getMeatFish(int index) 
@@ -93,7 +93,7 @@ public class CookManager : MonoBehaviour
 
     public void cookFood()
     {
-        // ���� �丮
+        // 음식 요리
 
         RecipeData food = RecipeManager.instance.GetRecipe(baseIngred, cook, meatfish, vege);
         CustomerData customer = CustomerManager.instance.currentCustomer;
@@ -101,7 +101,7 @@ public class CookManager : MonoBehaviour
         if (food != null)
         {
             UnlockManager.instance.UnlockRecipe(food.recipeName);
-            // �� �䱸���� �˻�
+            // 고객 요구조건 검사
             _requestSatisfied = customer.CheckCondition(food);
 
             //Debug.Log(food.recipeName);
@@ -110,11 +110,11 @@ public class CookManager : MonoBehaviour
             _reputationRise = judge(food);
 
             if (GameManager.instance.day != 0) {
-                // ���� ����
+                // 평판 증감
                 if (requestSatisfied)
                 {
                     GameManager.instance.reputation += ReputationRise;
-                    //CustomerManager.instance.orderText.text = "���ִ�";
+                    //CustomerManager.instance.orderText.text = "맛있다";
                     CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(0);
                     setSatisfiedType(Result.positive);
                 }
@@ -124,7 +124,7 @@ public class CookManager : MonoBehaviour
                     if (CustomerManager.instance.currentPersonality == Personality.Picky && food.taste >= 7)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        //CustomerManager.instance.orderText.text = "������ �ϴ�";
+                        //CustomerManager.instance.orderText.text = "먹을만 하다";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
@@ -132,7 +132,7 @@ public class CookManager : MonoBehaviour
                     else if (CustomerManager.instance.currentPersonality == Personality.Normal && food.taste >= 5)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        //CustomerManager.instance.orderText.text = "������ �ϴ�";
+                        //CustomerManager.instance.orderText.text = "먹을만 하다";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
@@ -140,14 +140,14 @@ public class CookManager : MonoBehaviour
                     else if (CustomerManager.instance.currentPersonality == Personality.Generous && food.taste >= 3)
                     {
                         GameManager.instance.reputation += ReputationRise;
-                        //CustomerManager.instance.orderText.text = "������ �ϴ�";
+                        //CustomerManager.instance.orderText.text = "먹을만 하다";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(1);
                         setSatisfiedType(Result.neutral);
                     }
 
                     else
                     {
-                        //CustomerManager.instance.orderText.text = "������";
+                        //CustomerManager.instance.orderText.text = "맛없다";
                         CustomerManager.instance.orderText.text = DialogueManager.Instance.getRandomReaction(2);
                         setSatisfiedType(Result.negative);
                     }
@@ -157,24 +157,24 @@ public class CookManager : MonoBehaviour
             if (DialogueManager.Instance.IsRandom == true) {
                 if (satisfiedType == Result.positive)
                 {
-                    //DialogueManager.Instance.getDialogueUI.text = "���ִ�";
+                    //DialogueManager.Instance.getDialogueUI.text = "맛있다";
                     var text = DialogueManager.Instance.getRandomReaction(0);
                     DialogueSetEvent!.Invoke(text);
                 }
                 else if (satisfiedType == Result.neutral)
                 {
-                    //DialogueManager.Instance.getDialogueUI.text = "������ �ϴ�";
+                    //DialogueManager.Instance.getDialogueUI.text = "먹을만 하다";
                     var text = DialogueManager.Instance.getRandomReaction(1);
                     DialogueSetEvent!.Invoke(text);
                 }
                 else if (satisfiedType == Result.negative)
                 {
-                    //DialogueManager.Instance.getDialogueUI.text = "������";
+                    //DialogueManager.Instance.getDialogueUI.text = "맛없다";
                     var text = DialogueManager.Instance.getRandomReaction(2);
                     DialogueSetEvent!.Invoke(text);
                 }
                 else
-                    Debug.Log("����");
+                    Debug.Log("오류");
 
                 _NextButton.gameObject.SetActive(false);
                 _SkipButton.gameObject.SetActive(true);
@@ -182,7 +182,7 @@ public class CookManager : MonoBehaviour
             else
                 DialogueManager.Instance.GetNextDialogue();
 
-            Debug.Log("���� ��� ������???");
+            Debug.Log("다음 대사 가져옴???");
 
             _OrderCanvas.gameObject.SetActive(true);
 
@@ -190,7 +190,7 @@ public class CookManager : MonoBehaviour
             //_OrderButton.gameObject.SetActive(true);
             _DialogueCanvas.gameObject.SetActive(true);
 
-            // GTR ���� �ٷ� ������ �� ��, �ֹ� ui ������ �ʵ��� ��
+            // GTR 다음 바로 오더가 올 때, 주문 ui 꺼지지 않도록 함
             string tmp1 = DialogueManager.Instance.currentID;
             string tmp2 = DialogueManager.Instance.pastID.Replace('~', '_');
             if (!(!tmp1.Contains("GTR") && tmp1.Contains("O") && tmp2.Contains(tmp1))) {
@@ -206,7 +206,7 @@ public class CookManager : MonoBehaviour
         }
         else 
         {
-            Debug.Log("���� �������Դϴ�");
+            Debug.Log("없는 레시피입니다");
         }
 
     }
@@ -235,12 +235,12 @@ public class CookManager : MonoBehaviour
         }
 
         if (food.isNew) {
-            return 6 + Math.Max((food.taste - person), 0);
+            return 6 + Math.Max((int) Math.Round((food.taste - person) * 0.5, 1), 0);
         }
 
         else
         {
-            return 3 + Math.Max((food.taste - person), 0);
+            return 3 + Math.Max((int) Math.Round((food.taste - person) * 0.5, 1), 0);
         }
 
     }
