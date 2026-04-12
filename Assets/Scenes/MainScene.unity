@@ -249,8 +249,8 @@ MonoBehaviour:
   money: 0
   achievements: 
   customerPerDay: 0100000003000000030000000500000005000000070000000700000009000000090000000c0000000c000000
-  GoodEndingCriteria: 2000
-  NormalCriteria: 1000
+  GoodEndingCriteria: 400
+  NormalCriteria: 200
   sawEnding: 0
   _Order_Canvas: {fileID: 1279513471}
   _Fade_Panel: {fileID: 319943489}
