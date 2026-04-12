@@ -100,7 +100,7 @@ public class CookManager : MonoBehaviour
 
         if (food != null)
         {
-            UnlockManager.instance.UnlockRecipe(food.recipeName);
+            //UnlockManager.instance.UnlockRecipe(food.recipeName);
             // 고객 요구조건 검사
             _requestSatisfied = customer.CheckCondition(food);
 
@@ -234,12 +234,16 @@ public class CookManager : MonoBehaviour
             person = 7;
         }
 
-        if (food.isNew) {
+        Debug.Log(food.recipeName);
+        if (!UnlockManager.instance.IsRecipeUnlocked(food.recipeName)) {
+            UnlockManager.instance.UnlockRecipe(food.recipeName);
+            Debug.Log("새로운거");
             return 6 + Math.Max((int) Math.Round((food.taste - person) * 0.5, 1), 0);
         }
 
         else
         {
+            Debug.Log("이전에 만든거");
             return 3 + Math.Max((int) Math.Round((food.taste - person) * 0.5, 1), 0);
         }
 
