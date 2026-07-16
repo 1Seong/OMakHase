@@ -100,6 +100,7 @@ public class CookManager : MonoBehaviour
 
         if (food != null)
         {
+            RecipePopupManager.instance.Show(food.recipeName);
             //UnlockManager.instance.UnlockRecipe(food.recipeName);
             // 고객 요구조건 검사
             _requestSatisfied = customer.CheckCondition(food);
@@ -201,7 +202,6 @@ public class CookManager : MonoBehaviour
                     _SkipButton.gameObject.SetActive(true);
                 }
             }
-
             initCook();
         }
         else 
@@ -246,7 +246,6 @@ public class CookManager : MonoBehaviour
             Debug.Log("이전에 만든거");
             return 3 + Math.Max((int) Math.Round((food.taste - person) * 0.5, 1), 0);
         }
-
     }
 
     private void Awake()

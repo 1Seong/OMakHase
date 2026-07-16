@@ -15,6 +15,7 @@ public class BookController : MonoBehaviour
     [SerializeField] private Sprite fullStar;
     [SerializeField] private Sprite halfStar;
     [SerializeField] private Sprite lockSprite;
+    [SerializeField] private GameObject rightPageTutorial;
 
     private Sprite baseSprite;
     private Sprite ingred1Sprite;
@@ -76,7 +77,11 @@ public class BookController : MonoBehaviour
 
         if (!UnlockManager.instance.IsRecipeUnlocked(data.recipeName))
         {
-            if (RightPageUI.localScale.x == 0) RightPageUI.localScale = new Vector3(1, 1, 1);
+            if (RightPageUI.localScale.x == 0)
+            {
+                RightPageUI.localScale = new Vector3(1, 1, 1);
+                rightPageTutorial.SetActive(false);
+            }
 
             image.sprite = lockSprite;
             image.SetNativeSize();
@@ -95,7 +100,11 @@ public class BookController : MonoBehaviour
         */
         if (data != null)
         {
-            if (RightPageUI.localScale.x == 0) RightPageUI.localScale = new Vector3(1, 1, 1);
+            if (RightPageUI.localScale.x == 0)
+            {
+                RightPageUI.localScale = new Vector3(1, 1, 1);
+                rightPageTutorial.SetActive(false);
+            }
 
             image.sprite = data.BookSprite;
             image.SetNativeSize();
