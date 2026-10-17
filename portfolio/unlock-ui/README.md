@@ -7,6 +7,7 @@
 **Observer:** 해금 이벤트와 UI 수신자를 분리합니다. **Template Method:** ClearButton의 공통 순회는 유지하고, GetButtonCount 훅만 레시피북에서 재정의합니다. 두 구조 모두 원본에 있습니다.
 
 ```mermaid
+%%{init: {"htmlLabels": false, "themeVariables": {"fontFamily": "Arial, sans-serif"}, "flowchart": {"padding": 20, "diagramPadding": 20}, "sequence": {"diagramMarginX": 24, "diagramMarginY": 16, "wrap": true}}}%%
 classDiagram
   UnlockButtonController <|-- UnlockBookButtonController
   class UnlockButtonController {
@@ -14,10 +15,11 @@ classDiagram
     GetButtonCount()
   }
   UnlockBookButtonController : GetButtonCount()
-  note for UnlockButtonController "ClearButton이 GetButtonCount 훅을 호출"
+  note for UnlockButtonController "초기화 순서 고정 · 개수만 확장"
 ```
 
 ```mermaid
+%%{init: {"htmlLabels": false, "themeVariables": {"fontFamily": "Arial, sans-serif"}, "flowchart": {"padding": 20, "diagramPadding": 20}, "sequence": {"diagramMarginX": 24, "diagramMarginY": 16, "wrap": true}}}%%
 sequenceDiagram
   participant G as 진행 시스템
   participant U as UnlockManager
