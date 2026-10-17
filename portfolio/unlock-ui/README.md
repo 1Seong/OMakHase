@@ -4,6 +4,19 @@
 
 ## 코드
 
+**Observer:** 해금 이벤트와 UI 수신자를 분리합니다. **Template Method:** ClearButton의 공통 순회는 유지하고, GetButtonCount 훅만 레시피북에서 재정의합니다. 두 구조 모두 원본에 있습니다.
+
+```mermaid
+classDiagram
+  UnlockButtonController <|-- UnlockBookButtonController
+  class UnlockButtonController {
+    ClearButton()
+    GetButtonCount()
+  }
+  UnlockBookButtonController : GetButtonCount()
+  note for UnlockButtonController "ClearButton이 GetButtonCount 훅을 호출"
+```
+
 ```mermaid
 sequenceDiagram
   participant G as 진행 시스템
