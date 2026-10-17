@@ -4,6 +4,20 @@
 
 ## 코드
 
+```mermaid
+sequenceDiagram
+  participant B as 재료·조리법 버튼
+  participant C as BookController
+  participant R as RecipeManager
+  participant U as UnlockManager
+  B->>C: OnClick으로 선택값 전달
+  C->>R: 선택 조합 조회
+  R-->>C: RecipeData 또는 null
+  C->>U: 레시피 발견 여부 확인
+  U-->>C: 잠금 상태
+  C->>C: 미등록·미발견·발견 페이지 표시
+```
+
 **BookController:** 선택한 조합을 조회하고 미등록·미발견·발견 상태를 구분해 표시합니다. **CookButton / MeatFishButton / VegeButton:** 선택값을 레시피북에 전달합니다. 중복되는 버튼 중 CookButton을 대표로 제시합니다.
 
 ```csharp
@@ -64,6 +78,11 @@ public void UpdateRightPage()
 
 ```csharp
 // CookButton: 조리법 버튼이 결과 조회·표시 로직을 직접 소유하지 않음
+public interface ButtonBehavior
+{
+    void OnClick();
+}
+
 public class CookButton : MonoBehaviour, ButtonBehavior
 {
     [SerializeField] private BookController controller;
@@ -85,7 +104,7 @@ public class CookButton : MonoBehaviour, ButtonBehavior
 
 ## 생략 및 재구성한 내용
 
-- 원본: `Assets/Scenes/Scripts/UI/`의 BookController·CookButton·MeatFishButton·VegeButton. 기준 커밋: `87c7ce2f89e529301e5f32d91fe2c6c5155ddaac`.
+- 원본: `Assets/Scenes/Scripts/UI/`의 BookController·ButtonBehavior·CookButton·MeatFishButton·VegeButton. 기준 커밋: `87c7ce2f89e529301e5f32d91fe2c6c5155ddaac`.
 - 동일한 구조의 baseIngred·meatFish·vege 프로퍼티와 OnClick 오버로드는 생략하고 cook을 대표로 남겼습니다. 버튼은 각자 상태를 변경하는 대신 BookController에 선택을 전달합니다.
 - UpdateRightPage의 잠금·발견 분기에 중복된 페이지 활성화와 별 숨김 기능을 합쳤습니다. 
-- 첫 블록은 BookController 내부 발췌이며 Image·TMP·별 이미지·enum·ButtonBehavior·싱글턴 의존성 없이 단독 실행되지 않습니다.
+- 첫 블록은 BookController 내부 발췌이며 Image·TMP·별 이미지·enum·싱글턴 의존성 없이 단독 실행되지 않습니다.

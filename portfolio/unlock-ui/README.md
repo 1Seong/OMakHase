@@ -4,6 +4,19 @@
 
 ## 코드
 
+```mermaid
+sequenceDiagram
+  participant G as 진행 시스템
+  participant U as UnlockManager
+  participant V as UnlockButtonController
+  G->>U: 재료 Unlock
+  U->>U: PlayerPrefs 해금값 기록
+  U-->>V: 분류와 버튼 인덱스 이벤트
+  V->>V: 자기 분류의 버튼만 활성화
+  G->>U: Load
+  U-->>V: 저장된 재료 버튼 재전달
+```
+
 **GameManager:** 날짜 진행에 따라 해금을 요청합니다. **UnlockManager:** 해금 상태를 기록하고 분류·버튼 인덱스를 알립니다. **UnlockButtonController / UnlockBookButtonController:** 공통 이벤트를 받아 각 화면의 버튼을 갱신합니다. **AchievementManager:** 업적 중복 해금 방지와 알림을 담당합니다.
 
 ```csharp
@@ -106,9 +119,21 @@ public void AchievementUnlock(Achievements achievement)
 }
 ```
 
+**CookManager 기여 범위:** 요리 진행·평판 계산은 팀원 구현입니다. 그 내부에서 최성원이 추가한 최초 발견 시 해금 호출만 아래에 발췌했습니다.
+
+```csharp
+// CookManager.judge의 해금 호출만 설명용 메서드로 분리
+private void UnlockFirstRecipe(RecipeData food)
+{
+    if (!UnlockManager.instance.IsRecipeUnlocked(food.recipeName))
+        UnlockManager.instance.UnlockRecipe(food.recipeName);
+}
+```
+
 ## 생략 및 재구성한 내용
 
-- 원본: `Assets/Scenes/Scripts/`의 GameManager·UnlockManager·AchievementManager와 `UI/UnlockButtonController.cs`, `UI/UnlockBookButtonController.cs`. 기준 커밋: `87c7ce2f89e529301e5f32d91fe2c6c5155ddaac`.
+- UnlockFirstRecipe는 기여한 두 줄을 분리한 설명용 함수명입니다. 원본의 요리·평판 판정 전체를 개인 기여로 제시하지 않습니다.
+- 원본: `Assets/Scenes/Scripts/`의 GameManager·UnlockManager·AchievementManager·CookManager와 `UI/UnlockButtonController.cs`, `UI/UnlockBookButtonController.cs`. 기준 커밋: `87c7ce2f89e529301e5f32d91fe2c6c5155ddaac`.
 - GameManager.nextCustomer의 날짜별 분기를 설명용 UnlockIngredientForDay로, UnlockManager.Load의 분류별 반복을 LoadMeatFishButtons로 분리했습니다. 새 함수명은 발췌용이며 원본에 그대로 존재하지 않습니다.
 - 이벤트의 두 번째 인자는 Base=0, Cook=1, MeatFish=2, Vege=3입니다. 다른 분류의 동일한 Unlock·Load 반복과 초기 해금 목록은 생략했습니다. 
 - 초기화는 원본 ResetData에서 PlayerPrefs.DeleteAll → ClearAction → 기본 재료 해금 순서입니다. 프로젝트 전체 저장값을 삭제하므로 범용 저장 초기화 예제로 제시하지 않고 본문에서는 생략했습니다.
