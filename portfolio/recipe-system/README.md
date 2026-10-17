@@ -5,13 +5,17 @@
 ## 코드
 
 ```mermaid
-flowchart LR
-  A["CategoryData · 기본 재료와 조리법"] --> C["RecipeManager 초기 인덱스"]
-  B["RecipeData · 육류·채소·결과"] --> C
-  C --> D["4개 enum 조합 키"]
-  D --> E["GetRecipe"]
-  E --> F["레시피북 표시"]
-  E --> G["요리 흐름에서 조회"]
+classDiagram
+  RecipeBase <|-- RecipeData
+  RecipeBase --> CategoryData : 기본 재료와 조리법
+  RecipeManager --> RecipeData : 조합 키로 조회
+  class RecipeData {
+    recipeName
+    taste
+    BookSprite
+  }
+  note for RecipeData "Type Object 방식: 메뉴 차이를 에셋 데이터로 정의"
+  note for RecipeManager "4개 enum 튜플 키로 조리와 레시피북이 공유"
 ```
 
 **CategoryData / RecipeBase / RecipeData:** 조리 분류와 레시피 정보를 에셋으로 분리합니다. **Ingredient:** 재료·조리법의 식별값을 정의합니다. **RecipeManager:** 네 가지 선택값으로 레시피를 조회합니다.
